@@ -105,7 +105,7 @@ const Navbar = () => {
                 className={`px-2 py-1 transition-colors cursor-pointer font-medium relative z-10 ${
                   activeLink === link.to
                     ? "text-indigo-600 dark:text-indigo-400"
-                    : "text-black dark:text-black hover:text-indigo-500 dark:hover:text-indigo-400"
+                    : "text-white dark:text-white hover:text-indigo-500 dark:hover:text-indigo-400"
                 }`}
                 onClick={() => setActiveLink(link.to)}
               >
