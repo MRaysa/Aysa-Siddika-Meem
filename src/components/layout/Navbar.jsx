@@ -82,8 +82,8 @@ const Navbar = () => {
           >
             <span className="text-white font-bold text-xl">AS</span>
           </motion.div>
-          <span className="text-sm text-blue-600 dark:text-blue-600 hidden md:block transition-opacity group-hover:opacity-80">
-            Portfolio
+          <span className="text-2xl text-blue-600 dark:text-blue-600 hidden md:block transition-opacity group-hover:opacity-80">
+            Aysa
           </span>
         </Link>
 
@@ -190,7 +190,8 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white dark:bg-gray-800 shadow-xl"
+            className="md:hidden bg-white dark:bg-gray-800 shadow-xl rounded-2xl"
+            style={{ width: "200px", marginLeft: "auto", marginRight: "10px" }}
           >
             <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
               {navLinks.map((link) => (
