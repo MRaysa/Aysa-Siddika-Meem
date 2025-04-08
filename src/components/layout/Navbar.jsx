@@ -82,8 +82,8 @@ const Navbar = () => {
           >
             <span className="text-white font-bold text-xl">AS</span>
           </motion.div>
-          <span className="text-2xl text-blue-600 dark:text-blue-600 hidden md:block transition-opacity group-hover:opacity-80">
-            Aysa
+          <span className="text-2xl font-bold text-blue-600 dark:text-blue-600 hidden md:block transition-opacity group-hover:opacity-80">
+            Meem
           </span>
         </Link>
 

@@ -7,9 +7,17 @@ const About = () => {
   const constraintsRef = useRef(null);
 
   const achievements = [
-    { number: "3+", text: "Years Experience", icon: "🚀" },
-    { number: "50+", text: "Projects", icon: "💻" },
-    { number: "∞", text: "Coffee Cups", icon: "☕" },
+    { number: "3+", text: "Years of Code, Creativity & Curiosity", icon: "🚀" },
+    {
+      number: "50+",
+      text: "Projects from fun side hacks to full-scale web systems",
+      icon: "💻",
+    },
+    {
+      number: "∞",
+      text: " Cups of Tea/Coffee fueling my late-night coding sessions .",
+      icon: "☕",
+    },
   ];
 
   return (
@@ -86,7 +94,7 @@ const About = () => {
             >
               <img
                 src="/profile.jpg"
-                alt="Aysa Siddika"
+                alt="Aysa Siddika Meem"
                 className="h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent" />
@@ -139,9 +147,13 @@ const About = () => {
             </h3>
 
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              Specializing in immersive 3D web applications and interactive
-              interfaces. My code comes to life with smooth animations and
-              pixel-perfect designs.
+              I’m a Full Stack Developer with a passion for building fast,
+              responsive, and user-centric web applications. My expertise spans
+              frontend artistry (React, Next.js, animations) and backend
+              precision (Node.js, Django, databases), allowing me to craft
+              seamless, end-to-end solutions. I obsess over clean code,
+              intuitive UX, and performance optimization—because great software
+              shouldn’t just work; it should delight.
             </p>
 
             {/* Interactive Skill Cloud */}
