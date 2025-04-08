@@ -20,41 +20,41 @@ const About = () => {
     },
   ];
 
-  const skillCategories = [
-    {
-      title: "Frontend",
-      skills: [
-        "React.js",
-        "Next.js",
-        "TypeScript",
-        "Tailwind CSS",
-        "JavaScript",
-      ],
-      icon: "💻",
-    },
-    {
-      title: "Backend",
-      skills: [
-        "Node.js",
-        "Express.js",
-        "Django",
-        "Python",
-        "MongoDB",
-        "PostgreSQL",
-      ],
-      icon: "⚙️",
-    },
-    {
-      title: "Dev Tools",
-      skills: ["Git & GitHub", "Vercel", "Netlify", "REST APIs", "Firebase"],
-      icon: "🛠️",
-    },
-    {
-      title: "UI/UX",
-      skills: ["Figma", "Responsive Design", "Accessibility Standards"],
-      icon: "🎨",
-    },
-  ];
+  // const skillCategories = [
+  //   {
+  //     title: "Frontend",
+  //     skills: [
+  //       "React.js",
+  //       "Next.js",
+  //       "TypeScript",
+  //       "Tailwind CSS",
+  //       "JavaScript",
+  //     ],
+  //     icon: "💻",
+  //   },
+  //   {
+  //     title: "Backend",
+  //     skills: [
+  //       "Node.js",
+  //       "Express.js",
+  //       "Django",
+  //       "Python",
+  //       "MongoDB",
+  //       "PostgreSQL",
+  //     ],
+  //     icon: "⚙️",
+  //   },
+  //   {
+  //     title: "Dev Tools",
+  //     skills: ["Git & GitHub", "Vercel", "Netlify", "REST APIs", "Firebase"],
+  //     icon: "🛠️",
+  //   },
+  //   {
+  //     title: "UI/UX",
+  //     skills: ["Figma", "Responsive Design", "Accessibility Standards"],
+  //     icon: "🎨",
+  //   },
+  // ];
 
   return (
     <section
@@ -216,7 +216,7 @@ const About = () => {
             </motion.div>
 
             {/* Formatted Skill Categories - Adjusted spacing */}
-            <div className="space-y-5">
+            {/* <div className="space-y-5">
               {skillCategories.map((category, index) => (
                 <motion.div
                   key={category.title}
@@ -250,7 +250,7 @@ const About = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </div> */}
 
             {/* Animated Achievement Cards - Adjusted grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
