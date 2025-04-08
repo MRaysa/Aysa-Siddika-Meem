@@ -18,9 +18,15 @@ import {
   SiFirebase,
   SiFigma,
 } from "react-icons/si";
-
+const techIcons = [
+  { icon: <TbBrandReact size={28} />, name: "React" },
+  { icon: <TbBrandNextjs size={28} />, name: "Next.js" },
+  { icon: <SiTypescript size={24} />, name: "TypeScript" },
+  { icon: <SiJavascript size={24} />, name: "JavaScript" },
+  { icon: <SiTailwindcss size={24} />, name: "Tailwind" },
+];
 const Skills = () => {
-  const constraintsRef = useRef(null);
+  const ref = useRef(null);
   const skillCategories = [
     {
       title: "Frontend",
@@ -70,16 +76,14 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="relative py-24 overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800"
-      ref={constraintsRef}
+      ref={ref}
+      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800 snap-start"
     >
-      {/* Floating Background Elements */}
+      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            drag
-            dragConstraints={constraintsRef}
             className="absolute rounded-full opacity-10"
             style={{
               width: Math.random() * 300 + 100,
@@ -100,6 +104,33 @@ const Skills = () => {
               ease: "linear",
             }}
           />
+        ))}
+      </div>
+
+      {/* Floating Tech Icons */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {techIcons.map((tech, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-blue-400/20 dark:text-blue-600/20"
+            style={{
+              fontSize: `${Math.random() * 40 + 20}px`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, Math.random() * 100 - 50],
+              rotate: [0, Math.random() * 360],
+            }}
+            transition={{
+              duration: Math.random() * 20 + 10,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          >
+            {tech.icon}
+          </motion.div>
         ))}
       </div>
       <div className="container mx-auto px-6">
