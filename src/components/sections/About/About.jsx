@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiTwitter, FiFacebook } from "react-icons/fi";
 
@@ -15,15 +15,51 @@ const About = () => {
     },
     {
       number: "∞",
-      text: " Cups of Tea/Coffee fueling my late-night coding sessions .",
+      text: "Cups of Tea/Coffee fueling my late-night coding sessions",
       icon: "☕",
+    },
+  ];
+
+  const skillCategories = [
+    {
+      title: "Frontend",
+      skills: [
+        "React.js",
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "JavaScript",
+      ],
+      icon: "💻",
+    },
+    {
+      title: "Backend",
+      skills: [
+        "Node.js",
+        "Express.js",
+        "Django",
+        "Python",
+        "MongoDB",
+        "PostgreSQL",
+      ],
+      icon: "⚙️",
+    },
+    {
+      title: "Dev Tools",
+      skills: ["Git & GitHub", "Vercel", "Netlify", "REST APIs", "Firebase"],
+      icon: "🛠️",
+    },
+    {
+      title: "UI/UX",
+      skills: ["Figma", "Responsive Design", "Accessibility Standards"],
+      icon: "🎨",
     },
   ];
 
   return (
     <section
       id="about"
-      className="relative py-32 overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800"
+      className="relative py-24 overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800"
       ref={constraintsRef}
     >
       {/* Floating Background Elements */}
@@ -63,9 +99,9 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
-          <h2 className="text-6xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
               About Me
             </span>
@@ -79,10 +115,10 @@ const About = () => {
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Profile Image Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Profile Image Section - Adjusted height and positioning */}
           <div
-            className="h-[500px] relative rounded-3xl overflow-hidden border-2 border-white/20 shadow-2xl"
+            className="h-[450px] relative rounded-3xl overflow-hidden border-2 border-white/20 shadow-2xl"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
@@ -101,7 +137,7 @@ const About = () => {
               <div className="absolute inset-0 flex items-end p-8">
                 <div>
                   <motion.h3
-                    className="text-4xl font-bold text-white mb-2"
+                    className="text-3xl md:text-4xl font-bold text-white mb-2"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
@@ -109,7 +145,7 @@ const About = () => {
                     Aysa Siddika Meem
                   </motion.h3>
                   <motion.p
-                    className="text-xl text-blue-200"
+                    className="text-lg md:text-xl text-blue-200"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
@@ -133,64 +169,91 @@ const About = () => {
             )}
           </div>
 
-          {/* Content Section */}
+          {/* Content Section - Adjusted spacing */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="space-y-8"
+            className="space-y-6"
           >
-            <h3 className="text-4xl font-bold text-gray-800 dark:text-white">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">
               I Build <span className="text-blue-500">Digital Experiences</span>{" "}
               That Inspire
             </h3>
 
             <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              I’m a Full Stack Developer with a passion for building fast,
+              I'm a Full Stack Developer with a passion for building fast,
               responsive, and user-centric web applications. My expertise spans
               frontend artistry (React, Next.js, animations) and backend
               precision (Node.js, Django, databases), allowing me to craft
               seamless, end-to-end solutions. I obsess over clean code,
               intuitive UX, and performance optimization—because great software
-              shouldn’t just work; it should delight.
+              shouldn't just work; it should delight.
             </p>
 
-            {/* Interactive Skill Cloud */}
-            <div className="flex flex-wrap gap-3">
-              {[
-                "MERN Stack",
-                "ReactJS",
-                "Next.js",
-                "Django",
-                "Python",
-                "Node.js",
-                "JavaScript",
-                "TypeScript",
-                "C++",
-                "UI/UX",
-              ].map((skill, i) => (
+            {/* Personal Mission - Adjusted padding */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              viewport={{ once: true }}
+              className="p-5 bg-blue-50/50 dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-gray-700"
+            >
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">💬</span>
+                <div>
+                  <h4 className="font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    Personal Mission:
+                  </h4>
+                  <p className="text-gray-700 dark:text-gray-300 italic">
+                    "I believe the best software doesn't just function — it
+                    tells a story, solves a need, and connects people in
+                    meaningful ways."
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Formatted Skill Categories - Adjusted spacing */}
+            <div className="space-y-5">
+              {skillCategories.map((category, index) => (
                 <motion.div
-                  key={skill}
-                  whileHover={{
-                    y: -5,
-                    scale: 1.05,
-                    backgroundColor: "#3b82f6",
-                    color: "white",
-                  }}
+                  key={category.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: 0.1 * index }}
                   viewport={{ once: true }}
-                  className="px-4 py-2 bg-white cursor-pointer dark:bg-gray-800 rounded-full shadow-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 cursor-default"
+                  className="space-y-2"
                 >
-                  {skill}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{category.icon}</span>
+                    <h4 className="font-bold text-gray-800 dark:text-gray-200">
+                      {category.title}
+                    </h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill, i) => (
+                      <motion.div
+                        key={skill}
+                        whileHover={{
+                          y: -3,
+                          scale: 1.03,
+                          backgroundColor: "#3b82f6",
+                          color: "white",
+                        }}
+                        className="px-3 py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm cursor-default"
+                      >
+                        {skill}
+                      </motion.div>
+                    ))}
+                  </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* Animated Achievement Cards */}
-            <div className="grid grid-cols-3 gap-4">
+            {/* Animated Achievement Cards - Adjusted grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {achievements.map((item, i) => (
                 <motion.div
                   key={item.text}
@@ -202,43 +265,42 @@ const About = () => {
                     y: -5,
                     boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)",
                   }}
-                  className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 text-center relative overflow-hidden"
+                  className="bg-white dark:bg-gray-800 p-3 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 text-center relative overflow-hidden"
                 >
-                  <div className="text-4xl mb-2">{item.icon}</div>
-                  <div className="text-2xl font-bold text-blue-500">
+                  <div className="text-3xl mb-2">{item.icon}</div>
+                  <div className="text-xl font-bold text-blue-500">
                     {item.number}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     {item.text}
                   </div>
                 </motion.div>
               ))}
             </div>
 
-            {/* Social Links */}
-            {/* Social Links */}
-            <div className="flex gap-4 pt-4">
+            {/* Social Links - Adjusted padding */}
+            <div className="flex gap-3 pt-6">
               {[
                 {
-                  icon: <FiGithub size={24} />,
+                  icon: <FiGithub size={20} />,
                   color: "from-gray-800 to-gray-600",
                   text: "GitHub",
                   url: "https://github.com/MRaysa",
                 },
                 {
-                  icon: <FiLinkedin size={24} />,
+                  icon: <FiLinkedin size={20} />,
                   color: "from-blue-600 to-blue-800",
                   text: "LinkedIn",
                   url: "https://www.linkedin.com/in/mst-aysa-siddika-meem/",
                 },
                 {
-                  icon: <FiTwitter size={24} />,
+                  icon: <FiTwitter size={20} />,
                   color: "from-sky-400 to-sky-600",
                   text: "Twitter",
                   url: "#",
                 },
                 {
-                  icon: <FiFacebook size={24} />,
+                  icon: <FiFacebook size={20} />,
                   color: "from-blue-500 to-blue-700",
                   text: "Facebook",
                   url: "https://www.facebook.com/muniaislam.meem",
@@ -254,7 +316,7 @@ const About = () => {
                     y: -5,
                     scale: 1.1,
                   }}
-                  className={`bg-gradient-to-r ${social.color} text-white p-4 rounded-full w-14 h-14 flex items-center justify-center relative overflow-hidden shadow-lg`}
+                  className={`bg-gradient-to-r ${social.color} text-white p-3 rounded-full w-12 h-12 flex items-center justify-center relative overflow-hidden shadow-lg`}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
