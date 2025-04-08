@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import {
   FiArrowRight,
@@ -10,6 +10,55 @@ import {
 } from "react-icons/fi";
 import { TbBrandNextjs, TbBrandReact } from "react-icons/tb";
 import { SiTypescript, SiTailwindcss, SiJavascript } from "react-icons/si";
+
+const TypewriterGreeting = () => {
+  const greetings = [
+    "Hello, I'm",
+    "Whats up! I'm",
+    "Hi there, I'm",
+    "Greetings, I'm",
+    "Hey, I'm",
+  ];
+  const [currentGreeting, setCurrentGreeting] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [greetingIndex, setGreetingIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const typingSpeed = isDeleting ? 50 : 100;
+    const changeDelay = isDeleting ? 500 : 2000;
+
+    const timer = setTimeout(() => {
+      const fullGreeting = greetings[greetingIndex];
+
+      if (isDeleting) {
+        setCurrentGreeting(fullGreeting.substring(0, currentIndex - 1));
+        setCurrentIndex(currentIndex - 1);
+
+        if (currentIndex === 0) {
+          setIsDeleting(false);
+          setGreetingIndex((greetingIndex + 1) % greetings.length);
+        }
+      } else {
+        setCurrentGreeting(fullGreeting.substring(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+
+        if (currentIndex === fullGreeting.length) {
+          setIsDeleting(true);
+        }
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, isDeleting, greetingIndex]);
+
+  return (
+    <span className="text-lg text-blue-500 dark:text-blue-400 font-medium">
+      {currentGreeting}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
+};
 
 const Home = () => {
   const controls = useAnimation();
@@ -122,9 +171,7 @@ const Home = () => {
           {/* Hero Content */}
           <div className="lg:w-1/2 space-y-8">
             <motion.div variants={itemVariants}>
-              <span className="text-lg text-blue-500 dark:text-blue-400 font-medium">
-                Hello, I'm
-              </span>
+              <TypewriterGreeting />
             </motion.div>
 
             <motion.h1
@@ -203,38 +250,37 @@ const Home = () => {
             </motion.div>
           </div>
 
-          {/* Hero Image/Illustration - Responsive Version */}
+          {/* Hero Image/Illustration */}
           <motion.div
             variants={itemVariants}
-            className="w-full lg:w-1/2 flex justify-center relative px-4 sm:px-0 mt-8 lg:mt-0"
+            className="w-full lg:w-1/2 flex justify-center relative mt-8 lg:mt-0"
           >
-            <div className="relative w-full max-w-xs sm:max-w-md md:max-w-lg">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
               {/* Layered background effect */}
               <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-3xl shadow-lg sm:shadow-2xl transform rotate-3 sm:rotate-6"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-lg sm:shadow-2xl transform -rotate-3 sm:-rotate-6"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-3xl shadow-lg lg:shadow-2xl transform rotate-3 lg:rotate-6"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-lg lg:shadow-2xl transform -rotate-3 lg:-rotate-6"></div>
               </div>
 
-              {/* Glow effect - responsive sizing */}
+              {/* Glow effect */}
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute -inset-4 sm:-inset-6 md:-inset-8 bg-blue-500/10 dark:bg-blue-600/10 rounded-3xl blur-lg sm:blur-xl"
+                className="absolute -inset-4 sm:-inset-6 lg:-inset-8 bg-blue-500/10 dark:bg-blue-600/10 rounded-3xl blur-md lg:blur-xl"
               />
 
-              {/* Main card with responsive sizing */}
+              {/* Main card */}
               <motion.div
                 whileHover={{ y: -10 }}
-                className="relative h-64 sm:h-80 md:h-96 w-full bg-white dark:bg-gray-800 rounded-3xl shadow-lg sm:shadow-xl overflow-hidden border-2 border-white/20 flex items-center justify-center"
+                className="relative h-64 sm:h-72 md:h-80 lg:h-96 w-full bg-white dark:bg-gray-800 rounded-3xl shadow-lg lg:shadow-xl overflow-hidden border-2 border-white/20 flex items-center justify-center"
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative">
-                    {/* Main developer emoji - responsive size */}
                     <motion.div
                       animate={{
                         y: [0, -10, 0],
-                        rotate: [0, 5, -5, 0],
+                        rotate: [0, 3, -3, 0],
                       }}
                       transition={{
                         duration: 8,
@@ -242,17 +288,15 @@ const Home = () => {
                         repeatType: "reverse",
                         ease: "easeInOut",
                       }}
-                      className="text-6xl sm:text-7xl md:text-8xl"
+                      className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
                     >
                       👩‍💻
                     </motion.div>
-
-                    {/* Computer emoji - responsive positioning */}
                     <motion.div
-                      className="absolute -bottom-6 -right-6 sm:-bottom-8 sm:-right-8 md:-bottom-10 md:-right-10 text-2xl sm:text-3xl md:text-4xl"
+                      className="absolute -bottom-6 -right-6 sm:-bottom-8 sm:-right-8 lg:-bottom-10 lg:-right-10 text-2xl sm:text-3xl lg:text-4xl"
                       animate={{
-                        y: [0, 8, 0],
-                        rotate: [0, -8, 8, 0],
+                        y: [0, 6, 0],
+                        rotate: [0, -6, 6, 0],
                       }}
                       transition={{
                         duration: 6,
@@ -264,13 +308,11 @@ const Home = () => {
                     >
                       💻
                     </motion.div>
-
-                    {/* Sparkle emoji - responsive positioning */}
                     <motion.div
-                      className="absolute -top-6 -left-6 sm:-top-8 sm:-left-8 md:-top-10 md:-left-10 text-2xl sm:text-3xl md:text-4xl"
+                      className="absolute -top-6 -left-6 sm:-top-8 sm:-left-8 lg:-top-10 lg:-left-10 text-2xl sm:text-3xl lg:text-4xl"
                       animate={{
-                        y: [0, -8, 0],
-                        rotate: [0, 12, -12, 0],
+                        y: [0, -6, 0],
+                        rotate: [0, 10, -10, 0],
                       }}
                       transition={{
                         duration: 7,
