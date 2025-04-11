@@ -7,13 +7,8 @@ import {
   SiJavascript,
   SiNodedotjs,
   SiExpress,
-  SiDjango,
   SiPython,
-  SiMongodb,
-  SiPostgresql,
   SiGithub,
-  SiVercel,
-  SiFirebase,
   SiFigma,
 } from "react-icons/si";
 
@@ -44,10 +39,10 @@ const OrbitingCircleItem = ({ children, index, total, radius, reverse }) => {
       }}
     >
       <div className="relative group">
-        <div className="absolute -right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <TbArrowRight className="text-blue-500 text-xl animate-pulse" />
+        <div className="absolute -right-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <TbArrowRight className="text-blue-500 text-2xl animate-pulse" />
         </div>
-        <div className="bg-white/90 dark:bg-gray-700/90 p-3 rounded-full shadow-md border border-gray-200/50 dark:border-gray-600/50">
+        <div className="bg-white/90 dark:bg-gray-700/90 p-3 rounded-full shadow-md border border-gray-200/50 dark:border-gray-600/50 flex items-center justify-center">
           {children}
         </div>
       </div>
@@ -114,27 +109,67 @@ const SkillMeter = ({ name, icon, percentage }) => {
 
 const Skills = () => {
   const skills = [
-    { name: "React", icon: <TbBrandReact />, percentage: 95 },
-    { name: "JavaScript", icon: <SiJavascript />, percentage: 90 },
-    { name: "TypeScript", icon: <SiTypescript />, percentage: 85 },
-    { name: "Next.js", icon: <TbBrandNextjs />, percentage: 88 },
-    { name: "Node.js", icon: <SiNodedotjs />, percentage: 87 },
-    { name: "Tailwind CSS", icon: <SiTailwindcss />, percentage: 92 },
-    { name: "Express", icon: <SiExpress />, percentage: 83 },
-    { name: "Python", icon: <SiPython />, percentage: 90 },
-    { name: "GitHub", icon: <SiGithub />, percentage: 94 },
-    { name: "Figma", icon: <SiFigma />, percentage: 78 },
+    {
+      name: "React",
+      icon: <TbBrandReact className="text-blue-500" />,
+      percentage: 95,
+    },
+    {
+      name: "JavaScript",
+      icon: <SiJavascript className="text-yellow-400" />,
+      percentage: 90,
+    },
+    {
+      name: "TypeScript",
+      icon: <SiTypescript className="text-blue-600" />,
+      percentage: 85,
+    },
+    {
+      name: "Next.js",
+      icon: <TbBrandNextjs className="text-black dark:text-white" />,
+      percentage: 88,
+    },
+    {
+      name: "Node.js",
+      icon: <SiNodedotjs className="text-green-600" />,
+      percentage: 87,
+    },
+    {
+      name: "Tailwind CSS",
+      icon: <SiTailwindcss className="text-cyan-500" />,
+      percentage: 92,
+    },
+    {
+      name: "Express",
+      icon: <SiExpress className="text-gray-800 dark:text-gray-200" />,
+      percentage: 83,
+    },
+    {
+      name: "Python",
+      icon: <SiPython className="text-blue-600" />,
+      percentage: 90,
+    },
+    {
+      name: "GitHub",
+      icon: <SiGithub className="text-black dark:text-white" />,
+      percentage: 94,
+    },
+    {
+      name: "Figma",
+      icon: <SiFigma className="text-purple-500" />,
+      percentage: 78,
+    },
   ];
 
   const orbitingSkills = [
-    <TbBrandReact className="text-blue-500 text-2xl" />,
-    <TbBrandNextjs className="text-black dark:text-white text-2xl" />,
-    <SiTypescript className="text-blue-600 text-xl" />,
-    <SiJavascript className="text-yellow-400 text-xl" />,
-    <SiTailwindcss className="text-cyan-500 text-xl" />,
-    <SiNodedotjs className="text-green-600 text-xl" />,
-    <SiGithub className="text-black dark:text-white text-xl" />,
-    <SiFigma className="text-purple-500 text-xl" />,
+    <TbBrandReact className="text-blue-500 text-3xl" />,
+    <TbBrandNextjs className="text-black dark:text-white text-3xl" />,
+    <SiTypescript className="text-blue-600 text-2xl" />,
+    <SiJavascript className="text-yellow-400 text-2xl" />,
+    <SiTailwindcss className="text-cyan-500 text-2xl" />,
+    <SiNodedotjs className="text-green-600 text-2xl" />,
+    // <SiGithub className="text-black dark:text-white text-2xl" />,
+    // <SiFigma className="text-purple-500 text-2xl" />,
   ];
 
   return (
@@ -194,6 +229,29 @@ const Skills = () => {
 
         {/* Content */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Skill Meters */}
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+            <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
+              Skill Proficiency
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {skills.map((skill, index) => (
+                <motion.div
+                  key={skill.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <SkillMeter
+                    name={skill.name}
+                    icon={skill.icon}
+                    percentage={skill.percentage}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
           {/* Orbiting Circles Animation */}
           <div className="flex justify-center lg:justify-end">
             <motion.div
@@ -230,7 +288,7 @@ const Skills = () => {
           </div>
 
           {/* Skill Meters */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+          {/* <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
             <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
               Skill Proficiency
             </h3>
@@ -251,7 +309,7 @@ const Skills = () => {
                 </motion.div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
