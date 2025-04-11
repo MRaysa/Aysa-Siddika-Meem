@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { TbBrandReact, TbBrandNextjs } from "react-icons/tb";
 import {
@@ -11,226 +11,107 @@ import {
   SiPython,
   SiMongodb,
   SiPostgresql,
-  SiGit,
   SiGithub,
   SiVercel,
-  SiNetlify,
   SiFirebase,
   SiFigma,
 } from "react-icons/si";
-const techIcons = [
-  { icon: <TbBrandReact size={28} />, name: "React" },
-  { icon: <TbBrandNextjs size={28} />, name: "Next.js" },
-  { icon: <SiTypescript size={24} />, name: "TypeScript" },
-  { icon: <SiJavascript size={24} />, name: "JavaScript" },
-  { icon: <SiTailwindcss size={24} />, name: "Tailwind" },
-];
-const Skills = () => {
-  const ref = useRef(null);
-  const skillCategories = [
-    {
-      title: "Frontend",
-      skills: [
-        { name: "React.js", icon: <TbBrandReact size={20} /> },
-        { name: "Next.js", icon: <TbBrandNextjs size={20} /> },
-        { name: "TypeScript", icon: <SiTypescript size={20} /> },
-        { name: "Tailwind CSS", icon: <SiTailwindcss size={20} /> },
-        { name: "JavaScript", icon: <SiJavascript size={20} /> },
-      ],
-      icon: "💻",
-    },
-    {
-      title: "Backend",
-      skills: [
-        { name: "Node.js", icon: <SiNodedotjs size={20} /> },
-        { name: "Express.js", icon: <SiExpress size={20} /> },
-        { name: "Django", icon: <SiDjango size={20} /> },
-        { name: "Python", icon: <SiPython size={20} /> },
-        { name: "MongoDB", icon: <SiMongodb size={20} /> },
-        { name: "PostgreSQL", icon: <SiPostgresql size={20} /> },
-      ],
-      icon: "⚙️",
-    },
-    {
-      title: "Dev Tools",
-      skills: [
-        { name: "Git & GitHub", icon: <SiGithub size={20} /> },
-        { name: "Vercel", icon: <SiVercel size={20} /> },
-        { name: "Netlify", icon: <SiNetlify size={20} /> },
-        // { name: "REST APIs", icon: <FiCode size={20} /> },
-        { name: "Firebase", icon: <SiFirebase size={20} /> },
-      ],
-      icon: "🛠️",
-    },
-    {
-      title: "UI/UX",
-      skills: [
-        { name: "Figma", icon: <SiFigma size={20} /> },
-        { name: "Responsive Design", icon: "📱" },
-        { name: "Accessibility", icon: "♿" },
-      ],
-      icon: "🎨",
-    },
+
+const SkillMeter = ({ name, icon, percentage }) => {
+  return (
+    <div className="mb-4">
+      <div className="flex items-center justify-between mb-1">
+        <div className="flex items-center">
+          <span className="text-xl mr-2">{icon}</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">
+            {name}
+          </span>
+        </div>
+        <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+          {percentage}%
+        </span>
+      </div>
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: `${percentage}%` }}
+          transition={{ duration: 1.5, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="h-2.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600"
+          style={{ width: `${percentage}%` }}
+        />
+      </div>
+    </div>
+  );
+};
+
+const TechStackSection = () => {
+  const skills = [
+    { name: "React", icon: <TbBrandReact />, percentage: 95 },
+    { name: "JavaScript", icon: <SiJavascript />, percentage: 90 },
+    { name: "TypeScript", icon: <SiTypescript />, percentage: 85 },
+    { name: "Next.js", icon: <TbBrandNextjs />, percentage: 88 },
+    { name: "Node.js", icon: <SiNodedotjs />, percentage: 87 },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />, percentage: 92 },
+    { name: "Express", icon: <SiExpress />, percentage: 83 },
+    { name: "Python", icon: <SiPython />, percentage: 80 },
+    { name: "GitHub", icon: <SiGithub />, percentage: 94 },
+    { name: "Figma", icon: <SiFigma />, percentage: 78 },
   ];
 
   return (
     <section
       id="skills"
-      ref={ref}
-      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800 snap-start"
+      className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800"
     >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full opacity-10"
-            style={{
-              width: Math.random() * 300 + 100,
-              height: Math.random() * 300 + 100,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: `radial-gradient(circle, #3b82f6, transparent 70%)`,
-            }}
-            animate={{
-              x: [0, Math.random() * 200 - 100],
-              y: [0, Math.random() * 200 - 100],
-              rotate: [0, Math.random() * 360],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Floating Tech Icons */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {techIcons.map((tech, i) => (
-          <motion.div
-            key={i}
-            className="absolute text-blue-400/20 dark:text-blue-600/20"
-            style={{
-              fontSize: `${Math.random() * 40 + 20}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, Math.random() * 100 - 50],
-              rotate: [0, Math.random() * 360],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 10,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400"
           >
-            {tech.icon}
-          </motion.div>
-        ))}
-      </div>
-      <div className="container mx-auto px-6">
-        {/* Section Title matching Home.jsx */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-center mb-12"
-        >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-            My Skills
-          </span>
-        </motion.h2>
+            My Skill Mastery
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-gray-600 dark:text-gray-300"
+          >
+            Technologies I've mastered with proficiency levels
+          </motion.p>
+        </div>
 
-        {/* Skills Grid with 3D effects */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {skillCategories.map((category, index) => (
+        {/* Skill Meters */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {skills.map((skill, index) => (
             <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 30 }}
+              key={skill.name}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -5 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 relative overflow-hidden group"
+              viewport={{ once: true }}
             >
-              {/* 3D floating effect background */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                initial={{ rotate: 0 }}
-                whileHover={{ rotate: 2 }}
-                transition={{ type: "spring", stiffness: 300 }}
+              <SkillMeter
+                name={skill.name}
+                icon={skill.icon}
+                percentage={skill.percentage}
               />
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <motion.span
-                    className="text-2xl"
-                    animate={{
-                      rotate: [0, 5, -5, 0],
-                      y: [0, -3, 0],
-                    }}
-                    transition={{
-                      duration: 6,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      ease: "easeInOut",
-                    }}
-                  >
-                    {category.icon}
-                  </motion.span>
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-                    {category.title}
-                  </h3>
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  {category.skills.map((skill, i) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: 0.1 * i }}
-                      viewport={{ once: true }}
-                      whileHover={{
-                        y: -5,
-                        scale: 1.05,
-                        backgroundColor: "#3b82f6",
-                        color: "white",
-                        boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.3)",
-                      }}
-                      className="px-3 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm cursor-default transition-all duration-200 flex items-center gap-2"
-                    >
-                      {skill.icon}
-                      {skill.name}
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Floating tech icons matching Home.jsx */}
+        {/* Floating Tech Icons */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-          {[
-            <TbBrandReact key="react" />,
-            <TbBrandNextjs key="next" />,
-            <SiTypescript key="ts" />,
-            <SiJavascript key="js" />,
-            <SiTailwindcss key="tailwind" />,
-            <SiNodedotjs key="node" />,
-            <SiDjango key="django" />,
-            <SiFigma key="figma" />,
-          ].map((Icon, i) => (
+          {skills.map((skill, i) => (
             <motion.div
               key={i}
-              className="absolute text-blue-400/20 dark:text-blue-600/20"
+              className="absolute text-blue-400/10 dark:text-blue-600/10"
               style={{
                 fontSize: `${Math.random() * 40 + 20}px`,
                 left: `${Math.random() * 100}%`,
@@ -247,7 +128,7 @@ const Skills = () => {
                 ease: "easeInOut",
               }}
             >
-              {Icon}
+              {skill.icon}
             </motion.div>
           ))}
         </div>
@@ -256,4 +137,4 @@ const Skills = () => {
   );
 };
 
-export default Skills;
+export default TechStackSection;

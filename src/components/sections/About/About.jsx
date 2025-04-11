@@ -253,7 +253,7 @@ const About = () => {
             </div> */}
 
             {/* Animated Achievement Cards - Adjusted grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {achievements.map((item, i) => (
                 <motion.div
                   key={item.text}
@@ -276,10 +276,10 @@ const About = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </div> */}
 
             {/* Social Links - Adjusted padding */}
-            <div className="flex gap-3 pt-6">
+            {/* <div className="flex gap-3 pt-6">
               {[
                 {
                   icon: <FiGithub size={20} />,
@@ -324,10 +324,99 @@ const About = () => {
                   {social.icon}
                 </motion.a>
               ))}
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>
+      {/* Achievement Cards Section - Moved inside main container */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="mt-12 p-4 md:px-40 "
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {achievements.map((item, i) => (
+            <motion.div
+              key={item.text}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + i * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)",
+              }}
+              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 text-center relative overflow-hidden"
+            >
+              <div className="text-3xl mb-3">{item.icon}</div>
+              <div className="text-2xl font-bold text-blue-500 mb-2">
+                {item.number}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                {item.text}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Social Links Section */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="mt-12 flex justify-center"
+      >
+        <div className="flex gap-4">
+          {[
+            {
+              icon: <FiGithub size={20} />,
+              color: "from-gray-800 to-gray-600",
+              text: "GitHub",
+              url: "https://github.com/MRaysa",
+            },
+            {
+              icon: <FiLinkedin size={20} />,
+              color: "from-blue-600 to-blue-800",
+              text: "LinkedIn",
+              url: "https://www.linkedin.com/in/mst-aysa-siddika-meem/",
+            },
+            {
+              icon: <FiTwitter size={20} />,
+              color: "from-sky-400 to-sky-600",
+              text: "Twitter",
+              url: "#",
+            },
+            {
+              icon: <FiFacebook size={20} />,
+              color: "from-blue-500 to-blue-700",
+              text: "Facebook",
+              url: "https://www.facebook.com/muniaislam.meem",
+            },
+          ].map((social, i) => (
+            <motion.a
+              key={social.text}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + i * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{
+                y: -5,
+                scale: 1.1,
+              }}
+              className={`bg-gradient-to-r ${social.color} text-white p-3 rounded-full w-12 h-12 flex items-center justify-center relative overflow-hidden shadow-lg`}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {social.icon}
+            </motion.a>
+          ))}
+        </div>
+      </motion.div>
     </section>
   );
 };
