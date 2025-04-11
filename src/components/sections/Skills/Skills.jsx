@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { TbBrandReact, TbBrandNextjs } from "react-icons/tb";
+import { TbBrandReact, TbBrandNextjs, TbArrowRight } from "react-icons/tb";
 import {
   SiTypescript,
   SiTailwindcss,
@@ -17,48 +17,69 @@ import {
   SiFigma,
 } from "react-icons/si";
 
+const OrbitingCircleItem = ({ children, index, total, radius, reverse }) => {
+  const angle = index * (360 / total);
+  const radians = (angle * Math.PI) / 180;
+  const x = radius * Math.cos(radians) * (reverse ? -1 : 1);
+  const y = radius * Math.sin(radians) * (reverse ? -1 : 1);
+
+  return (
+    <motion.div
+      className="absolute flex flex-col items-center justify-center"
+      style={{
+        x,
+        y,
+      }}
+      animate={{
+        rotate: [0, reverse ? -360 : 360],
+      }}
+      transition={{
+        duration: 20,
+        repeat: Infinity,
+        ease: "linear",
+      }}
+      whileHover={{
+        scale: 1.2,
+        transition: { duration: 0.3 },
+      }}
+    >
+      <div className="relative group">
+        <div className="absolute -right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <TbArrowRight className="text-blue-500 text-xl animate-pulse" />
+        </div>
+        <div className="bg-white/90 dark:bg-gray-700/90 p-3 rounded-full shadow-md border border-gray-200/50 dark:border-gray-600/50">
+          {children}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const OrbitingCircles = ({
   children,
   radius = 150,
   size = 40,
-  delay = 0,
   reverse = false,
 }) => {
   return (
-    <div className="relative" style={{ width: radius * 2, height: radius * 2 }}>
-      {React.Children.map(children, (child, i) => {
-        const angle = i * (360 / React.Children.count(children)) + delay;
-        const radians = (angle * Math.PI) / 180;
-        const x = radius + radius * Math.cos(radians) * (reverse ? -1 : 1);
-        const y = radius + radius * Math.sin(radians) * (reverse ? -1 : 1);
-
-        return (
-          <motion.div
-            key={i}
-            className="absolute flex flex-col items-center justify-center"
-            style={{
-              width: size,
-              height: size,
-              x: x - size / 2,
-              y: y - size / 2,
-            }}
-            animate={{
-              rotate: [0, reverse ? -360 : 360],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            whileHover={{
-              scale: 1.3,
-              transition: { duration: 0.3 },
-            }}
-          >
-            {child}
-          </motion.div>
-        );
-      })}
+    <div
+      className="relative flex items-center justify-center"
+      style={{
+        width: radius * 2,
+        height: radius * 2,
+      }}
+    >
+      {React.Children.map(children, (child, i) => (
+        <OrbitingCircleItem
+          key={i}
+          index={i}
+          total={React.Children.count(children)}
+          radius={radius}
+          reverse={reverse}
+        >
+          {child}
+        </OrbitingCircleItem>
+      ))}
     </div>
   );
 };
@@ -100,20 +121,20 @@ const Skills = () => {
     { name: "Node.js", icon: <SiNodedotjs />, percentage: 87 },
     { name: "Tailwind CSS", icon: <SiTailwindcss />, percentage: 92 },
     { name: "Express", icon: <SiExpress />, percentage: 83 },
-    { name: "Python", icon: <SiPython />, percentage: 80 },
+    { name: "Python", icon: <SiPython />, percentage: 90 },
     { name: "GitHub", icon: <SiGithub />, percentage: 94 },
     { name: "Figma", icon: <SiFigma />, percentage: 78 },
   ];
 
   const orbitingSkills = [
-    <TbBrandReact className="text-blue-500" size={32} />,
-    <TbBrandNextjs className="text-black dark:text-white" size={32} />,
-    <SiTypescript className="text-blue-600" size={28} />,
-    <SiJavascript className="text-yellow-400" size={28} />,
-    <SiTailwindcss className="text-cyan-500" size={28} />,
-    <SiNodedotjs className="text-green-600" size={28} />,
-    <SiGithub className="text-black dark:text-white" size={28} />,
-    <SiFigma className="text-purple-500" size={28} />,
+    <TbBrandReact className="text-blue-500 text-2xl" />,
+    <TbBrandNextjs className="text-black dark:text-white text-2xl" />,
+    <SiTypescript className="text-blue-600 text-xl" />,
+    <SiJavascript className="text-yellow-400 text-xl" />,
+    <SiTailwindcss className="text-cyan-500 text-xl" />,
+    <SiNodedotjs className="text-green-600 text-xl" />,
+    <SiGithub className="text-black dark:text-white text-xl" />,
+    <SiFigma className="text-purple-500 text-xl" />,
   ];
 
   return (
@@ -197,12 +218,12 @@ const Skills = () => {
               />
 
               {/* Outer orbiting skills */}
-              <OrbitingCircles radius={220} size={80} speed={25}>
+              <OrbitingCircles radius={180} size={80}>
                 {orbitingSkills.slice(0, 6)}
               </OrbitingCircles>
 
               {/* Inner orbiting skills */}
-              <OrbitingCircles radius={140} size={60} speed={18} reverse>
+              <OrbitingCircles radius={100} size={60} reverse>
                 {orbitingSkills.slice(6)}
               </OrbitingCircles>
             </motion.div>
