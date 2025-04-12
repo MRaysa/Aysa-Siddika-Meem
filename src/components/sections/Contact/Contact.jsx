@@ -98,14 +98,14 @@ const Contact = () => {
               <ContactInfoItem
                 icon={<FiMail className="text-blue-500" size={24} />}
                 title="Email"
-                value="meem@example.com"
-                link="mailto:meem@example.com"
+                value="aysasiddikameem3141@gmail.com"
+                link="mailto:aysasiddikameem3141@gmail.com"
               />
               <ContactInfoItem
                 icon={<FiPhone className="text-green-500" size={24} />}
                 title="Phone"
-                value="+880 1234 567890"
-                link="tel:+8801234567890"
+                value="+880 1617272980"
+                link="tel:+8801617272980"
               />
               <ContactInfoItem
                 icon={<FiMapPin className="text-purple-500" size={24} />}
@@ -116,7 +116,7 @@ const Contact = () => {
 
             <motion.div variants={itemVariants} className="flex gap-4 pt-4">
               <motion.a
-                href="https://wa.me/8801234567890"
+                href="https://wa.me/8801617272980"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -5, scale: 1.1 }}
@@ -126,7 +126,7 @@ const Contact = () => {
                 <FaWhatsapp size={24} />
               </motion.a>
               <motion.a
-                href="https://t.me/yourusername"
+                href="https://t.me/aysasiddikameem"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -5, scale: 1.1 }}
