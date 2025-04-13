@@ -228,7 +228,7 @@ const Skills = () => {
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Skill Meters */}
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
             <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
