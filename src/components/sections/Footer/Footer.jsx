@@ -331,7 +331,7 @@ const Footer = () => {
                       placeholder="Your email"
                       className="flex-1 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    <button className="bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 rounded-r-lg font-medium hover:opacity-90 transition-opacity">
+                    <button className="bg-gradient-to-r from-blue-500 to-purple-600 px-2 py-2 rounded-r-lg font-medium hover:opacity-90 transition-opacity">
                       Subscribe
                     </button>
                   </motion.div>
