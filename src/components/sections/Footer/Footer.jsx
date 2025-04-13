@@ -27,8 +27,8 @@ const Footer = () => {
   // ];
 
   const contactInfo = [
-    { icon: <FiMail />, text: "aysasiddikameem@gmail.com" },
-    { icon: <FiPhone />, text: "+880 1521-427028" },
+    { icon: <FiMail />, text: "dev.aysasiddika@gmail.com" },
+    { icon: <FiPhone />, text: "+880 123456789" },
     { icon: <FiMapPin />, text: "Dhaka, Bangladesh" },
   ];
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -68,7 +68,7 @@ const Footer = () => {
     { icon: <FiTwitter size={20} />, url: "#", label: "Twitter" },
     {
       icon: <FiMail size={20} />,
-      url: "mailto:aysasiddikameem@gmail.com",
+      url: "mailto:dev.aysasiddika@gmail.com",
       label: "Email",
     },
   ];
