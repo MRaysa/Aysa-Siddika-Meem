@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   FiGithub,
@@ -6,11 +6,31 @@ import {
   FiTwitter,
   FiMail,
   FiHeart,
+  FiPhone,
+  FiMapPin,
 } from "react-icons/fi";
 import { FaReact, FaNodeJs } from "react-icons/fa";
 import { SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si";
 
 const Footer = () => {
+  // const constraintsRef = useRef(null);
+
+  // const techStack = [
+  //   { icon: <FaReact className="text-blue-500" />, name: "React" },
+  //   {
+  //     icon: <SiNextdotjs className="text-black dark:text-white" />,
+  //     name: "Next.js",
+  //   },
+  //   { icon: <SiTypescript className="text-blue-600" />, name: "TypeScript" },
+  //   { icon: <SiTailwindcss className="text-cyan-500" />, name: "Tailwind" },
+  //   { icon: <FaNodeJs className="text-green-600" />, name: "Node.js" },
+  // ];
+
+  const contactInfo = [
+    { icon: <FiMail />, text: "aysasiddikameem@gmail.com" },
+    { icon: <FiPhone />, text: "+880 1521-427028" },
+    { icon: <FiMapPin />, text: "Dhaka, Bangladesh" },
+  ];
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState("default");
 
@@ -207,7 +227,117 @@ const Footer = () => {
               Whether you have a project in mind or just want to chat about
               tech, I'd love to hear from you!
             </motion.p>
+            <div className="container mx-auto px-6 relative z-10">
+              {/* Main Footer Content */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16"
+              >
+                {/* About Section */}
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all"
+                >
+                  <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                    Aysa Siddika Meem
+                  </h3>
+                  <p className="text-gray-300 mb-4">
+                    Full Stack Developer creating digital experiences that
+                    inspire and solve real-world problems with clean, efficient
+                    code.
+                  </p>
+                  <div className="flex gap-3">
+                    {techStack.map((tech, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ scale: 1.2, y: -5 }}
+                        className="text-2xl p-2 bg-white/10 rounded-lg hover:bg-blue-500/20 transition-all"
+                        title={tech.name}
+                      >
+                        {tech.icon}
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
 
+                {/* Quick Links */}
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all"
+                >
+                  <h3 className="text-xl font-bold mb-4 text-white">
+                    Quick Links
+                  </h3>
+                  <ul className="space-y-3">
+                    {["Home", "About", "Projects", "Skills", "Contact"].map(
+                      (link, i) => (
+                        <motion.li
+                          key={i}
+                          whileHover={{ x: 5 }}
+                          className="text-gray-300 hover:text-blue-400 transition-colors"
+                        >
+                          <a
+                            href={`#${link.toLowerCase()}`}
+                            className="flex items-center gap-2"
+                          >
+                            <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                            {link}
+                          </a>
+                        </motion.li>
+                      )
+                    )}
+                  </ul>
+                </motion.div>
+
+                {/* Contact Info */}
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-cyan-500/30 transition-all"
+                >
+                  <h3 className="text-xl font-bold mb-4 text-white">
+                    Get In Touch
+                  </h3>
+                  <ul className="space-y-4">
+                    {contactInfo.map((item, i) => (
+                      <motion.li
+                        key={i}
+                        whileHover={{ x: 5 }}
+                        className="text-gray-300 flex items-start gap-3"
+                      >
+                        <span className="text-blue-400 mt-1">{item.icon}</span>
+                        <span>{item.text}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                {/* Newsletter */}
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-pink-500/30 transition-all"
+                >
+                  <h3 className="text-xl font-bold mb-4 text-white">
+                    Newsletter
+                  </h3>
+                  <p className="text-gray-300 mb-4">
+                    Subscribe to get updates on my latest projects and articles.
+                  </p>
+                  <motion.div whileHover={{ scale: 1.02 }} className="flex">
+                    <input
+                      type="email"
+                      placeholder="Your email"
+                      className="flex-1 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button className="bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 rounded-r-lg font-medium hover:opacity-90 transition-opacity">
+                      Subscribe
+                    </button>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            </div>
             {/* Social links with creative hover effects */}
             <motion.div
               className="flex gap-6 mb-16"

@@ -2,31 +2,40 @@ import React, { useState, useEffect } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
 
 const ThemeToggle = ({ className = "", iconSize = 20 }) => {
-  const [darkMode, setDarkMode] = useState(() => {
-    // Check localStorage first, then system preference
-    if (typeof window !== "undefined") {
-      const savedMode = localStorage.getItem("darkMode");
-      if (savedMode !== null) {
-        return savedMode === "true";
-      }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return false;
-  });
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    // Apply the class to the document element
-    if (darkMode) {
+    // Check for saved user preference or system preference
+    const savedMode = localStorage.getItem("darkMode");
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    // Use saved mode if available, otherwise use system preference
+    const initialMode =
+      savedMode !== null ? savedMode === "true" : systemPrefersDark;
+    setDarkMode(initialMode);
+
+    // Apply the class immediately
+    if (initialMode) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-    // Save preference to localStorage
-    localStorage.setItem("darkMode", darkMode.toString());
-  }, [darkMode]);
+  }, []);
 
   const toggleTheme = () => {
-    setDarkMode((prevMode) => !prevMode);
+    const newMode = !darkMode;
+    setDarkMode(newMode);
+
+    // Update class and storage
+    if (newMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    localStorage.setItem("darkMode", String(newMode));
   };
 
   return (
