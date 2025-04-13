@@ -98,8 +98,8 @@ const Contact = () => {
               <ContactInfoItem
                 icon={<FiMail className="text-blue-500" size={24} />}
                 title="Email"
-                value="aysasiddikameem3141@gmail.com"
-                link="mailto:aysasiddikameem3141@gmail.com"
+                value="dev.aysasiddika@gmail.com"
+                link="mailto:dev.aysasiddika@gmail.com"
               />
               <ContactInfoItem
                 icon={<FiPhone className="text-green-500" size={24} />}
