@@ -229,8 +229,8 @@ const Skills = () => {
 
         {/* Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Skill Meters */}
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+          {/* Skill Meters - Give this order-2 on mobile, order-1 on md+ */}
+          <div className="order-2 md:order-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
             <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
               Skill Proficiency
             </h3>
@@ -252,8 +252,9 @@ const Skills = () => {
               ))}
             </div>
           </div>
-          {/* Orbiting Circles Animation */}
-          <div className="flex justify-center lg:justify-end">
+
+          {/* Orbiting Circles Animation - Give this order-1 on mobile, order-2 on md+ */}
+          <div className="order-1 md:order-2 flex justify-center lg:justify-end">
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -286,30 +287,6 @@ const Skills = () => {
               </OrbitingCircles>
             </motion.div>
           </div>
-
-          {/* Skill Meters */}
-          {/* <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
-            <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
-              Skill Proficiency
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {skills.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <SkillMeter
-                    name={skill.name}
-                    icon={skill.icon}
-                    percentage={skill.percentage}
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div> */}
         </div>
       </div>
     </section>
