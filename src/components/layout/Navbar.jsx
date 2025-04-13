@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-scroll";
-import { FiMoon, FiSun, FiMenu, FiX, FiDownload } from "react-icons/fi";
+import { FiMenu, FiX, FiDownload } from "react-icons/fi";
 import Button from "../ui/Button";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [activeLink, setActiveLink] = useState("home");
 
   const navLinks = [
@@ -17,14 +17,6 @@ const Navbar = () => {
     { name: "Skills", to: "skills" },
     { name: "Contact", to: "contact" },
   ];
-
-  // Color scheme
-  const colors = {
-    primary: "rgb(99 102 241)", // indigo-600
-    primaryLight: "rgb(129 140 248)", // indigo-400
-    darkBg: "rgb(17 24 39)", // gray-900
-    lightBg: "rgb(255 255 255)",
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,13 +36,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-    document.documentElement.classList.toggle("dark");
-    localStorage.setItem("darkMode", newMode);
-  };
-
   return (
     <motion.header
       initial={{ y: -100 }}
@@ -58,19 +43,16 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? `bg-white/90 dark:bg-[${colors.darkBg}]/90 backdrop-blur-md py-2 shadow-sm`
-          : "py-4"
+          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm"
+          : "bg-transparent"
       }`}
-      style={{
-        backgroundColor: scrolled
-          ? darkMode
-            ? `${colors.darkBg}cc`
-            : `${colors.lightBg}cc`
-          : "transparent",
-      }}
     >
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        {/* Animated Logo */}
+      <div
+        className={`container mx-auto px-6 flex justify-between items-center ${
+          scrolled ? "py-2" : "py-4"
+        }`}
+      >
+        {/* Logo */}
         <Link
           to="home"
           smooth={true}
@@ -83,12 +65,12 @@ const Navbar = () => {
           >
             <span className="text-white font-bold text-xl">AS</span>
           </motion.div>
-          <span className="text-2xl font-bold text-blue-600 dark:text-blue-600 hidden md:block transition-opacity group-hover:opacity-80">
+          <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 hidden md:block transition-opacity group-hover:opacity-80">
             Meem
           </span>
         </Link>
 
-        {/* Desktop Navigation with animated indicators */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 relative">
           {navLinks.map((link) => (
             <div
@@ -106,7 +88,7 @@ const Navbar = () => {
                 className={`px-2 py-1 transition-colors cursor-pointer font-medium relative z-10 ${
                   activeLink === link.to
                     ? "text-indigo-600 dark:text-indigo-400"
-                    : "text-white dark:text-white hover:text-indigo-500 dark:hover:text-indigo-400"
+                    : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
                 }`}
                 onClick={() => setActiveLink(link.to)}
               >
@@ -115,7 +97,7 @@ const Navbar = () => {
               {activeLink === link.to && (
                 <motion.div
                   layoutId="navIndicator"
-                  className="absolute bottom-0 left-0 w-full h-1 bg-indigo-500 rounded-full"
+                  className="absolute bottom-0 left-0 w-full h-1 bg-indigo-500 dark:bg-indigo-400 rounded-full"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
@@ -137,20 +119,10 @@ const Navbar = () => {
           >
             Resume
           </Button>
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-            aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
-          >
-            {darkMode ? (
-              <FiSun className="text-yellow-400" size={20} />
-            ) : (
-              <FiMoon className="text-indigo-600" size={20} />
-            )}
-          </button>
+          <ThemeToggle />
         </div>
 
-        {/* Mobile Menu Button with animated hamburger */}
+        {/* Mobile Menu Button */}
         <button
           className="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 relative z-50"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -183,7 +155,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu with sliding animation */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -191,17 +163,16 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-white dark:bg-gray-800 shadow-xl rounded-2xl"
-            style={{ width: "200px", marginLeft: "auto", marginRight: "10px" }}
+            className="md:hidden absolute top-full right-0 w-64 bg-white dark:bg-gray-800 shadow-xl rounded-lg mx-4"
           >
-            <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
+            <div className="flex flex-col gap-1 p-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   smooth={true}
                   offset={-80}
-                  className={`px-4 py-3 rounded-lg transition-colors ${
+                  className={`px-4 py-3 rounded-md transition-colors ${
                     activeLink === link.to
                       ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300"
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -214,28 +185,19 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
-              <div className="flex gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center gap-2 p-4 border-t border-gray-200 dark:border-gray-700 mt-2">
                 <Button
                   variant="primary"
                   onClick={() => {
                     window.open("/resume.pdf");
                     setMobileOpen(false);
                   }}
-                  className="w-full"
+                  className="flex-1"
                   icon={<FiDownload />}
                 >
                   Resume
                 </Button>
-                <button
-                  onClick={toggleTheme}
-                  className="p-3 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center"
-                >
-                  {darkMode ? (
-                    <FiSun className="text-yellow-400" size={20} />
-                  ) : (
-                    <FiMoon className="text-indigo-600" size={20} />
-                  )}
-                </button>
+                <ThemeToggle className="p-3" />
               </div>
             </div>
           </motion.div>
