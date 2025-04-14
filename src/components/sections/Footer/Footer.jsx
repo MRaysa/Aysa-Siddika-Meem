@@ -91,6 +91,13 @@ const Footer = () => {
       y: cursorPosition.y - 16,
       backgroundColor: "#3b82f6",
       mixBlendMode: "normal",
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 150,
+        mass: 0.3,
+        restDelta: 0.001,
+      },
     },
     text: {
       x: cursorPosition.x - 32,
@@ -99,6 +106,12 @@ const Footer = () => {
       width: 64,
       height: 64,
       mixBlendMode: "difference",
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 120,
+        mass: 0.4,
+      },
     },
     social: {
       x: cursorPosition.x - 24,
@@ -107,6 +120,12 @@ const Footer = () => {
       width: 48,
       height: 48,
       mixBlendMode: "normal",
+      transition: {
+        type: "spring",
+        damping: 20,
+        stiffness: 130,
+        mass: 0.35,
+      },
     },
     tech: {
       x: cursorPosition.x - 20,
@@ -115,6 +134,12 @@ const Footer = () => {
       width: 40,
       height: 40,
       mixBlendMode: "normal",
+      transition: {
+        type: "spring",
+        damping: 22,
+        stiffness: 140,
+        mass: 0.3,
+      },
     },
   };
 
@@ -132,8 +157,22 @@ const Footer = () => {
         className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
         variants={variants}
         animate={cursorVariant}
-        transition={{ type: "spring", mass: 0.1 }}
+        transition={{
+          type: "spring",
+          damping: 25,
+          stiffness: 150,
+          mass: 0.3,
+          restDelta: 0.001,
+        }}
       />
+
+      {/* <motion.div className="w-1 h-1 bg-white rounded-full">
+        animate=
+        {{
+          scale: cursorVariant === "default" ? 1 : 0,
+        }}
+        transition={{ duration: 0.2 }}
+      </motion.div> */}
 
       <footer className="relative overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700">
         {/* Floating background elements */}

@@ -61,13 +61,22 @@ const Navbar = () => {
         >
           <motion.div
             whileHover={{ rotate: 15 }}
-            className="w-10 h-10 rounded-lg bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center shadow-lg"
+            className="w-40 h-10 rounded-lg flex items-center justify-center shadow-lg"
+            // className="w-10 h-10 rounded-lg bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center shadow-lg"
           >
-            <span className="text-white font-bold text-xl">AS</span>
+            <span className="text-white font-bold text-xl">
+              {" "}
+              <img
+                src="/FINAL-01.png"
+                alt="Aysa Siddika Meem"
+                className="h-full w-full object-cover"
+              />
+            </span>
+            {/* <span className="text-white font-bold text-xl">AS</span> */}
           </motion.div>
-          <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 hidden md:block transition-opacity group-hover:opacity-80">
+          {/* <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 hidden md:block transition-opacity group-hover:opacity-80">
             Meem
-          </span>
+          </span> */}
         </Link>
 
         {/* Desktop Navigation */}
