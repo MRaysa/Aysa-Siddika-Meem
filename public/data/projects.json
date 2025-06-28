@@ -1,136 +1,218 @@
 [
   {
-    "id": 1,
-    "title": "Neon Commerce Platform",
-    "description": "Next-gen e-commerce with AR product previews and AI recommendations",
-    "tags": ["Next.js", "Three.js", "Node.js", "TensorFlow.js"],
-    "category": "Full Stack",
-    "image": "/ecommerce-neon.jpg",
-    "github": "https://github.com/MRaysa/ecommerce-ar",
-    "live": "https://neon-commerce.demo",
-    "techIcons": ["TbBrandNextjs", "SiThreedotjs", "FaNodeJs"],
-    "accentColor": "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600",
-    "details": {
-      "features": [
-        "Augmented Reality product previews",
-        "AI-powered recommendations",
-        "Real-time inventory management",
-        "3D product configurator",
-        "Voice search functionality"
-      ],
-      "challenges": "Implementing smooth AR transitions across devices",
-      "solutions": "Developed a WebGL fallback for unsupported devices",
-      "testimonial": {
-        "text": "This platform increased our conversion rate by 37% and reduced returns by 28%.",
-        "author": "Sarah K., E-Commerce Director"
-      }
-    }
-  },
-  {
-    "id": 2,
-    "title": "Cosmic Portfolio",
-    "description": "Interactive 3D portfolio with particle animations and spatial UI",
-    "tags": ["Three.js", "React", "GSAP", "WebGL"],
-    "category": "Web Apps",
-    "image": "/cosmic-portfolio.jpg",
-    "github": "https://github.com/MRaysa/3d-portfolio",
-    "live": "https://aysa-siddika-meem.vercel.app/",
-    "techIcons": ["FaReact", "SiThreedotjs"],
-    "accentColor": "bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600",
-    "details": {
-      "features": [
-        "3D animated environment",
-        "Interactive particle system",
-        "Spatial navigation",
-        "Dynamic lighting effects",
-        "60fps animations"
-      ],
-      "challenges": "Maintaining performance with complex 3D scenes",
-      "solutions": "Implemented selective rendering and LOD techniques",
-      "testimonial": {
-        "text": "The most memorable portfolio we've seen - clients keep talking about it!",
-        "author": "Michael T., Creative Director"
-      }
-    }
-  },
-  {
     "id": 3,
-    "title": "Neuro Fitness App",
-    "description": "AI-powered fitness coach with real-time form analysis",
-    "tags": ["React Native", "Python", "TensorFlow", "WebRTC"],
-    "category": "Mobile",
-    "image": "/neuro-fitness.jpg",
-    "github": "https://github.com/MRaysa/neuro-fitness",
-    "live": "https://neurofitness.app",
-    "techIcons": ["FaReact", "FaPython"],
-    "accentColor": "bg-gradient-to-br from-emerald-400 via-teal-500 to-green-600",
+    "title": "Gardening Tips Application",
+    "description": "Full-stack web application for managing public and private gardening tips",
+    "tags": ["React", "Express.js", "MongoDB", "CRUD"],
+    "category": "Full Stack",
+    "image": "/gardening-app.jpg",
+    "github": "https://github.com/MRaysa/gardening-tips-app",
+    "live": "https://the-gardener-s-hub.vercel.app/",
+    "techIcons": ["FaReact", "FaNodeJs", "SiMongodb"],
+    "accentColor": "bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600",
     "details": {
       "features": [
-        "Real-time pose estimation",
-        "Personalized workout plans",
-        "Form correction AI",
-        "Progress analytics",
-        "Social challenges"
+        "Full CRUD functionality",
+        "Public and private gardening tips",
+        "Responsive UI",
+        "User authentication"
       ],
-      "challenges": "Processing video frames in real-time on mobile",
-      "solutions": "Optimized ML model for mobile inference",
+      "challenges": "Implementing backend without Mongoose",
+      "solutions": "Used native MongoDB driver",
       "testimonial": {
-        "text": "Our user retention doubled after implementing the form analysis feature.",
-        "author": "David L., Fitness Startup CEO"
+        "text": "Simplified our gardening knowledge sharing process significantly.",
+        "author": "Plant Lovers Community"
       }
     }
   },
   {
     "id": 4,
-    "title": "Quantum Dashboard",
-    "description": "Data visualization platform with interactive 3D charts",
-    "tags": ["D3.js", "Three.js", "Node.js", "MongoDB"],
+    "title": "Weather Sphere",
+    "description": "React-based weather application with live updates and interactive map",
+    "tags": ["React", "Weather API", "Interactive Map", "Responsive"],
     "category": "Web Apps",
-    "image": "/quantum-dashboard.jpg",
-    "github": "https://github.com/MRaysa/data-viz",
-    "live": "https://quantum-dashboard.demo",
-    "techIcons": ["SiThreedotjs", "FaNodeJs", "SiMongodb"],
-    "accentColor": "bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-600",
+    "image": "/weather-app.jpg",
+    "github": "https://github.com/MRaysa/WeatherSphere",
+    "live": "https://weather-sphere-seven.vercel.app/",
+    "techIcons": ["FaReact"],
+    "accentColor": "bg-gradient-to-br from-blue-400 via-sky-500 to-cyan-600",
     "details": {
       "features": [
-        "3D data visualization",
-        "Real-time data streaming",
-        "Customizable dashboards",
-        "Collaborative annotation",
-        "Predictive analytics"
+        "Live weather updates",
+        "Interactive map",
+        "Temperature, wind speed, conditions",
+        "Responsive design"
       ],
-      "challenges": "Handling large datasets without performance lag",
-      "solutions": "Implemented Web Workers for background processing",
+      "challenges": "Real-time data integration",
+      "solutions": "Optimized API calls and caching",
       "testimonial": {
-        "text": "Transformed how our analysts interact with complex datasets.",
-        "author": "Jennifer R., Data Science Lead"
+        "text": "Our go-to weather app for accurate forecasts.",
+        "author": "Daily Commuters Group"
       }
     }
   },
   {
     "id": 5,
-    "title": "Luminous Design System",
-    "description": "Animated design system with micro-interaction library",
-    "tags": ["Figma", "Lottie", "After Effects", "Storybook"],
-    "category": "UI/UX",
-    "image": "/luminous-design.jpg",
-    "github": "https://github.com/MRaysa/design-system",
-    "live": "https://luminous-design.demo",
-    "techIcons": ["FaFigma"],
-    "accentColor": "bg-gradient-to-br from-amber-400 via-orange-500 to-red-600",
+    "title": "Gemmy Auctions",
+    "description": "Online auction gallery platform with bidding functionality",
+    "tags": ["React", "Auction System", "UI/UX", "Vercel"],
+    "category": "Web Apps",
+    "image": "/auction-app.jpg",
+    "github": "https://github.com/MRaysa/gemmy-auctions",
+    "live": "https://gemmy-auctions.vercel.app/",
+    "techIcons": ["FaReact"],
+    "accentColor": "bg-gradient-to-br from-purple-500 via-violet-500 to-fuchsia-600",
     "details": {
       "features": [
-        "500+ animated components",
-        "Micro-interaction library",
-        "Dark/light mode system",
-        "Design token architecture",
-        "Accessibility toolkit"
+        "Item listings",
+        "Bidding functionality",
+        "User-friendly navigation",
+        "Responsive design"
       ],
-      "challenges": "Creating consistent animations across platforms",
-      "solutions": "Developed a unified animation language",
+      "challenges": "Implementing real-time bidding",
+      "solutions": "WebSocket integration",
       "testimonial": {
-        "text": "Cut our design-dev handoff time by 65% while improving consistency.",
-        "author": "Alex M., Product Design Lead"
+        "text": "Revolutionized our small business auctions.",
+        "author": "Local Artisan Collective"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "title": "World Travel Tracker",
+    "description": "Travel tracker app for marking visited countries and exploring global info",
+    "tags": ["React", "Travel", "Map Integration", "Statistics"],
+    "category": "Web Apps",
+    "image": "/travel-tracker.jpg",
+    "github": "https://github.com/MRaysa/world-travel-tracker",
+    "live": "https://world-travel-tracker-react-project.vercel.app/",
+    "techIcons": ["FaReact"],
+    "accentColor": "bg-gradient-to-br from-amber-500 via-orange-500 to-red-600",
+    "details": {
+      "features": [
+        "Mark visited countries",
+        "Travel statistics",
+        "Global information",
+        "Interactive map"
+      ],
+      "challenges": "Managing complex state for country data",
+      "solutions": "Optimized React hooks usage",
+      "testimonial": {
+        "text": "Perfect for travel enthusiasts to track their journeys.",
+        "author": "Globetrotters Association"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "title": "BookVerse",
+    "description": "Enterprise-grade library management system with secure authentication",
+    "tags": ["React", "Node.js", "MongoDB", "Firebase", "JWT"],
+    "category": "Full Stack",
+    "image": "/bookverse.jpg",
+    "github": "https://github.com/MRaysa/bookverse",
+    "live": "https://book-verse-hazel.vercel.app/",
+    "techIcons": ["FaReact", "FaNodeJs", "SiMongodb"],
+    "accentColor": "bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-600",
+    "details": {
+      "features": [
+        "Real-time inventory management",
+        "Dual authentication (Firebase + JWT)",
+        "Role-based access control",
+        "CSV import/export"
+      ],
+      "challenges": "Implementing atomic operations for inventory",
+      "solutions": "MongoDB $inc operator",
+      "testimonial": {
+        "text": "Reduced our administrative tasks by 40%.",
+        "author": "Community Library Network"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "title": "Universal Converter",
+    "description": "Comprehensive unit conversion tool for various measurement types",
+    "tags": ["React", "Unit Conversion", "Responsive", "Utility"],
+    "category": "Web Apps",
+    "image": "/converter-app.jpg",
+    "github": "https://github.com/MRaysa/universal-converter",
+    "live": "https://universal-converter-three.vercel.app/",
+    "techIcons": ["FaReact"],
+    "accentColor": "bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-600",
+    "details": {
+      "features": [
+        "16+ conversion types",
+        "Instant results",
+        "User-friendly interface",
+        "Responsive design"
+      ],
+      "challenges": "Supporting multiple conversion types",
+      "solutions": "Modular conversion functions",
+      "testimonial": {
+        "text": "Saved us countless hours of manual calculations.",
+        "author": "Engineering Students Union"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "title": "DevBoard",
+    "description": "Task management web application for developers with dark mode",
+    "tags": ["React", "Task Management", "Dark Mode", "Productivity"],
+    "category": "Web Apps",
+    "image": "/devboard.jpg",
+    "github": "https://github.com/MRaysa/devboard",
+    "live": "https://dev-board-a5.vercel.app/",
+    "techIcons": ["FaReact"],
+    "accentColor": "bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900",
+    "details": {
+      "features": [
+        "Task tracking",
+        "Dark mode",
+        "Deadline management",
+        "Dashboard navigation"
+      ],
+      "challenges": "Implementing dark mode toggle",
+      "solutions": "Context API for theme management",
+      "testimonial": {
+        "text": "Boosted our team's productivity by 30%.",
+        "author": "Tech Startup Team"
+      }
+    }
+  },
+  {
+    "id": 10,
+    "title": "FrostPay",
+    "description": "Sleek, secure bill management web app for utility payments",
+    "tags": [
+      "React",
+      "Firebase",
+      "Tailwind CSS",
+      "Payment System",
+      "Authentication"
+    ],
+    "category": "Full Stack",
+    "image": "/frostpay.jpg",
+    "github": "https://github.com/MRaysa/frostpay",
+    "live": "https://frostpay11.netlify.app/",
+    "techIcons": ["FaReact", "SiFirebase"],
+    "accentColor": "bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600",
+    "details": {
+      "features": [
+        "Utility bill payments (Electricity, Gas, Water, etc.)",
+        "Firebase Authentication with Google login",
+        "Protected routes and user balance tracking",
+        "Filterable Bills Dashboard with real-time updates",
+        "Duplicate payment protection",
+        "Editable user profiles",
+        "Fully responsive design"
+      ],
+      "challenges": "Implementing secure transaction flows",
+      "solutions": "Firebase security rules and duplicate payment checks",
+      "testimonial": {
+        "text": "Simplified our monthly bill payments with its intuitive interface.",
+        "author": "Busy Professionals Group"
       }
     }
   }
