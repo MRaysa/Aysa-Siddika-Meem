@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -26,8 +26,11 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [hoveredProject, setHoveredProject] = useState(null);
   const [viewMode, setViewMode] = useState("grid");
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const constraintsRef = useRef(null);
   const carouselRef = useRef(null);
+
   const { scrollYProgress } = useScroll({
     target: carouselRef,
     offset: ["start start", "end end"],
@@ -47,148 +50,43 @@ const Projects = () => {
     "Innovative",
   ];
 
-  const projects = [
-    {
-      id: 1,
-      title: "Neon Commerce Platform",
-      description:
-        "Next-gen e-commerce with AR product previews and AI recommendations",
-      tags: ["Next.js", "Three.js", "Node.js", "TensorFlow.js"],
-      category: "Full Stack",
-      image: "/ecommerce-neon.jpg",
-      github: "https://github.com/MRaysa/ecommerce-ar",
-      live: "https://neon-commerce.demo",
-      techIcons: [<TbBrandNextjs />, <SiThreedotjs />, <FaNodeJs />],
-      accentColor:
-        "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600",
-      details: {
-        features: [
-          "Augmented Reality product previews",
-          "AI-powered recommendations",
-          "Real-time inventory management",
-          "3D product configurator",
-          "Voice search functionality",
-        ],
-        challenges: "Implementing smooth AR transitions across devices",
-        solutions: "Developed a WebGL fallback for unsupported devices",
-        testimonial: {
-          text: "This platform increased our conversion rate by 37% and reduced returns by 28%.",
-          author: "Sarah K., E-Commerce Director",
-        },
-      },
-    },
-    {
-      id: 2,
-      title: "Cosmic Portfolio",
-      description:
-        "Interactive 3D portfolio with particle animations and spatial UI",
-      tags: ["Three.js", "React", "GSAP", "WebGL"],
-      category: "Web Apps",
-      image: "/cosmic-portfolio.jpg",
-      github: "https://github.com/MRaysa/3d-portfolio",
-      live: "https://aysa-siddika-meem.vercel.app/",
-      techIcons: [<FaReact />, <SiThreedotjs />],
-      accentColor: "bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600",
-      details: {
-        features: [
-          "3D animated environment",
-          "Interactive particle system",
-          "Spatial navigation",
-          "Dynamic lighting effects",
-          "60fps animations",
-        ],
-        challenges: "Maintaining performance with complex 3D scenes",
-        solutions: "Implemented selective rendering and LOD techniques",
-        testimonial: {
-          text: "The most memorable portfolio we've seen - clients keep talking about it!",
-          author: "Michael T., Creative Director",
-        },
-      },
-    },
-    {
-      id: 3,
-      title: "Neuro Fitness App",
-      description: "AI-powered fitness coach with real-time form analysis",
-      tags: ["React Native", "Python", "TensorFlow", "WebRTC"],
-      category: "Mobile",
-      image: "/neuro-fitness.jpg",
-      github: "https://github.com/MRaysa/neuro-fitness",
-      live: "https://neurofitness.app",
-      techIcons: [<FaReact />, <FaPython />],
-      accentColor:
-        "bg-gradient-to-br from-emerald-400 via-teal-500 to-green-600",
-      details: {
-        features: [
-          "Real-time pose estimation",
-          "Personalized workout plans",
-          "Form correction AI",
-          "Progress analytics",
-          "Social challenges",
-        ],
-        challenges: "Processing video frames in real-time on mobile",
-        solutions: "Optimized ML model for mobile inference",
-        testimonial: {
-          text: "Our user retention doubled after implementing the form analysis feature.",
-          author: "David L., Fitness Startup CEO",
-        },
-      },
-    },
-    {
-      id: 4,
-      title: "Quantum Dashboard",
-      description: "Data visualization platform with interactive 3D charts",
-      tags: ["D3.js", "Three.js", "Node.js", "MongoDB"],
-      category: "Web Apps",
-      image: "/quantum-dashboard.jpg",
-      github: "https://github.com/MRaysa/data-viz",
-      live: "https://quantum-dashboard.demo",
-      techIcons: [<SiThreedotjs />, <FaNodeJs />, <SiMongodb />],
-      accentColor:
-        "bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-600",
-      details: {
-        features: [
-          "3D data visualization",
-          "Real-time data streaming",
-          "Customizable dashboards",
-          "Collaborative annotation",
-          "Predictive analytics",
-        ],
-        challenges: "Handling large datasets without performance lag",
-        solutions: "Implemented Web Workers for background processing",
-        testimonial: {
-          text: "Transformed how our analysts interact with complex datasets.",
-          author: "Jennifer R., Data Science Lead",
-        },
-      },
-    },
-    {
-      id: 5,
-      title: "Luminous Design System",
-      description: "Animated design system with micro-interaction library",
-      tags: ["Figma", "Lottie", "After Effects", "Storybook"],
-      category: "UI/UX",
-      image: "/luminous-design.jpg",
-      github: "https://github.com/MRaysa/design-system",
-      live: "https://luminous-design.demo",
-      techIcons: [<FaFigma />],
-      accentColor: "bg-gradient-to-br from-amber-400 via-orange-500 to-red-600",
-      details: {
-        features: [
-          "500+ animated components",
-          "Micro-interaction library",
-          "Dark/light mode system",
-          "Design token architecture",
-          "Accessibility toolkit",
-        ],
-        challenges: "Creating consistent animations across platforms",
-        solutions: "Developed a unified animation language",
-        testimonial: {
-          text: "Cut our design-dev handoff time by 65% while improving consistency.",
-          author: "Alex M., Product Design Lead",
-        },
-      },
-    },
-  ];
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("/data/projects.json");
+        const data = await response.json();
+
+        // Map icon strings to actual components
+        const iconComponents = {
+          FaReact: FaReact,
+          FaNodeJs: FaNodeJs,
+          FaPython: FaPython,
+          FaFigma: FaFigma,
+          SiDjango: SiDjango,
+          SiMongodb: SiMongodb,
+          SiTailwindcss: SiTailwindcss,
+          SiThreedotjs: SiThreedotjs,
+          TbBrandNextjs: TbBrandNextjs,
+        };
+
+        const projectsWithIcons = data.map((project) => ({
+          ...project,
+          techIcons: project.techIcons.map((iconName) => {
+            const IconComponent = iconComponents[iconName];
+            return IconComponent ? React.createElement(IconComponent) : null;
+          }),
+        }));
+
+        setProjects(projectsWithIcons);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error loading projects:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   const filteredProjects =
     activeFilter === "Show All"
@@ -291,7 +189,7 @@ const Projects = () => {
     const particles = Array(30).fill();
 
     return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none  py-24  bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none py-24 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800">
         {particles.map((_, i) => (
           <motion.div
             key={i}
@@ -319,6 +217,20 @@ const Projects = () => {
       </div>
     );
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="text-4xl"
+        >
+          ⚡
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <section
@@ -572,7 +484,7 @@ const Projects = () => {
         )}
 
         {/* Empty state */}
-        {filteredProjects.length === 0 && (
+        {filteredProjects.length === 0 && !loading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
