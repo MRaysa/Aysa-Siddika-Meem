@@ -7,7 +7,7 @@
     "category": "Full Stack",
     "image": "/gardening-app.jpg",
     "github": "https://github.com/MRaysa/gardening-tips-app",
-    "live": "https://the-gardener-s-hub.vercel.app/",
+    "live": "https://the-gardener-s-hub-client.vercel.app/",
     "techIcons": ["FaReact", "FaNodeJs", "SiMongodb"],
     "accentColor": "bg-gradient-to-br from-green-500 via-emerald-500 to-teal-600",
     "details": {
@@ -58,7 +58,7 @@
     "tags": ["React", "Auction System", "UI/UX", "Vercel"],
     "category": "Web Apps",
     "image": "/auction-app.jpg",
-    "github": "https://github.com/MRaysa/gemmy-auctions",
+    "github": "https://github.com/MRaysa/Gemmy-Auctions",
     "live": "https://gemmy-auctions.vercel.app/",
     "techIcons": ["FaReact"],
     "accentColor": "bg-gradient-to-br from-purple-500 via-violet-500 to-fuchsia-600",
@@ -213,6 +213,34 @@
       "testimonial": {
         "text": "Simplified our monthly bill payments with its intuitive interface.",
         "author": "Busy Professionals Group"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "title": "LiteraryEscape",
+    "description": "Book tracking web app with custom lists and reading progress",
+    "tags": ["React", "Tailwind CSS", "Vite", "LocalStorage", "Book Tracking"],
+    "category": "Web Apps",
+    "image": "/literary-escape.jpg",
+    "github": "https://github.com/MRaysa/literary-escape",
+    "live": "https://literary-escapee.vercel.app/",
+    "techIcons": ["FaReact", "SiTailwindcss", "SiVite"],
+    "accentColor": "bg-gradient-to-br from-amber-400 via-orange-500 to-red-500",
+    "details": {
+      "features": [
+        "Save reads to custom lists with one click",
+        "Track reading progress visually",
+        "Create and manage book wishlists",
+        "Blazing-fast Vite performance",
+        "LocalStorage persistence",
+        "Responsive design"
+      ],
+      "challenges": "State management complexity",
+      "solutions": "Optimized custom hooks and context API",
+      "testimonial": {
+        "text": "Transformed how our book club tracks our reading challenges.",
+        "author": "Avid Readers Collective"
       }
     }
   }
