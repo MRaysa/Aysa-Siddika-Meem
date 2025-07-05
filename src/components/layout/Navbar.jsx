@@ -129,7 +129,7 @@ const Navbar = () => {
           >
             Resume
           </Button>
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -207,7 +207,7 @@ const Navbar = () => {
                 >
                   Resume
                 </Button>
-                <ThemeToggle className="p-3" />
+                {/* <ThemeToggle className="p-3" /> */}
               </div>
             </div>
           </motion.div>
