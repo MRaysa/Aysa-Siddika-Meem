@@ -1,12 +1,100 @@
-# React + Vite
+# Aysa Siddika Meem — Portfolio 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to my personal portfolio!  
+Explore my journey as a **Full Stack Developer** passionate about building modern, user-centric web applications.
 
-Currently, two official plugins are available:
+🌐 **Live Site:** [aysa-siddika-meem.vercel.app](https://aysa-siddika-meem.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Interactive, animated UI with [Framer Motion](https://www.framer.com/motion/)
+- Responsive design for all devices
+- Project showcase with immersive modals
+- Animated skill orbit and timeline
+- Contact form with validation and social links
+- Custom theme toggle (dark/light mode)
+- Smooth navigation and scroll-based highlights
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React, Vite, Tailwind CSS, Framer Motion
+- **Backend:** Node.js, Express.js, MongoDB (for some projects)
+- **UI/UX:** Figma, Responsive Design, Accessibility
+- **Other:** Firebase, JWT, REST APIs, Context API, LocalStorage
+
+---
+
+## 📁 Project Structure
+
+```
+/
+├── public/
+│   ├── data/
+│   └── images, assets, resume.pdf
+├── src/
+│   ├── components/
+│   │   ├── layout/
+│   │   └── sections/
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+---
+
+## 🚩 Sections
+
+- **Home:** Animated intro, social links, and tech stack badges
+- **About:** My story, mission, and achievements
+- **Projects:** Interactive gallery with details, features, and live/code links
+- **Skills:** Animated orbiting skills and proficiency meters
+- **Education:** Timeline with achievements and animated stats
+- **Contact:** Contact form, info, and social media
+- **Footer:** Quick links, tech stack, and credits
+
+---
+
+## 📸 Screenshots
+
+![Portfolio Screenshot](public/Portfolio.png)
+
+---
+
+## 📝 Getting Started
+
+1. **Clone the repo:**
+
+   ```sh
+   git clone https://github.com/MRaysa/aysa-siddika-meem-portfolio.git
+   cd aysa-siddika-meem-portfolio
+   ```
+
+2. **Install dependencies:**
+
+   ```sh
+   npm install
+   ```
+
+3. **Run locally:**
+   ```sh
+   npm run dev
+   ```
+
+---
+
+## 📬 Contact
+
+- **Email:** dev.aysasiddika@gmail.com
+- **LinkedIn:** [mst-aysa-siddika-meem](https://www.linkedin.com/in/mst-aysa-siddika-meem/)
+- **GitHub:** [MRaysa](https://github.com/MRaysa)
+
+---
+
+> Crafted with ❤️ and React — [Live Portfolio](https://aysa-siddika-meem.vercel.app/)
