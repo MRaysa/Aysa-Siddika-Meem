@@ -68,7 +68,7 @@ const Footer = () => {
     { icon: <FiTwitter size={20} />, url: "#", label: "Twitter" },
     {
       icon: <FiMail size={20} />,
-      url: "mailto:dev.aysasiddika@gmail.com",
+      url: "mailto:aysasiddikameem3141@gmail.com",
       label: "Email",
     },
   ];
