@@ -243,5 +243,45 @@
         "author": "Avid Readers Collective"
       }
     }
+  },
+  {
+    "id": 12,
+    "title": "ChronicleInk",
+    "description": "A full-featured news platform offering premium and free article experiences with user and admin dashboards",
+    "tags": [
+      "React",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Firebase",
+      "JWT",
+      "TanStack Query"
+    ],
+    "category": "Full Stack",
+    "image": "/chronicle-ink.jpg",
+    "github": "https://github.com/MRaysa/chronicle-ink-client",
+    "live": "https://chronicle-ink-full-stack-news-platf.vercel.app/",
+    "techIcons": ["FaReact", "FaNodeJs", "SiMongodb", "SiFirebase"],
+    "accentColor": "bg-gradient-to-br from-rose-500 via-red-500 to-pink-500",
+    "details": {
+      "features": [
+        "Responsive newspaper portal",
+        "Public and premium articles",
+        "Admin and user dashboards",
+        "Article management and approval system",
+        "Secure authentication with JWT and Firebase",
+        "Subscription-based article access",
+        "Advanced filtering, search, and statistics",
+        "Integrated charts and analytics",
+        "React Select, SweetAlert, and Toast integration",
+        "Private route persistence"
+      ],
+      "challenges": "Implementing dual authentication, dynamic dashboard, and premium logic",
+      "solutions": "Used Firebase Auth with JWT, MongoDB for dynamic checks, and protected routes",
+      "testimonial": {
+        "text": "Streamlined the way we share and manage editorial content online.",
+        "author": "Editorial Admin Team"
+      }
+    }
   }
 ]
