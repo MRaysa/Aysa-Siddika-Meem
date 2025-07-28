@@ -91,7 +91,7 @@ Explore my journey as a **Full Stack Developer** passionate about building moder
 
 ## 📬 Contact
 
-- **Email:** dev.aysasiddika@gmail.com
+- **Email:** aysasiddikameem3141@gmail.com
 - **LinkedIn:** [mst-aysa-siddika-meem](https://www.linkedin.com/in/mst-aysa-siddika-meem/)
 - **GitHub:** [MRaysa](https://github.com/MRaysa)
 
