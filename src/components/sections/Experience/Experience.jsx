@@ -1,22 +1,66 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { FiBriefcase, FiMapPin, FiCalendar, FiExternalLink } from "react-icons/fi";
+import { FiBriefcase, FiMapPin, FiCalendar, FiChevronRight, FiZap, FiCode } from "react-icons/fi";
+
+// Animated background particles
+const FloatingParticle = ({ delay, size, x, y }) => (
+  <motion.div
+    className="absolute rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20"
+    style={{ width: size, height: size, left: `${x}%`, top: `${y}%` }}
+    animate={{
+      y: [0, -30, 0],
+      x: [0, 15, 0],
+      scale: [1, 1.2, 1],
+      opacity: [0.3, 0.6, 0.3],
+    }}
+    transition={{
+      duration: 5,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
+);
+
+// Glowing orb component
+const GlowingOrb = ({ color, size, position }) => (
+  <motion.div
+    className="absolute rounded-full blur-3xl"
+    style={{
+      width: size,
+      height: size,
+      background: color,
+      ...position,
+    }}
+    animate={{
+      scale: [1, 1.3, 1],
+      opacity: [0.3, 0.5, 0.3],
+    }}
+    transition={{
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  />
+);
 
 const Experience = () => {
   const experiences = [
     {
       title: "Software Engineer",
       company: "Sharetasking",
+      logo: <FiCode className="text-4xl text-white" />,
       location: "Remote",
       period: "Present",
       type: "Full-time",
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "from-blue-500/10 to-cyan-500/10",
       description: [
-        "Developing and maintaining full-stack web applications using modern technologies",
-        "Collaborating with cross-functional teams to deliver high-quality software solutions",
-        "Implementing responsive and user-friendly interfaces with React and Next.js",
-        "Building scalable backend services and RESTful APIs",
+        "Building scalable full-stack web applications with cutting-edge technologies",
+        "Architecting robust backend systems and RESTful APIs",
+        "Creating pixel-perfect, responsive UI components",
+        "Collaborating in agile sprints to deliver features on time",
       ],
-      technologies: ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "Tailwind CSS"],
+      technologies: ["React", "Next.js", "Node.js", "TypeScript", "PostgreSQL", "Tailwind CSS", "Convex", "Fastify"],
       current: true,
     },
   ];
@@ -24,184 +68,283 @@ const Experience = () => {
   return (
     <section
       id="experience"
-      className="relative py-24 overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800"
+      className="relative min-h-screen py-24 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
     >
-      {/* Background decoration */}
+      {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(10)].map((_, i) => (
-          <motion.div
+        <GlowingOrb
+          color="rgba(59, 130, 246, 0.15)"
+          size={400}
+          position={{ top: "10%", left: "-5%" }}
+        />
+        <GlowingOrb
+          color="rgba(147, 51, 234, 0.15)"
+          size={350}
+          position={{ bottom: "10%", right: "-5%" }}
+        />
+        <GlowingOrb
+          color="rgba(6, 182, 212, 0.1)"
+          size={300}
+          position={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+        />
+
+        {/* Floating particles */}
+        {[...Array(15)].map((_, i) => (
+          <FloatingParticle
             key={i}
-            className="absolute rounded-full opacity-10"
-            style={{
-              width: Math.random() * 200 + 100,
-              height: Math.random() * 200 + 100,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: `radial-gradient(circle, #8b5cf6, transparent 70%)`,
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 15,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear",
-            }}
+            delay={i * 0.3}
+            size={Math.random() * 20 + 10}
+            x={Math.random() * 100}
+            y={Math.random() * 100}
           />
         ))}
+
+        {/* Grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }}
+        />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Section Title */}
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+          <motion.div
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            transition={{ type: "spring", duration: 0.8 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-medium mb-6"
+          >
+            <FiZap className="animate-pulse" />
+            Career Journey
+          </motion.div>
+
+          <h2 className="text-5xl md:text-7xl font-bold mb-6">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 dark:from-blue-400 dark:via-purple-400 dark:to-cyan-400">
               Experience
             </span>
           </h2>
+
           <motion.div
-            className="w-32 h-1 mx-auto bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
+            className="w-40 h-1.5 mx-auto rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
             viewport={{ once: true }}
           />
-          <p className="mt-6 text-gray-600 dark:text-gray-300 text-lg max-w-2xl mx-auto">
-            My professional journey and the amazing teams I've had the privilege to work with
-          </p>
         </motion.div>
 
-        {/* Experience Cards */}
-        <div className="max-w-4xl mx-auto">
+        {/* Main Experience Card */}
+        <div className="max-w-5xl mx-auto">
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, type: "spring" }}
               viewport={{ once: true }}
               className="relative"
             >
-              {/* Timeline line */}
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500 hidden md:block" />
-
-              {/* Timeline dot */}
+              {/* Animated border gradient */}
               <motion.div
-                className="absolute left-6 top-8 w-5 h-5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-4 border-white dark:border-gray-900 hidden md:block z-10"
-                animate={exp.current ? { scale: [1, 1.2, 1] } : {}}
-                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -inset-[2px] rounded-[2rem] bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-70"
+                animate={{
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                style={{
+                  backgroundSize: "200% 200%",
+                }}
               />
 
-              {/* Card */}
-              <div className="md:ml-20 mb-8">
-                <motion.div
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  className="relative p-8 rounded-3xl backdrop-blur-xl bg-white/80 dark:bg-gray-800/80 border border-white/20 dark:border-gray-700/30 shadow-xl overflow-hidden group"
-                >
-                  {/* Current badge */}
-                  {exp.current && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="absolute top-4 right-4"
-                    >
-                      <span className="px-4 py-1.5 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-sm font-medium rounded-full flex items-center gap-2">
-                        <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+              {/* Card content */}
+              <div className="relative p-8 md:p-12 rounded-[2rem] bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl overflow-hidden">
+                {/* Background pattern */}
+                <div className="absolute inset-0 opacity-5">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-blue-500 to-transparent rounded-full blur-3xl" />
+                  <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-purple-500 to-transparent rounded-full blur-3xl" />
+                </div>
+
+                {/* Current badge with animation */}
+                {exp.current && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="absolute top-6 right-6 md:top-8 md:right-8"
+                  >
+                    <div className="relative">
+                      <motion.div
+                        className="absolute inset-0 bg-green-400 rounded-full blur-md"
+                        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0.2, 0.5] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      <span className="relative flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-sm font-bold rounded-full shadow-lg">
+                        <motion.span
+                          className="w-2 h-2 bg-white rounded-full"
+                          animate={{ scale: [1, 1.3, 1] }}
+                          transition={{ duration: 1, repeat: Infinity }}
+                        />
                         Currently Working
                       </span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Header section */}
+                <div className="flex flex-col md:flex-row md:items-start gap-6 mb-10 relative z-10">
+                  {/* Logo/Icon */}
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 10 }}
+                    className="relative"
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl blur-xl opacity-50"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    />
+                    <div className="relative w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-2xl">
+                      {exp.logo}
+                    </div>
+                  </motion.div>
+
+                  {/* Title and company */}
+                  <div className="flex-1">
+                    <motion.h3
+                      className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 }}
+                      viewport={{ once: true }}
+                    >
+                      {exp.title}
+                    </motion.h3>
+                    <motion.p
+                      className="text-2xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 }}
+                      viewport={{ once: true }}
+                    >
+                      @ {exp.company}
+                    </motion.p>
+
+                    {/* Meta info */}
+                    <motion.div
+                      className="flex flex-wrap gap-4 mt-4"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ delay: 0.4 }}
+                      viewport={{ once: true }}
+                    >
+                      <span className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <FiMapPin className="text-blue-500" />
+                        {exp.location}
+                      </span>
+                      <span className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                        <FiCalendar className="text-purple-500" />
+                        {exp.period}
+                      </span>
+                      <span className="px-4 py-1 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold">
+                        {exp.type}
+                      </span>
                     </motion.div>
-                  )}
-
-                  {/* Header */}
-                  <div className="mb-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 dark:from-blue-500/30 dark:to-purple-500/30 flex items-center justify-center shadow-lg">
-                        <FiBriefcase className="text-3xl text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
-                          {exp.title}
-                        </h3>
-                        <p className="text-xl text-blue-600 dark:text-blue-400 font-semibold">
-                          {exp.company}
-                        </p>
-                      </div>
-                    </div>
                   </div>
+                </div>
 
-                  {/* Meta info */}
-                  <div className="flex flex-wrap gap-4 mb-6 text-sm text-gray-600 dark:text-gray-400">
-                    <div className="flex items-center gap-2">
-                      <FiMapPin className="text-purple-500" />
-                      <span>{exp.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FiCalendar className="text-purple-500" />
-                      <span>{exp.period}</span>
-                    </div>
-                    <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-full text-xs font-medium">
-                      {exp.type}
-                    </span>
-                  </div>
-
-                  {/* Description */}
-                  <ul className="space-y-3 mb-6">
+                {/* Description with animated bullets */}
+                <div className="mb-10 relative z-10">
+                  <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <FiBriefcase className="text-blue-500" />
+                    What I Do
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-4">
                     {exp.description.map((item, i) => (
-                      <motion.li
+                      <motion.div
                         key={i}
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 * i }}
                         viewport={{ once: true }}
-                        className="flex items-start gap-3 text-gray-600 dark:text-gray-300"
+                        whileHover={{ x: 5 }}
+                        className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100/50 dark:from-gray-800/50 dark:to-gray-700/30 border border-gray-200/50 dark:border-gray-700/50"
                       >
-                        <span className="w-2 h-2 mt-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex-shrink-0" />
-                        {item}
-                      </motion.li>
+                        <motion.div
+                          className="mt-1 w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center flex-shrink-0"
+                          whileHover={{ scale: 1.2, rotate: 180 }}
+                          transition={{ type: "spring" }}
+                        >
+                          <FiChevronRight className="text-white text-sm" />
+                        </motion.div>
+                        <span className="text-gray-700 dark:text-gray-300">{item}</span>
+                      </motion.div>
                     ))}
-                  </ul>
+                  </div>
+                </div>
 
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2">
+                {/* Technologies */}
+                <div className="relative z-10">
+                  <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <FiZap className="text-cyan-500" />
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
                     {exp.technologies.map((tech, i) => (
                       <motion.span
                         key={tech}
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0, scale: 0 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.05 * i }}
+                        transition={{ delay: 0.05 * i, type: "spring" }}
                         viewport={{ once: true }}
-                        whileHover={{ y: -3, scale: 1.05 }}
-                        className="px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-blue-100 dark:border-blue-800/30"
+                        whileHover={{
+                          y: -5,
+                          scale: 1.1,
+                          boxShadow: "0 10px 30px -10px rgba(59, 130, 246, 0.5)"
+                        }}
+                        className="px-5 py-2.5 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:via-purple-500/20 dark:to-cyan-500/20 text-gray-800 dark:text-gray-200 rounded-xl text-sm font-semibold border border-blue-200/50 dark:border-blue-700/30 cursor-default backdrop-blur-sm"
                       >
                         {tech}
                       </motion.span>
                     ))}
                   </div>
+                </div>
 
-                  {/* Hover gradient */}
-                  <motion.div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(147,51,234,0.05) 100%)",
-                    }}
-                  />
-
-                  {/* Corner decorations */}
-                  <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-blue-400/20 rounded-tl-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-purple-400/20 rounded-br-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                </motion.div>
+                {/* Decorative elements */}
+                <div className="absolute top-6 left-6 w-20 h-20 border-t-2 border-l-2 border-blue-300/30 dark:border-blue-600/30 rounded-tl-3xl" />
+                <div className="absolute bottom-6 right-6 w-20 h-20 border-b-2 border-r-2 border-purple-300/30 dark:border-purple-600/30 rounded-br-3xl" />
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Bottom decoration */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          viewport={{ once: true }}
+          className="flex justify-center mt-16"
+        >
+          <div className="flex items-center gap-4 text-gray-500 dark:text-gray-400">
+            <div className="w-16 h-px bg-gradient-to-r from-transparent to-gray-300 dark:to-gray-600" />
+            <span className="text-sm font-medium">More experiences coming soon</span>
+            <div className="w-16 h-px bg-gradient-to-l from-transparent to-gray-300 dark:to-gray-600" />
+          </div>
+        </motion.div>
       </div>
     </section>
   );
