@@ -27,8 +27,8 @@ const Footer = () => {
   // ];
 
   const contactInfo = [
-    { icon: <FiMail />, text: "dev.aysasiddika@gmail.com" },
-    { icon: <FiPhone />, text: "+880 123456789" },
+    { icon: <FiMail />, text: "aysasiddikameem3141@gmail.com" },
+    { icon: <FiPhone />, text: "+880 1617272980" },
     { icon: <FiMapPin />, text: "Dhaka, Bangladesh" },
   ];
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });

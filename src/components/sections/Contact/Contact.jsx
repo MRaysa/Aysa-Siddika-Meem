@@ -98,14 +98,14 @@ const Contact = () => {
               <ContactInfoItem
                 icon={<FiMail className="text-blue-500" size={24} />}
                 title="Email"
-                value="dev.aysasiddika@gmail.com"
-                link="mailto:dev.aysasiddika@gmail.com"
+                value="aysasiddikameem3141@gmail.com"
+                link="mailto:aysasiddikameem3141@gmail.com"
               />
               <ContactInfoItem
                 icon={<FiPhone className="text-green-500" size={24} />}
                 title="Phone"
-                value="+880 1234567891"
-                link="tel:+880123456789"
+                value="+880 1617272980"
+                link="tel:+8801617272980"
               />
               <ContactInfoItem
                 icon={<FiMapPin className="text-purple-500" size={24} />}
@@ -116,7 +116,7 @@ const Contact = () => {
 
             <motion.div variants={itemVariants} className="flex gap-4 pt-4">
               <motion.a
-                href="https://wa.me/880123456789"
+                href="https://wa.me/8801617272980"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -5, scale: 1.1 }}

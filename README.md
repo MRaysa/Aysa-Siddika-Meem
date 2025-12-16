@@ -92,6 +92,7 @@ Explore my journey as a **Full Stack Developer** passionate about building moder
 ## 📬 Contact
 
 - **Email:** aysasiddikameem3141@gmail.com
+- **Phone:** +880 1617272980
 - **LinkedIn:** [mst-aysa-siddika-meem](https://www.linkedin.com/in/mst-aysa-siddika-meem/)
 - **GitHub:** [MRaysa](https://github.com/MRaysa)
 
