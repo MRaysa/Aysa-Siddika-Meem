@@ -8,10 +8,12 @@ import Footer from "./components/sections/Footer/Footer";
 import Home from "./components/sections/Home/Home";
 import Projects from "./components/sections/Projects/Projects";
 import Skills from "./components/sections/Skills/Skills";
+import CustomCursor from "./components/ui/CustomCursor";
 
 function App() {
   return (
     <>
+      <CustomCursor />
       <Navbar></Navbar>
       <Home></Home>
       <About></About>
