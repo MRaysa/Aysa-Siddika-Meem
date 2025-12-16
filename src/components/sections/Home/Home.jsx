@@ -8,8 +8,8 @@ import {
   FiFacebook,
   FiCode,
 } from "react-icons/fi";
-import { TbBrandNextjs, TbBrandReact } from "react-icons/tb";
-import { SiTypescript, SiTailwindcss, SiJavascript } from "react-icons/si";
+import { TbBrandNextjs, TbBrandReact, TbDatabase } from "react-icons/tb";
+import { SiTypescript, SiTailwindcss, SiJavascript, SiFastify, SiPostgresql, SiPython, SiDjango } from "react-icons/si";
 
 const TypewriterGreeting = () => {
   const greetings = [
@@ -98,6 +98,11 @@ const Home = () => {
     { icon: <SiTypescript size={24} />, name: "TypeScript" },
     { icon: <SiJavascript size={24} />, name: "JavaScript" },
     { icon: <SiTailwindcss size={24} />, name: "Tailwind" },
+    { icon: <SiFastify size={24} />, name: "Fastify" },
+    { icon: <SiPostgresql size={24} />, name: "PostgreSQL" },
+    { icon: <TbDatabase size={24} />, name: "Convex" },
+    {icon: <SiPython size={24} />, name: "Python" },
+    {icon: <SiDjango size={24} />, name: "Django" },
   ];
 
   return (

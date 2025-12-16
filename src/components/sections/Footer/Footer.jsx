@@ -14,7 +14,8 @@ import {
   FiCoffee,
 } from "react-icons/fi";
 import { FaReact, FaNodeJs, FaWhatsapp } from "react-icons/fa";
-import { SiNextdotjs, SiTailwindcss, SiTypescript, SiMongodb, SiJavascript } from "react-icons/si";
+import { SiNextdotjs, SiTailwindcss, SiTypescript, SiMongodb, SiJavascript, SiFastify, SiPostgresql } from "react-icons/si";
+import { TbDatabase } from "react-icons/tb";
 import { HiSparkles, HiLightningBolt } from "react-icons/hi";
 import { BsStars } from "react-icons/bs";
 
@@ -50,6 +51,9 @@ const Footer = () => {
     { icon: <SiTailwindcss size={24} />, name: "Tailwind", color: "#06B6D4", glow: "rgba(6, 182, 212, 0.4)" },
     { icon: <FaNodeJs size={24} />, name: "Node.js", color: "#339933", glow: "rgba(51, 153, 51, 0.4)" },
     { icon: <SiMongodb size={24} />, name: "MongoDB", color: "#47A248", glow: "rgba(71, 162, 72, 0.4)" },
+    { icon: <SiFastify size={24} />, name: "Fastify", color: "#ffffff", glow: "rgba(255, 255, 255, 0.3)" },
+    { icon: <SiPostgresql size={24} />, name: "PostgreSQL", color: "#4169E1", glow: "rgba(65, 105, 225, 0.4)" },
+    { icon: <TbDatabase size={24} />, name: "Convex", color: "#EE342F", glow: "rgba(238, 52, 47, 0.4)" },
   ];
 
   const socialLinks = [
@@ -605,8 +609,8 @@ const Footer = () => {
 
           <motion.div
             className="flex gap-8"
-            animate={{ x: [0, -1000] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            animate={{ x: [0, -1500] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
           >
             {[...techStack, ...techStack, ...techStack].map((tech, i) => (
               <div

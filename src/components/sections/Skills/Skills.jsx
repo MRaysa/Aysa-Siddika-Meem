@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { TbBrandReact, TbBrandNextjs, TbArrowRight } from "react-icons/tb";
+import { TbBrandReact, TbBrandNextjs, TbDatabase } from "react-icons/tb";
 import {
   SiTypescript,
   SiTailwindcss,
@@ -10,70 +10,95 @@ import {
   SiPython,
   SiGithub,
   SiFigma,
+  SiFastify,
+  SiPostgresql,
 } from "react-icons/si";
 
-const OrbitingCircleItem = ({ children, index, total, radius, reverse }) => {
-  const angle = index * (360 / total);
-  const radians = (angle * Math.PI) / 180;
-  const x = radius * Math.cos(radians) * (reverse ? -1 : 1);
-  const y = radius * Math.sin(radians) * (reverse ? -1 : 1);
+const OrbitingIcon = ({ icon, index, total, radius, duration, reverse, delay = 0 }) => {
+  const angle = (index / total) * 360;
 
   return (
     <motion.div
-      className="absolute flex flex-col items-center justify-center"
+      className="absolute"
       style={{
-        x,
-        y,
+        width: 50,
+        height: 50,
       }}
       animate={{
-        rotate: [0, reverse ? -360 : 360],
+        rotate: reverse ? -360 : 360,
       }}
       transition={{
-        duration: 20,
+        duration: duration,
         repeat: Infinity,
         ease: "linear",
-      }}
-      whileHover={{
-        scale: 1.2,
-        transition: { duration: 0.3 },
+        delay: delay,
       }}
     >
-      <div className="relative group">
-        <div className="absolute -right-8 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <TbArrowRight className="text-blue-500 text-2xl animate-pulse" />
-        </div>
-        <div className="bg-white/90 dark:bg-gray-700/90 p-3 rounded-full shadow-md border border-gray-200/50 dark:border-gray-600/50 flex items-center justify-center">
-          {children}
-        </div>
-      </div>
+      <motion.div
+        className="absolute bg-white/95 dark:bg-gray-800/95 p-3 rounded-xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm flex items-center justify-center cursor-pointer"
+        style={{
+          left: `calc(50% + ${radius}px - 25px)`,
+          top: "50%",
+          transform: "translateY(-50%)",
+        }}
+        initial={{ rotate: -angle }}
+        animate={{
+          rotate: reverse ? angle : -angle,
+        }}
+        transition={{
+          duration: duration,
+          repeat: Infinity,
+          ease: "linear",
+          delay: delay,
+        }}
+        whileHover={{
+          scale: 1.3,
+          boxShadow: "0 0 20px rgba(59, 130, 246, 0.5)",
+          transition: { duration: 0.2 },
+        }}
+      >
+        {icon}
+      </motion.div>
     </motion.div>
   );
 };
 
-const OrbitingCircles = ({
-  children,
-  radius = 150,
-  size = 40,
-  reverse = false,
-}) => {
+const OrbitRing = ({ children, radius, duration = 20, reverse = false, className = "" }) => {
+  const items = React.Children.toArray(children);
+  const total = items.length;
+
   return (
     <div
-      className="relative flex items-center justify-center"
+      className={`absolute inset-0 flex items-center justify-center ${className}`}
       style={{
         width: radius * 2,
         height: radius * 2,
+        left: "50%",
+        top: "50%",
+        transform: "translate(-50%, -50%)",
       }}
     >
-      {React.Children.map(children, (child, i) => (
-        <OrbitingCircleItem
-          key={i}
-          index={i}
-          total={React.Children.count(children)}
+      {/* Orbit path ring */}
+      <div
+        className="absolute rounded-full border border-dashed border-blue-300/30 dark:border-blue-500/20"
+        style={{
+          width: radius * 2,
+          height: radius * 2,
+        }}
+      />
+
+      {/* Orbiting items */}
+      {items.map((item, index) => (
+        <OrbitingIcon
+          key={index}
+          icon={item}
+          index={index}
+          total={total}
           radius={radius}
+          duration={duration}
           reverse={reverse}
-        >
-          {child}
-        </OrbitingCircleItem>
+          delay={(index / total) * duration}
+        />
       ))}
     </div>
   );
@@ -159,6 +184,21 @@ const Skills = () => {
       icon: <SiFigma className="text-purple-500" />,
       percentage: 78,
     },
+    {
+      name: "Fastify",
+      icon: <SiFastify className="text-gray-800 dark:text-white" />,
+      percentage: 82,
+    },
+    {
+      name: "PostgreSQL",
+      icon: <SiPostgresql className="text-blue-600" />,
+      percentage: 85,
+    },
+    {
+      name: "Convex",
+      icon: <TbDatabase className="text-red-500" />,
+      percentage: 80,
+    },
   ];
 
   const orbitingSkills = [
@@ -168,8 +208,9 @@ const Skills = () => {
     <SiJavascript className="text-yellow-400 text-2xl" />,
     <SiTailwindcss className="text-cyan-500 text-2xl" />,
     <SiNodedotjs className="text-green-600 text-2xl" />,
-    // <SiGithub className="text-black dark:text-white text-2xl" />,
-    // <SiFigma className="text-purple-500 text-2xl" />,
+    <SiFastify className="text-gray-800 dark:text-white text-2xl" />,
+    <SiPostgresql className="text-blue-600 text-2xl" />,
+    <TbDatabase className="text-red-500 text-2xl" />,
   ];
 
   return (
@@ -230,7 +271,7 @@ const Skills = () => {
         {/* Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* Skill Meters - Give this order-2 on mobile, order-1 on md+ */}
-          <div className="order-2 md:order-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl  pl-8 pr-8 pb-8  shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+          <div className="order-2 md:order-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/50">
             <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-200">
               Skill Proficiency
             </h3>
@@ -260,31 +301,62 @@ const Skills = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="relative"
+              className="relative w-[400px] h-[400px]"
             >
+              {/* Outer glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-600/10 rounded-full blur-3xl" />
+
               {/* Central glowing orb */}
               <motion.div
-                className="absolute inset-0 m-auto w-40 h-40 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 blur-xl"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 shadow-2xl flex items-center justify-center z-10"
                 animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.4, 0.6, 0.4],
+                  scale: [1, 1.1, 1],
+                  boxShadow: [
+                    "0 0 30px rgba(59, 130, 246, 0.4)",
+                    "0 0 60px rgba(147, 51, 234, 0.6)",
+                    "0 0 30px rgba(59, 130, 246, 0.4)",
+                  ],
                 }}
                 transition={{
-                  duration: 8,
+                  duration: 3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-              />
+              >
+                <span className="text-white text-2xl font-bold">&lt;/&gt;</span>
+              </motion.div>
+
+              {/* Pulsing rings */}
+              {[1, 2, 3].map((i) => (
+                <motion.div
+                  key={i}
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-400/20"
+                  style={{
+                    width: 80 + i * 30,
+                    height: 80 + i * 30,
+                  }}
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.1, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.3,
+                  }}
+                />
+              ))}
 
               {/* Outer orbiting skills */}
-              <OrbitingCircles radius={180} size={80}>
+              <OrbitRing radius={160} duration={25}>
                 {orbitingSkills.slice(0, 6)}
-              </OrbitingCircles>
+              </OrbitRing>
 
               {/* Inner orbiting skills */}
-              <OrbitingCircles radius={100} size={60} reverse>
+              <OrbitRing radius={95} duration={18} reverse>
                 {orbitingSkills.slice(6)}
-              </OrbitingCircles>
+              </OrbitRing>
             </motion.div>
           </div>
         </div>
