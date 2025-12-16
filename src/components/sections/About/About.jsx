@@ -1,6 +1,56 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiTwitter, FiFacebook } from "react-icons/fi";
+
+// Animated Number with flip effect
+const FlipNumber = ({ value, isInfinity }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const ref = useRef(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (isInfinity || hasAnimated.current) return;
+    const target = parseInt(value) || 0;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          let current = 0;
+          const increment = target / 40;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              setDisplayValue(target);
+              clearInterval(timer);
+            } else {
+              setDisplayValue(Math.floor(current));
+            }
+          }, 50);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [value, isInfinity]);
+
+  if (isInfinity) {
+    return (
+      <motion.span
+        className="text-6xl font-black"
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        ∞
+      </motion.span>
+    );
+  }
+
+  return <span ref={ref}>{displayValue}+</span>;
+};
 
 const About = () => {
   const [hovered, setHovered] = useState(false);
@@ -150,7 +200,7 @@ const About = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
                   >
-                    Full Stack Web Developer
+                    Software Engineer 
                   </motion.p>
                 </div>
               </div>
@@ -163,7 +213,7 @@ const About = () => {
                 className="absolute bottom-6 left-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg"
               >
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  UI/UX Designer • React Developer
+                 Full Stack Web Developer • MERN Stack Developer • Problem Solver
                 </p>
               </motion.div>
             )}
@@ -328,39 +378,64 @@ const About = () => {
           </motion.div>
         </div>
       </div>
-      {/* Achievement Cards Section - Moved inside main container */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="mt-12 p-4 md:px-40 "
-      >
+      {/* Achievement Cards - Glassmorphism Style */}
+      <div className="mt-20 px-4 md:px-16 lg:px-32">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {achievements.map((item, i) => (
             <motion.div
               key={item.text}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.1 }}
+              initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
+              whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+              transition={{ duration: 0.7, delay: i * 0.2, type: "spring" }}
               viewport={{ once: true }}
-              whileHover={{
-                y: -5,
-                boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)",
-              }}
-              className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 text-center relative overflow-hidden"
+              whileHover={{ scale: 1.05, rotateY: 5 }}
+              className="group perspective-1000"
             >
-              <div className="text-3xl mb-3">{item.icon}</div>
-              <div className="text-2xl font-bold text-blue-500 mb-2">
-                {item.number}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                {item.text}
+              <div className="relative p-8 rounded-3xl backdrop-blur-xl bg-white/70 dark:bg-gray-900/50 border border-white/20 dark:border-gray-700/30 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden">
+                {/* Animated gradient background */}
+                <motion.div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(147,51,234,0.1) 50%, rgba(236,72,153,0.1) 100%)",
+                  }}
+                />
+
+                {/* Floating icon */}
+                <motion.div
+                  className="relative z-10 mb-6"
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 dark:from-blue-500/30 dark:to-purple-500/30 flex items-center justify-center shadow-lg">
+                    <span className="text-5xl">{item.icon}</span>
+                  </div>
+                </motion.div>
+
+                {/* Number with glow */}
+                <div className="relative z-10 text-center mb-4">
+                  <span className="text-6xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent drop-shadow-sm">
+                    <FlipNumber value={item.number} isInfinity={item.number === "∞"} />
+                  </span>
+                </div>
+
+                {/* Description */}
+                <p className="relative z-10 text-center text-gray-600 dark:text-gray-300 text-sm leading-relaxed font-medium">
+                  {item.text}
+                </p>
+
+                {/* Bottom glow line */}
+                <motion.div
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full group-hover:w-3/4 transition-all duration-500"
+                />
+
+                {/* Corner accents */}
+                <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-blue-400/30 rounded-tr-xl" />
+                <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-purple-400/30 rounded-bl-xl" />
               </div>
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* Social Links Section */}
       <motion.div
