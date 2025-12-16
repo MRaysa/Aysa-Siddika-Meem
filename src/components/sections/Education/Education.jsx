@@ -323,266 +323,328 @@ const Education = () => {
           ))}
         </div>
 
-        {/* Ultra Advanced Achievement Badge */}
+        {/* Ultra Creative Academic Excellence Section */}
         <motion.div
-          initial={{ opacity: 0, y: 80, scale: 0.95 }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-              type: "spring",
-              damping: 15,
-              stiffness: 100,
-              delay: 0.4,
-            },
-          }}
+          initial={{ opacity: 0, y: 80 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", damping: 20, stiffness: 80, delay: 0.3 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="mt-24 p-2 rounded-3xl relative overflow-hidden group"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(168, 85, 247, 0.4) 50%, rgba(236, 72, 153, 0.4) 100%)",
-            boxShadow: "0 25px 50px -12px rgba(79, 70, 229, 0.25)",
-          }}
+          className="mt-24 relative"
         >
-          {/* Glass morphism container */}
-          <div className="relative z-20 backdrop-blur-xl bg-white/5 dark:bg-gray-900/30 border border-white/20 dark:border-gray-700/50 rounded-[calc(1.5rem-4px)] p-8  overflow-hidden">
-            {/* Floating gradient orbs */}
-            <motion.div
-              className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-indigo-500/20 blur-3xl"
-              animate={{
-                x: [0, 40, 0],
-                y: [0, 30, 0],
-                opacity: [0.2, 0.4, 0.2],
-              }}
-              transition={{
-                duration: 12,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-pink-500/20 blur-3xl"
-              animate={{
-                x: [0, -30, 0],
-                y: [0, -20, 0],
-                opacity: [0.2, 0.4, 0.2],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                repeatType: "reverse",
-                delay: 3,
-                ease: "easeInOut",
-              }}
-            />
-
-            {/* Shimmer border effect */}
-            <div className="absolute inset-0 overflow-hidden rounded-2xl">
-              <motion.div
-                className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                animate={{
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                style={{
-                  transformOrigin: "center center",
-                }}
-              />
-            </div>
-
-            {/* Content container */}
-            <div className="relative z-30 max-w-4xl mx-auto text-center">
-              {/* Animated icon with floating effect */}
-              <motion.div
-                className="inline-flex items-center justify-center p-6 mb-6 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-white/10"
-                animate={{
-                  y: [0, -8, 0],
-                  rotate: [0, 5, -5, 0],
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                  ease: "easeInOut",
-                }}
-              >
-                <motion.div
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 10, 0],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    delay: 2,
-                  }}
-                >
-                  <FaGraduationCap className="text-white" size={48} />
-                </motion.div>
-              </motion.div>
-
-              {/* Headline with text gradient */}
-              <motion.h3
-                className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-purple-200"
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 100%"],
-                  letterSpacing: ["0em", "0.02em", "0em"],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              >
-                Academic Excellence
-              </motion.h3>
-
-              {/* Subtitle with subtle animation */}
-              <motion.p
-                className="text-lg text-blue-100/90 mb-8 max-w-2xl mx-auto"
-                animate={{
-                  opacity: [0.9, 1, 0.9],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                }}
-              >
-                Maintained a perfect GPA of 5.00 throughout my academic journey,
-                demonstrating consistent excellence across all levels of
-                education.
-              </motion.p>
-
-              {/* Animated stats grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {[
-                  {
-                    value: "5.00",
-                    label: "GPA",
-                    icon: <FaAward className="text-yellow-300" />,
-                  },
-                  {
-                    value: "4",
-                    label: "Institutions",
-                    icon: <FaSchool className="text-blue-300" />,
-                  },
-                  {
-                    value: "8+",
-                    label: "Years",
-                    icon: <GiDiploma className="text-purple-300" />,
-                  },
-                  {
-                    value: "100%",
-                    label: "Consistency",
-                    icon: <GiBrain className="text-pink-300" />,
-                  },
-                ].map((stat, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 + i * 0.1 }}
-                    viewport={{ once: true }}
-                    className="bg-white/5 dark:bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-white/10 dark:border-gray-700/50"
-                    whileHover={{
-                      y: -5,
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    }}
-                  >
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <div className="text-2xl">{stat.icon}</div>
-                      <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-                        {stat.value}
-                      </span>
-                    </div>
-                    <p className="text-sm text-blue-100/80">{stat.label}</p>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Particle explosion effect */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {[...Array(20)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute text-yellow-300 text-xl"
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                      opacity: 0,
-                    }}
-                    animate={{
-                      y: [
-                        `${Math.random() * 100}%`,
-                        `${Math.random() * -100}%`,
-                      ],
-                      x: [`${Math.random() * 50}%`, `${Math.random() * -50}%`],
-                      rotate: [0, Math.random() * 360],
-                      opacity: [0, 0.8, 0],
-                      scale: [0.5, 1.5, 0],
-                    }}
-                    transition={{
-                      duration: 3 + Math.random() * 4,
-                      repeat: Infinity,
-                      repeatDelay: 5 + Math.random() * 10,
-                      ease: "easeOut",
-                    }}
-                  >
-                    {["★", "✧", "✦", "✶"][i % 4]}
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Glowing CTA button */}
-              {/* <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 20px 5px rgba(99, 102, 241, 0.5)",
-                }}
-                whileTap={{ scale: 0.98 }}
-                className="relative overflow-hidden px-8 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium shadow-lg"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <FaAward /> View Certificates
-                </span>
-                <motion.span
-                  className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-700 opacity-0"
-                  animate={{
-                    opacity: [0, 0.5, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                  }}
+          {/* Main Container with 3D perspective */}
+          <div className="relative perspective-[2000px]">
+            {/* Animated Hexagonal Background Pattern */}
+            <div className="absolute inset-0 overflow-hidden rounded-3xl">
+              <svg className="absolute w-full h-full opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                  <pattern id="hexagons" width="50" height="43.4" patternUnits="userSpaceOnUse" patternTransform="scale(0.5)">
+                    <polygon points="25,0 50,14.4 50,43.4 25,57.7 0,43.4 0,14.4" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-purple-400"/>
+                  </pattern>
+                </defs>
+                <motion.rect
+                  width="100%"
+                  height="100%"
+                  fill="url(#hexagons)"
+                  animate={{ x: [0, 25, 0] }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 />
-              </motion.button> */}
+              </svg>
             </div>
-          </div>
 
-          {/* Outer glow effect on hover */}
-          <motion.div
-            className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            style={{
-              background:
-                "radial-gradient(circle at center, rgba(124, 58, 237, 0.4) 0%, transparent 70%)",
-              boxShadow: "0 0 60px 20px rgba(124, 58, 237, 0.3)",
-            }}
-            animate={{
-              scale: [1, 1.05, 1],
-              opacity: [0, 0.6, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-            }}
-          />
+            {/* Outer Glow Ring */}
+            <motion.div
+              className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-violet-600 via-fuchsia-500 to-cyan-400 opacity-75 blur-xl"
+              animate={{
+                opacity: [0.5, 0.8, 0.5],
+                scale: [1, 1.02, 1],
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            {/* Main Card */}
+            <motion.div
+              className="relative rounded-3xl overflow-hidden"
+              style={{
+                background: "linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 27, 75, 0.95) 50%, rgba(20, 30, 48, 0.95) 100%)",
+              }}
+              whileHover={{ rotateX: 2, rotateY: -2 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              {/* Inner border gradient */}
+              <div className="absolute inset-[1px] rounded-3xl bg-gradient-to-br from-white/10 via-transparent to-white/5 pointer-events-none" />
+
+              {/* Animated corner accents */}
+              {[
+                { position: "top-0 left-0", rotate: 0 },
+                { position: "top-0 right-0", rotate: 90 },
+                { position: "bottom-0 right-0", rotate: 180 },
+                { position: "bottom-0 left-0", rotate: 270 },
+              ].map((corner, i) => (
+                <motion.div
+                  key={i}
+                  className={`absolute ${corner.position} w-24 h-24`}
+                  style={{ rotate: corner.rotate }}
+                >
+                  <motion.div
+                    className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-transparent"
+                    animate={{ opacity: [0.3, 1, 0.3], scaleX: [0.5, 1, 0.5] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                  />
+                  <motion.div
+                    className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-400 to-transparent"
+                    animate={{ opacity: [0.3, 1, 0.3], scaleY: [0.5, 1, 0.5] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
+                  />
+                </motion.div>
+              ))}
+
+              {/* Floating Orbs */}
+              <motion.div
+                className="absolute top-10 right-20 w-32 h-32 rounded-full"
+                style={{
+                  background: "radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%)",
+                }}
+                animate={{ x: [0, 30, 0], y: [0, -20, 0], scale: [1, 1.2, 1] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute bottom-20 left-10 w-24 h-24 rounded-full"
+                style={{
+                  background: "radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, transparent 70%)",
+                }}
+                animate={{ x: [0, -20, 0], y: [0, 30, 0], scale: [1, 1.3, 1] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              />
+
+              {/* Content */}
+              <div className="relative z-10 p-10 md:p-14">
+                {/* Top Section - Icon and Title */}
+                <div className="text-center mb-12">
+                  {/* Animated 3D Trophy/Cap Icon */}
+                  <motion.div
+                    className="inline-block mb-8 relative"
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    {/* Glow behind icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <motion.div
+                        className="w-28 h-28 rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 blur-2xl opacity-50"
+                        animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                      />
+                    </div>
+                    {/* Icon container with rotating ring */}
+                    <div className="relative">
+                      <motion.div
+                        className="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/50"
+                        style={{ width: 100, height: 100, top: -10, left: -10 }}
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      />
+                      <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center shadow-2xl shadow-violet-500/30">
+                        <FaGraduationCap className="text-white" size={40} />
+                        {/* Sparkle effects */}
+                        <motion.div
+                          className="absolute -top-1 -right-1 text-yellow-300"
+                          animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          ✦
+                        </motion.div>
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Title with animated underline */}
+                  <div className="relative inline-block">
+                    <motion.h3
+                      className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-violet-200 to-cyan-200"
+                      animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                      style={{ backgroundSize: "200% 200%" }}
+                      transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                    >
+                      Academic Excellence
+                    </motion.h3>
+                    {/* Animated underline */}
+                    <motion.div
+                      className="absolute -bottom-3 left-0 right-0 h-1 rounded-full bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+                      animate={{ scaleX: [0.3, 1, 0.3], opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    />
+                  </div>
+
+                  {/* Subtitle */}
+                  <motion.p
+                    className="mt-8 text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    Maintained a <span className="text-cyan-400 font-semibold">perfect GPA of 5.00</span> throughout my academic journey,
+                    demonstrating consistent excellence across all levels of education.
+                  </motion.p>
+                </div>
+
+                {/* Stats Section - Creative Cards */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[
+                    {
+                      value: "5.00",
+                      label: "GPA",
+                      icon: <FaAward size={28} />,
+                      gradient: "from-amber-400 to-orange-500",
+                      glowColor: "rgba(251, 191, 36, 0.3)",
+                      description: "Perfect Score"
+                    },
+                    {
+                      value: "4",
+                      label: "Institutions",
+                      icon: <FaSchool size={28} />,
+                      gradient: "from-blue-400 to-indigo-500",
+                      glowColor: "rgba(96, 165, 250, 0.3)",
+                      description: "Prestigious"
+                    },
+                    {
+                      value: "8+",
+                      label: "Years",
+                      icon: <GiDiploma size={28} />,
+                      gradient: "from-violet-400 to-purple-500",
+                      glowColor: "rgba(167, 139, 250, 0.3)",
+                      description: "Of Learning"
+                    },
+                    {
+                      value: "100%",
+                      label: "Consistency",
+                      icon: <GiBrain size={28} />,
+                      gradient: "from-pink-400 to-rose-500",
+                      glowColor: "rgba(244, 114, 182, 0.3)",
+                      description: "Dedication"
+                    },
+                  ].map((stat, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 30, rotateX: -20 }}
+                      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                      transition={{ delay: 0.2 + i * 0.15, type: "spring", stiffness: 100 }}
+                      viewport={{ once: true }}
+                      whileHover={{
+                        y: -8,
+                        scale: 1.02,
+                        transition: { type: "spring", stiffness: 400 }
+                      }}
+                      className="relative group"
+                    >
+                      {/* Card glow on hover */}
+                      <motion.div
+                        className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-lg"
+                        style={{ background: `linear-gradient(135deg, ${stat.glowColor}, transparent)` }}
+                      />
+
+                      {/* Card */}
+                      <div className="relative h-full rounded-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/10 p-6 overflow-hidden">
+                        {/* Animated background pattern */}
+                        <motion.div
+                          className="absolute inset-0 opacity-20"
+                          style={{
+                            backgroundImage: `radial-gradient(circle at 50% 50%, ${stat.glowColor} 0%, transparent 50%)`,
+                          }}
+                          animate={{ scale: [1, 1.5, 1], opacity: [0.1, 0.3, 0.1] }}
+                          transition={{ duration: 4, repeat: Infinity, delay: i * 0.5 }}
+                        />
+
+                        {/* Icon with gradient background */}
+                        <motion.div
+                          className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${stat.gradient} mb-4 shadow-lg`}
+                          whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <span className="text-white">{stat.icon}</span>
+                        </motion.div>
+
+                        {/* Value with counting animation effect */}
+                        <motion.div
+                          className={`text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${stat.gradient} mb-1`}
+                          initial={{ scale: 0.5 }}
+                          whileInView={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 200, delay: 0.3 + i * 0.1 }}
+                        >
+                          {stat.value}
+                        </motion.div>
+
+                        {/* Label */}
+                        <div className="text-white font-semibold text-lg">{stat.label}</div>
+                        <div className="text-gray-400 text-sm mt-1">{stat.description}</div>
+
+                        {/* Corner accent */}
+                        <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
+                          <motion.div
+                            className={`absolute -top-8 -right-8 w-16 h-16 bg-gradient-to-br ${stat.gradient} opacity-20 rotate-45`}
+                            animate={{ opacity: [0.1, 0.3, 0.1] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                          />
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Bottom decorative element */}
+                <motion.div
+                  className="mt-12 flex justify-center items-center gap-4"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="text-yellow-400"
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        rotate: [0, 180, 360],
+                        opacity: [0.5, 1, 0.5]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: i * 0.2,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      ★
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                {/* Floating particles */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  {[...Array(15)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1 h-1 rounded-full bg-cyan-400"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                      }}
+                      animate={{
+                        y: [0, -100, 0],
+                        x: [0, Math.random() * 50 - 25, 0],
+                        opacity: [0, 1, 0],
+                        scale: [0, 1.5, 0],
+                      }}
+                      transition={{
+                        duration: 4 + Math.random() * 3,
+                        repeat: Infinity,
+                        delay: Math.random() * 5,
+                        ease: "easeOut",
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
