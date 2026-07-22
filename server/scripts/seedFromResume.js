@@ -95,6 +95,7 @@ const skillGroups = {
     ["Firebase", "SiFirebase", "text-amber-500"],
   ],
   "DevOps & Cloud": [
+    ["Cloudflare Workers", "SiCloudflare", "text-orange-500"],
     ["Docker", "SiDocker", "text-blue-400"],
     ["AWS", "FaAws", "text-orange-500"],
     ["Linux", "SiLinux", "text-yellow-600"],

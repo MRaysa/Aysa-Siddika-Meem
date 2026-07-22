@@ -1,18 +1,79 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
-import { FiGithub, FiLinkedin, FiMail, FiArrowRight, FiDownload } from "react-icons/fi";
+import {
+  FiGithub,
+  FiArrowRight,
+  FiDownload,
+  FiCheck,
+  FiFolder,
+} from "react-icons/fi";
 import { GridBg } from "../../ui/term";
 
 const RESUME = "/Mst_Aysa_Siddika_Meem_Resume.pdf";
+const GITHUB = "https://github.com/MRaysa";
 
-const SOCIALS = [
-  { icon: <FiGithub size={18} />, url: "https://github.com/MRaysa", label: "github" },
-  { icon: <FiLinkedin size={18} />, url: "https://www.linkedin.com/in/mst-aysa-siddika-meem/", label: "linkedin" },
-  { icon: <FiMail size={18} />, url: "mailto:aysasiddikameem3141@gmail.com", label: "email" },
+const ROLES = [
+  "Full-Stack Software Engineer",
+  "AI Integration Engineer",
+  "Cloudflare Workers Engineer",
+  "Scalable API Engineer",
+  "SaaS Product Engineer",
 ];
 
-// Token colors -> CSS design tokens
+const HIGHLIGHTS = [
+  "2+ yrs professional experience",
+  "10+ projects shipped",
+  "AI integrations (OpenAI · Gemini)",
+  "SaaS · Stripe · scalable APIs",
+  "Undergraduate researcher @ CCDS",
+  "Available for hire",
+];
+
+/* ---------- rotating role typewriter (single robust loop) ---------- */
+const RoleRotator = () => {
+  const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    let roleIdx = 0;
+    let char = 0;
+    let deleting = false;
+    let timer;
+
+    const loop = () => {
+      const full = ROLES[roleIdx];
+      if (!deleting) {
+        char++;
+        setDisplay(full.slice(0, char));
+        if (char === full.length) {
+          deleting = true;
+          timer = setTimeout(loop, 1600); // hold on the full word
+          return;
+        }
+      } else {
+        char--;
+        setDisplay(full.slice(0, char));
+        if (char === 0) {
+          deleting = false;
+          roleIdx = (roleIdx + 1) % ROLES.length; // next role
+        }
+      }
+      timer = setTimeout(loop, deleting ? 40 : 85);
+    };
+
+    timer = setTimeout(loop, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <span className="text-[var(--accent)]">
+      {display}
+      <span className="caret" />
+    </span>
+  );
+};
+
+/* ---------- live code editor (right) ---------- */
 const C = {
   kw: "var(--red)",
   fn: "var(--blue)",
@@ -24,7 +85,6 @@ const C = {
   plain: "var(--fg)",
 };
 
-// The "developer.ts" file that gets typed out — this is "about me" as code.
 const CODE = [
   [["// who I am, in code", "cmt"]],
   [["const ", "kw"], ["engineer", "fn"], [": ", "punc"], ["Developer", "fn"], [" = {", "punc"]],
@@ -34,7 +94,8 @@ const CODE = [
   [["  experience", "key"], [": ", "punc"], ['"2+ years"', "str"], [",", "punc"]],
   [["  stack", "key"], [": [", "punc"], ['"Next.js"', "str"], [", ", "punc"], ['"Node"', "str"], [", ", "punc"], ['"Fastify"', "str"], ["],", "punc"]],
   [["  databases", "key"], [": [", "punc"], ['"PostgreSQL"', "str"], [", ", "punc"], ['"MongoDB"', "str"], ["],", "punc"]],
-  [["  focus", "key"], [": [", "punc"], ['"SaaS"', "str"], [", ", "punc"], ['"AI"', "str"], [", ", "punc"], ['"Scalable APIs"', "str"], ["],", "punc"]],
+  [["  cloud", "key"], [": [", "punc"], ['"Cloudflare Workers"', "str"], [", ", "punc"], ['"AWS"', "str"], ["],", "punc"]],
+  [["  focus", "key"], [": [", "punc"], ['"SaaS"', "str"], [", ", "punc"], ['"AI"', "str"], [", ", "punc"], ['"Edge APIs"', "str"], ["],", "punc"]],
   [["  openToWork", "key"], [": ", "punc"], ["true", "num"], [",", "punc"]],
   [["};", "punc"]],
   [[""]],
@@ -44,7 +105,6 @@ const CODE = [
 const lineLength = (line) => line.reduce((n, t) => n + t[0].length, 0);
 
 const CodeEditor = () => {
-  // total characters typed so far
   const [count, setCount] = useState(0);
   const total = useRef(CODE.reduce((n, l) => n + lineLength(l), 0));
 
@@ -54,7 +114,6 @@ const CodeEditor = () => {
     const tick = () => {
       n++;
       if (n > total.current) {
-        // hold, then restart the "session"
         timer = setTimeout(() => {
           n = 0;
           setCount(0);
@@ -70,7 +129,6 @@ const CodeEditor = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Figure out how many chars belong to each line as we render
   let consumed = 0;
   const rendered = CODE.map((line, li) => {
     const len = lineLength(line);
@@ -78,9 +136,7 @@ const CodeEditor = () => {
     consumed += len;
     const visibleInLine = Math.max(0, Math.min(len, count - lineStart));
     const isCurrent = count >= lineStart && count < lineStart + len;
-    const isTypedThrough = count >= lineStart + len;
 
-    // build colored spans up to visibleInLine
     let used = 0;
     const spans = [];
     for (let ti = 0; ti < line.length; ti++) {
@@ -95,8 +151,6 @@ const CodeEditor = () => {
       used += take;
     }
 
-    const showCaret = isCurrent || (isTypedThrough && li === CODE.length - 1 && count >= total.current);
-
     return (
       <div key={li} className="flex">
         <span className="w-8 shrink-0 select-none pr-3 text-right text-[var(--faint)]/60">
@@ -104,9 +158,7 @@ const CodeEditor = () => {
         </span>
         <code className="whitespace-pre">
           {spans}
-          {showCaret && count < total.current + 1 && isCurrent && (
-            <span className="caret" />
-          )}
+          {isCurrent && <span className="caret" />}
         </code>
       </div>
     );
@@ -118,14 +170,11 @@ const CodeEditor = () => {
         <span className="term-dot bg-[#ff5f56]" />
         <span className="term-dot bg-[#ffbd2e]" />
         <span className="term-dot bg-[#27c93f]" />
-        <span className="ml-3 font-mono text-xs text-[var(--muted)]">
-          developer.ts
-        </span>
+        <span className="ml-3 font-mono text-xs text-[var(--muted)]">code.ts</span>
         <span className="ml-auto font-mono text-[10px] text-[var(--faint)]">
           TypeScript
         </span>
       </div>
-
       <div className="min-h-[340px] bg-[var(--surface)] p-5 font-mono text-[13px] leading-6 sm:text-sm">
         {rendered}
       </div>
@@ -133,35 +182,32 @@ const CodeEditor = () => {
   );
 };
 
+/* ---------- hero ---------- */
 const Home = () => {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16"
+      className="relative flex items-center overflow-hidden pt-28 pb-20 sm:pt-32"
     >
       <GridBg />
 
       <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 px-5 lg:grid-cols-2">
-        {/* Left: intro */}
+        {/* Left */}
         <div>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 font-mono text-xs text-[var(--muted)]"
+            transition={{ duration: 0.4 }}
+            className="mb-4 flex items-center gap-2 font-mono text-sm text-[var(--muted)]"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--accent)]" />
-            </span>
-            available for opportunities
+            <span className="text-[var(--accent)]">$</span> whoami
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-mono text-4xl font-extrabold leading-tight tracking-tight text-[var(--fg-strong)] sm:text-5xl lg:text-6xl"
+            className="font-mono text-4xl font-extrabold leading-[1.1] tracking-tight text-[var(--fg-strong)] sm:text-5xl lg:text-6xl"
           >
             Aysa Siddika
             <br />
@@ -169,70 +215,71 @@ const Home = () => {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 font-mono text-lg text-[var(--accent)]"
+            className="mt-4 font-mono text-lg text-[var(--muted)] sm:text-xl"
           >
-            &gt; Full-Stack Software Engineer
+            <span className="text-[var(--faint)]">&gt; </span>
+            <RoleRotator />
           </motion.p>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-5 max-w-lg leading-relaxed text-[var(--muted)]"
-          >
-            I build scalable, production-grade web platforms — multi-tenant SaaS,
-            AI integrations, and clean APIs — with Next.js, Node.js, Fastify and
-            PostgreSQL. 2+ years shipping for US-based companies.
-          </motion.p>
-
+          {/* divider */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="my-6 h-px w-full max-w-sm origin-left bg-gradient-to-r from-[var(--border-strong)] to-transparent"
+          />
+
+          {/* highlights checklist */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="grid max-w-lg grid-cols-1 gap-x-6 gap-y-2 font-mono text-sm sm:grid-cols-2"
+          >
+            {HIGHLIGHTS.map((h, i) => (
+              <div key={i} className="flex items-center gap-2 text-[var(--muted)]">
+                <FiCheck className="shrink-0 text-[var(--accent)]" strokeWidth={3} />
+                {h}
+              </div>
+            ))}
+          </motion.div>
+
+          {/* buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
             className="mt-8 flex flex-wrap items-center gap-3"
           >
+            <a
+              href={RESUME}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-md bg-[var(--accent)] px-5 py-2.5 font-mono text-sm font-medium text-[var(--accent-fg)] transition-opacity hover:opacity-90"
+            >
+              <FiDownload size={15} /> resume.pdf
+            </a>
             <Link
               to="projects"
               smooth
               duration={500}
               offset={-72}
-              className="group inline-flex cursor-pointer items-center gap-2 rounded-md bg-[var(--accent)] px-5 py-2.5 font-mono text-sm font-medium text-[var(--accent-fg)] transition-opacity hover:opacity-90"
+              className="group inline-flex cursor-pointer items-center gap-2 rounded-md border border-[var(--border)] px-5 py-2.5 font-mono text-sm text-[var(--fg)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
             >
-              view work
+              <FiFolder size={15} /> projects
               <FiArrowRight className="transition-transform group-hover:translate-x-1" />
             </Link>
             <a
-              href={RESUME}
+              href={GITHUB}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] px-5 py-2.5 font-mono text-sm text-[var(--fg)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
             >
-              <FiDownload size={15} />
-              resume.pdf
+              <FiGithub size={15} /> github
             </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="mt-8 flex items-center gap-5"
-          >
-            {SOCIALS.map((s) => (
-              <a
-                key={s.label}
-                href={s.url}
-                target="_blank"
-                rel="noreferrer"
-                className="link-underline inline-flex items-center gap-2 font-mono text-sm text-[var(--muted)] transition-colors hover:text-[var(--fg)]"
-              >
-                {s.icon}
-                <span className="hidden sm:inline">{s.label}</span>
-              </a>
-            ))}
           </motion.div>
         </div>
 

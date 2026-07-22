@@ -39,6 +39,7 @@ const fallbackGroups = {
     ["AWS", "FaAws", "text-orange-500"],
     ["Linux", "SiLinux", "text-yellow-600"],
     ["Nginx", "SiNginx", "text-green-600"],
+    ["Cloudflare Workers", "SiCloudflare", "text-orange-500"],
     ["GitHub Actions", "SiGithubactions", "text-blue-500"],
     ["CI/CD", "", ""],
     ["Vercel", "SiVercel", ""],
