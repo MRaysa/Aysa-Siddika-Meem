@@ -1,29 +1,27 @@
 import "./App.css";
-import Navbar from "./components/layout/Navbar";
-import About from "./components/sections/About/About";
-import Contact from "./components/sections/Contact/Contact";
-import Education from "./components/sections/Education/Education";
-import Experience from "./components/sections/Experience/Experience";
-import Footer from "./components/sections/Footer/Footer";
-import Home from "./components/sections/Home/Home";
-import Projects from "./components/sections/Projects/Projects";
-import Skills from "./components/sections/Skills/Skills";
-import CustomCursor from "./components/ui/CustomCursor";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Portfolio from "./pages/Portfolio";
+import AdminLogin from "./pages/admin/Login";
+import AdminDashboard from "./pages/admin/Dashboard";
+import ProtectedRoute from "./pages/admin/ProtectedRoute";
 
 function App() {
   return (
-    <>
-      <CustomCursor />
-      <Navbar></Navbar>
-      <Home></Home>
-      <About></About>
-      <Experience></Experience>
-      <Projects></Projects>
-      <Skills></Skills>
-      <Education></Education>
-      <Contact></Contact>
-      <Footer></Footer>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Portfolio />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,54 +1,24 @@
-import React, { useState, useEffect } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
+import { useTheme } from "../../hooks/useTheme";
 
-const ThemeToggle = ({ className = "", iconSize = 20 }) => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    // Check for saved user preference or system preference
-    const savedMode = localStorage.getItem("darkMode");
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    // Use saved mode if available, otherwise use system preference
-    const initialMode =
-      savedMode !== null ? savedMode === "true" : systemPrefersDark;
-    setDarkMode(initialMode);
-
-    // Apply the class immediately
-    if (initialMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
-
-    // Update class and storage
-    if (newMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
-    localStorage.setItem("darkMode", String(newMode));
-  };
+// Terminal-style theme switch.
+const ThemeToggle = ({ className = "", iconSize = 16 }) => {
+  const { isDark, toggle } = useTheme();
 
   return (
     <button
-      onClick={toggleTheme}
-      className={`p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${className}`}
-      aria-label={`Switch to ${darkMode ? "light" : "dark"} mode`}
+      onClick={toggle}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+      className={`group inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 font-mono text-xs text-[var(--muted)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--fg)] ${className}`}
     >
-      {darkMode ? (
-        <FiSun className="text-yellow-400" size={iconSize} />
+      {isDark ? (
+        <FiSun size={iconSize} className="text-[var(--amber)]" />
       ) : (
-        <FiMoon className="text-indigo-600" size={iconSize} />
+        <FiMoon size={iconSize} className="text-[var(--blue)]" />
       )}
+      <span className="hidden sm:inline">
+        {isDark ? "light" : "dark"}
+      </span>
     </button>
   );
 };
