@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
+import { FiClock, FiBriefcase, FiPackage, FiAward } from "react-icons/fi";
 import { SectionLabel, GridBg } from "../../ui/term";
 
 const STATS = [
-  { value: "2+", label: "years shipping production" },
-  { value: "3", label: "US-based companies" },
-  { value: "10+", label: "projects delivered" },
-  { value: "3.82", label: "CGPA / 4.00" },
+  { key: "uptime", value: "2+", label: "years shipping production", icon: <FiClock /> },
+  { key: "clients", value: "3", label: "companies · US & AU", icon: <FiBriefcase /> },
+  { key: "shipped", value: "10+", label: "projects delivered", icon: <FiPackage /> },
+  { key: "gpa", value: "3.82", label: "CGPA / 4.00", icon: <FiAward /> },
 ];
 
 // A syntax-highlighted key/value line for the profile object.
@@ -122,12 +123,26 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
               viewport={{ once: true }}
-              className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5"
+              whileHover={{ y: -4 }}
+              className="group relative overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 transition-colors hover:border-[var(--accent)]"
             >
-              <div className="font-mono text-3xl font-bold text-[var(--accent)]">
+              {/* faint metric key + icon */}
+              <div className="mb-3 flex items-center justify-between">
+                <span className="font-mono text-xs text-[var(--faint)]">
+                  {s.key}
+                </span>
+                <span className="text-[var(--muted)] transition-colors group-hover:text-[var(--accent)]">
+                  {s.icon}
+                </span>
+              </div>
+
+              <div className="font-mono text-4xl font-bold tracking-tight text-[var(--accent)]">
                 {s.value}
               </div>
               <div className="mt-1 text-sm text-[var(--muted)]">{s.label}</div>
+
+              {/* hover accent bar */}
+              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
             </motion.div>
           ))}
         </div>
