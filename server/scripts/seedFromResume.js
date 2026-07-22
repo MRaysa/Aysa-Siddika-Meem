@@ -14,7 +14,7 @@ const experiences = [
   {
     title: "Junior Software Engineer",
     company: "NAFCORP Technologies",
-    location: "Remote",
+    location: "Remote, Australia",
     period: "Jul 2026 – Present",
     type: "Full-time",
     color: "from-blue-500 to-cyan-500",

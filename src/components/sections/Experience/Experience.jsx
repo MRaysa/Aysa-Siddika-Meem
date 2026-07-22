@@ -8,7 +8,7 @@ const fallbackExperiences = [
   {
     title: "Junior Software Engineer",
     company: "NAFCORP Technologies",
-    location: "Remote",
+    location: "Remote, Australia",
     period: "Jul 2026 – Present",
     type: "Full-time",
     current: true,

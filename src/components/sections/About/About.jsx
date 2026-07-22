@@ -75,16 +75,19 @@ const About = () => {
             className="lg:col-span-3"
           >
             <p className="leading-relaxed text-[var(--fg)]">
-              I'm a full-stack engineer with{" "}
+              I'm a full-stack software engineer with{" "}
               <span className="text-[var(--accent)]">2+ years</span> of
-              professional experience building scalable applications for US-based
-              companies — multi-tenant SaaS platforms, Stripe billing, AI
-              integrations (OpenAI, Gemini, Claude), and custom CRM systems.
+              professional experience building scalable applications for
+              companies across the{" "}
+              <span className="text-[var(--fg-strong)]">US and Australia</span> —
+              multi-tenant SaaS platforms, Stripe billing, AI integrations
+              (OpenAI, Gemini, Claude), and custom CRM systems.
             </p>
             <p className="mt-4 leading-relaxed text-[var(--muted)]">
-              I care about clean architecture, type safety, and performance. I'm
-              also an undergraduate researcher at CCDS working on geospatial
-              analysis and remote sensing.
+              I care deeply about clean architecture, type safety, and
+              performance — writing code that's maintainable as much as it works.
+              Alongside engineering, I'm an undergraduate researcher at CCDS,
+              working on geospatial analysis and remote sensing.
             </p>
 
             {/* profile object literal */}
@@ -96,7 +99,7 @@ const About = () => {
               </div>
               <Field k="role" v="Full-Stack Software Engineer" />
               <Field k="location" v="Dhaka, Bangladesh" />
-              <Field k="currentlyAt" v="NAFCORP Technologies (Remote)" />
+              <Field k="currentlyAt" v="NAFCORP Technologies (Remote · Australia)" />
               <Field k="focus" v="SaaS · AI · Scalable APIs" />
               <Field k="education" v="B.Sc CSE — IUB" />
               <div className="flex flex-wrap gap-x-2 pl-4">
