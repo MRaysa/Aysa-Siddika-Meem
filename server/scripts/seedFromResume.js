@@ -121,7 +121,7 @@ const skillGroups = {
   ],
   "AI & Research": [
     ["AI Integration", "SiOpenai", "text-emerald-500"],
-    ["Machine Learning", "", ""],
+    ["Machine Learning", "https://cdn-icons-png.flaticon.com/512/7017/7017557.png", ""],
     ["Computer Vision", "", ""],
     ["HPC", "", ""],
     ["Parallel Computing", "", ""],

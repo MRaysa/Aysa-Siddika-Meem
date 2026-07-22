@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { FiHash } from "react-icons/fi";
 import { skillsApi } from "../../../lib/api";
 import { renderIcon } from "../../../lib/icons";
 import { SectionLabel, GridBg } from "../../ui/term";
@@ -60,7 +61,7 @@ const fallbackGroups = {
   ],
   "AI & Research": [
     ["AI Integration", "SiOpenai", "text-emerald-500"],
-    ["Machine Learning", "", ""],
+    ["Machine Learning", "https://cdn-icons-png.flaticon.com/512/7017/7017557.png", ""],
     ["Computer Vision", "", ""],
     ["HPC", "", ""],
     ["Parallel Computing", "", ""],
@@ -103,40 +104,62 @@ function groupByCategory(list) {
   return [...ordered, ...extras].map((cat) => ({ cat, items: groups[cat] }));
 }
 
-const Chip = ({ skill }) => {
-  const icon = renderIcon(skill.icon, {
-    className: `${skill.iconColor || "text-[var(--muted)]"} text-base`,
-  });
-  return (
-    <motion.span
-      whileHover={{ y: -2 }}
-      className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 font-mono text-xs text-[var(--fg)] transition-colors hover:border-[var(--accent)]"
-    >
-      {icon}
-      {skill.name}
-    </motion.span>
-  );
-};
-
-const CategoryCard = ({ cat, items, index }) => (
+// One dependency-tree branch (a category and its skills).
+const Branch = ({ cat, items, index, isLastBranch }) => (
   <motion.div
-    initial={{ opacity: 0, y: 24 }}
+    initial={{ opacity: 0, y: 16 }}
     whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.45, delay: index * 0.06 }}
+    transition={{ duration: 0.4, delay: index * 0.05 }}
     viewport={{ once: true, margin: "-40px" }}
-    className="card p-5"
+    className="font-mono text-sm"
   >
-    <div className="mb-4 flex items-center gap-2 font-mono text-sm">
-      <span className="text-[var(--accent)]">#</span>
-      <span className="font-semibold text-[var(--fg-strong)] lowercase">
-        {cat}
+    {/* branch header */}
+    <div className="flex items-center gap-1.5">
+      <span className="select-none text-[var(--faint)]">
+        {isLastBranch ? "└─┬" : "├─┬"}
       </span>
-      <span className="ml-auto text-[var(--faint)]">{items.length}</span>
+      <span className="font-semibold text-[var(--accent)] lowercase">
+        {cat.replace(/\s+/g, "-")}
+      </span>
+      <span className="text-[var(--faint)]">@{items.length}</span>
     </div>
-    <div className="flex flex-wrap gap-2">
-      {items.map((s, i) => (
-        <Chip key={`${s.name}-${i}`} skill={s} />
-      ))}
+
+    {/* leaves */}
+    <div className="mt-0.5">
+      {items.map((s, i) => {
+        const last = i === items.length - 1;
+        // icon can be: an image URL, a react-icons name, or empty.
+        // Concepts with no logo fall back to a neutral marker.
+        const isUrl = s.icon && /^https?:\/\//.test(s.icon);
+        const icon = isUrl ? (
+          <img
+            src={s.icon}
+            alt=""
+            className="h-4 w-4 shrink-0 object-contain"
+          />
+        ) : (
+          renderIcon(s.icon, {
+            className: `${s.iconColor || "text-[var(--muted)]"} shrink-0`,
+          }) || <FiHash size={12} className="text-[var(--faint)] shrink-0" />
+        );
+        return (
+          <div
+            key={`${s.name}-${i}`}
+            className="group flex items-center gap-2 rounded px-1 py-[3px] transition-colors hover:bg-[var(--surface-2)]"
+          >
+            <span className="select-none text-[var(--faint)]">
+              {isLastBranch ? "  " : "│ "}
+              {last ? "└──" : "├──"}
+            </span>
+            <span className="flex h-4 w-4 items-center justify-center">
+              {icon}
+            </span>
+            <span className="text-[var(--muted)] transition-colors group-hover:text-[var(--fg)]">
+              {s.name}
+            </span>
+          </div>
+        );
+      })}
     </div>
   </motion.div>
 );
@@ -156,20 +179,58 @@ const Skills = () => {
       .catch((err) => console.error("Skills load failed:", err));
   }, []);
 
+  const total = grouped.reduce((n, g) => n + g.items.length, 0);
+
   return (
     <section id="skills" className="relative overflow-hidden py-24">
       <GridBg glow={false} />
       <div className="relative z-10 mx-auto max-w-6xl px-5">
         <SectionLabel
-          name="cat skills.json"
+          name="npm ls --stack"
           title="Tech Stack"
-          description="Languages, frameworks and tools I use to design and ship software."
+          description="My working dependency tree — languages, frameworks and tools I ship with."
         />
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {grouped.map(({ cat, items }, i) => (
-            <CategoryCard key={cat} cat={cat} items={items} index={i} />
-          ))}
+        <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl">
+          {/* window bar */}
+          <div className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5">
+            <span className="term-dot bg-[#ff5f56]" />
+            <span className="term-dot bg-[#ffbd2e]" />
+            <span className="term-dot bg-[#27c93f]" />
+            <span className="ml-3 font-mono text-xs text-[var(--muted)]">
+              zsh — npm ls
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6">
+            {/* command + root */}
+            <div className="mb-4 font-mono text-sm">
+              <div className="flex gap-2">
+                <span className="text-[var(--accent)]">$</span>
+                <span className="text-[var(--fg)]">npm ls --stack --all</span>
+              </div>
+              <div className="mt-2 text-[var(--fg-strong)]">
+                aysa-siddika-meem
+                <span className="text-[var(--faint)]">@stack</span>{" "}
+                <span className="text-[var(--faint)]">
+                  ({total} dependencies)
+                </span>
+              </div>
+            </div>
+
+            {/* branches grid */}
+            <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+              {grouped.map(({ cat, items }, i) => (
+                <Branch
+                  key={cat}
+                  cat={cat}
+                  items={items}
+                  index={i}
+                  isLastBranch={i === grouped.length - 1}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
