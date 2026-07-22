@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FiMapPin, FiClock } from "react-icons/fi";
 import { experienceApi } from "../../../lib/api";
 import { SectionLabel, GridBg } from "../../ui/term";
 
@@ -49,93 +48,115 @@ const fallbackExperiences = [
   },
 ];
 
-// git-style scope from company name, e.g. "nafcorp"
-const scope = (company) =>
-  (company || "").toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 10);
+// deterministic short commit hash from a string
+const shortHash = (str = "") => {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  return h.toString(16).padStart(7, "0").slice(0, 7);
+};
 
-const CommitEntry = ({ exp, index, isLast }) => (
-  <motion.div
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    viewport={{ once: true, margin: "-60px" }}
-    className="relative pl-8"
-  >
-    {/* timeline line + node */}
-    {!isLast && (
-      <span className="absolute left-[7px] top-4 h-full w-px bg-[var(--border)]" />
-    )}
-    <span
-      className={`absolute left-0 top-2 flex h-4 w-4 items-center justify-center rounded-full border-2 ${
-        exp.current
-          ? "border-[var(--accent)] bg-[var(--accent)]"
-          : "border-[var(--border-strong)] bg-[var(--bg)]"
-      }`}
+const scope = (company = "") =>
+  company.toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 10);
+
+const Commit = ({ exp, index, isLast }) => {
+  const hash = shortHash(exp.company + exp.title);
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -16 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.45, delay: index * 0.08 }}
+      viewport={{ once: true, margin: "-60px" }}
+      className="group flex gap-4"
     >
-      {exp.current && (
-        <span className="absolute h-4 w-4 animate-ping rounded-full bg-[var(--accent)] opacity-50" />
-      )}
-    </span>
+      {/* graph rail */}
+      <div className="flex flex-col items-center pt-1">
+        <span
+          className={`relative flex h-4 w-4 items-center justify-center rounded-full border-2 ${
+            exp.current
+              ? "border-[var(--accent)] bg-[var(--accent)]"
+              : "border-[var(--border-strong)] bg-[var(--bg)]"
+          }`}
+        >
+          {exp.current && (
+            <span className="absolute h-4 w-4 animate-ping rounded-full bg-[var(--accent)] opacity-40" />
+          )}
+        </span>
+        {!isLast && <span className="mt-1 w-px flex-1 bg-[var(--border)]" />}
+      </div>
 
-    <div className="card p-5 sm:p-6">
-      {/* commit header */}
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <div className="font-mono text-sm">
+      {/* commit body */}
+      <div className="flex-1 pb-9 font-mono text-sm leading-relaxed">
+        {/* commit hash + refs */}
+        <div className="flex flex-wrap items-center gap-x-2">
+          <span className="text-[var(--amber)]">commit {hash}</span>
+          {exp.current ? (
+            <span className="text-[var(--faint)]">
+              (<span className="text-[var(--cyan)]">HEAD -&gt; </span>
+              <span className="text-[var(--accent)]">main</span>
+              <span className="text-[var(--faint)]">, </span>
+              <span className="text-[var(--red)]">origin/main</span>)
+            </span>
+          ) : (
+            <span className="text-[var(--faint)]">
+              (<span className="text-[var(--red)]">origin/main</span>)
+            </span>
+          )}
+        </div>
+
+        {/* author + date */}
+        <div className="text-[var(--muted)]">
+          <span className="text-[var(--faint)]">Author: </span>
+          Aysa Siddika Meem &lt;aysasiddikameem3141@gmail.com&gt;
+        </div>
+        <div className="text-[var(--muted)]">
+          <span className="text-[var(--faint)]">Date:&nbsp;&nbsp; </span>
+          {exp.period}
+          <span className="text-[var(--faint)]">
+            {" "}
+            · {exp.location} · {exp.type}
+          </span>
+        </div>
+
+        {/* commit subject */}
+        <div className="mt-3 pl-4">
           <span className="text-[var(--accent)]">feat</span>
           <span className="text-[var(--faint)]">(</span>
           <span className="text-[var(--amber)]">{scope(exp.company)}</span>
-          <span className="text-[var(--faint)]">):</span>{" "}
+          <span className="text-[var(--faint)]">): </span>
           <span className="font-semibold text-[var(--fg-strong)]">
             {exp.title}
           </span>
+          <span className="text-[var(--muted)]"> @ {exp.company}</span>
         </div>
-        {exp.current && (
-          <span className="rounded border border-[var(--accent)] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-[var(--accent)]">
-            HEAD
-          </span>
-        )}
-      </div>
 
-      {/* meta */}
-      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs text-[var(--muted)]">
-        <span className="text-[var(--blue)]">@ {exp.company}</span>
-        <span className="inline-flex items-center gap-1">
-          <FiMapPin size={12} /> {exp.location}
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <FiClock size={12} /> {exp.period}
-        </span>
-        {exp.type && (
-          <span className="text-[var(--faint)]">· {exp.type}</span>
-        )}
-      </div>
-
-      {/* diff-style bullets */}
-      <ul className="mt-4 space-y-1.5 font-mono text-sm">
-        {(exp.description || []).map((d, i) => (
-          <li key={i} className="flex gap-2">
-            <span className="select-none text-[var(--accent)]">+</span>
-            <span className="text-[var(--muted)]">{d}</span>
-          </li>
-        ))}
-      </ul>
-
-      {/* tech tags */}
-      {exp.technologies?.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {exp.technologies.map((t) => (
-            <span
-              key={t}
-              className="rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-2 py-0.5 font-mono text-xs text-[var(--muted)]"
-            >
-              {t}
-            </span>
+        {/* body bullets */}
+        <div className="mt-2 space-y-1 pl-4">
+          {(exp.description || []).map((d, i) => (
+            <div key={i} className="flex gap-2 text-[var(--muted)]">
+              <span className="select-none text-[var(--faint)]">-</span>
+              <span>{d}</span>
+            </div>
           ))}
         </div>
-      )}
-    </div>
-  </motion.div>
-);
+
+        {/* tech footer */}
+        {exp.technologies?.length > 0 && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 pl-4">
+            <span className="text-[var(--faint)]">stack:</span>
+            {exp.technologies.map((t) => (
+              <span
+                key={t}
+                className="rounded border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-0.5 text-xs text-[var(--muted)] transition-colors group-hover:border-[var(--border-strong)]"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
 
 const Experience = () => {
   const [experiences, setExperiences] = useState(fallbackExperiences);
@@ -152,22 +173,44 @@ const Experience = () => {
   return (
     <section id="experience" className="relative overflow-hidden py-24">
       <GridBg glow={false} />
-      <div className="relative z-10 mx-auto max-w-4xl px-5">
+      <div className="relative z-10 mx-auto max-w-6xl px-5">
         <SectionLabel
           name="git log --experience"
           title="Experience"
-          description="Roles where I've shipped real products for real users."
+          description="My commit history — roles where I've shipped real products for real users."
         />
 
-        <div className="space-y-6">
-          {experiences.map((exp, i) => (
-            <CommitEntry
-              key={exp._id || i}
-              exp={exp}
-              index={i}
-              isLast={i === experiences.length - 1}
-            />
-          ))}
+        <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl">
+          {/* window bar */}
+          <div className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5">
+            <span className="term-dot bg-[#ff5f56]" />
+            <span className="term-dot bg-[#ffbd2e]" />
+            <span className="term-dot bg-[#27c93f]" />
+            <span className="ml-3 font-mono text-xs text-[var(--muted)]">
+              zsh — git log
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6">
+            {/* command */}
+            <div className="mb-6 flex gap-2 font-mono text-sm">
+              <span className="text-[var(--accent)]">$</span>
+              <span className="text-[var(--fg)]">
+                git log --graph --decorate --author="Aysa"
+              </span>
+            </div>
+
+            <div>
+              {experiences.map((exp, i) => (
+                <Commit
+                  key={exp._id || i}
+                  exp={exp}
+                  index={i}
+                  isLast={i === experiences.length - 1}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
