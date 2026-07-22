@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FiAward } from "react-icons/fi";
+import { FiCheck, FiAward } from "react-icons/fi";
 import { educationApi } from "../../../lib/api";
 import { renderIcon } from "../../../lib/icons";
 import { SectionLabel, GridBg } from "../../ui/term";
@@ -42,64 +42,102 @@ const fallbackEducation = [
   },
 ];
 
-const EduEntry = ({ edu, index, isLast }) => (
-  <motion.div
-    initial={{ opacity: 0, x: -20 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    viewport={{ once: true, margin: "-60px" }}
-    className="relative pl-8"
-  >
-    {!isLast && (
-      <span className="absolute left-[7px] top-4 h-full w-px bg-[var(--border)]" />
-    )}
-    <span className="absolute left-0 top-2 h-4 w-4 rounded-full border-2 border-[var(--border-strong)] bg-[var(--bg)]" />
+const jobName = (degree = "") =>
+  degree
+    .toLowerCase()
+    .replace(/\(.*?\)/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 22);
 
-    <div className="card p-5 sm:p-6">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <div className="flex items-start gap-3">
-          <span className="mt-0.5 shrink-0">
-            {renderIcon(edu.icon, {
-              className: `${edu.iconColor || "text-[var(--accent)]"}`,
-              size: 20,
-            })}
-          </span>
-          <div>
-            <h3 className="font-mono font-semibold text-[var(--fg-strong)]">
-              {edu.degree}
-            </h3>
-            <p className="mt-0.5 font-mono text-sm text-[var(--blue)]">
-              {edu.institution}
-            </p>
-          </div>
-        </div>
-        <span className="rounded border border-[var(--border)] px-2 py-0.5 font-mono text-xs text-[var(--muted)]">
-          {edu.year}
+const Stage = ({ edu, index, isLast }) => {
+  const running = /present|pursuing|current/i.test(
+    `${edu.year} ${edu.details}`
+  );
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: index * 0.1 }}
+      viewport={{ once: true, margin: "-50px" }}
+      className="group flex gap-4"
+    >
+      {/* status rail */}
+      <div className="flex flex-col items-center pt-0.5">
+        <span
+          className={`relative flex h-6 w-6 items-center justify-center rounded-md border font-mono text-xs ${
+            running
+              ? "border-[var(--accent)] text-[var(--accent)]"
+              : "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-fg)]"
+          }`}
+        >
+          {running ? (
+            <motion.span
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
+              className="inline-block h-3 w-3 rounded-full border-2 border-[var(--accent)] border-t-transparent"
+            />
+          ) : (
+            <FiCheck size={14} strokeWidth={3} />
+          )}
         </span>
+        {!isLast && <span className="mt-1 w-px flex-1 bg-[var(--border)]" />}
       </div>
 
-      {edu.details && (
-        <p className="mt-3 pl-8 font-mono text-sm text-[var(--muted)]">
-          {edu.details}
-        </p>
-      )}
+      {/* stage body */}
+      <div className="flex-1 pb-8 font-mono text-sm">
+        {/* leader row */}
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <span className="flex items-center gap-2">
+            {renderIcon(edu.icon, {
+              className: `${edu.iconColor || "text-[var(--accent)]"}`,
+              size: 15,
+            })}
+            <span className="font-semibold text-[var(--fg-strong)]">
+              {jobName(edu.degree)}
+            </span>
+          </span>
+          <span className="hidden flex-1 border-b border-dotted border-[var(--border)] sm:block" />
+          <span className="text-[var(--faint)]">{edu.year}</span>
+          <span
+            className={`rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
+              running
+                ? "bg-[var(--accent)]/15 text-[var(--accent)]"
+                : "bg-[var(--accent)]/10 text-[var(--accent)]"
+            }`}
+          >
+            {running ? "running" : "passed"}
+          </span>
+        </div>
 
-      {edu.achievements?.length > 0 && (
-        <ul className="mt-3 space-y-1 pl-8">
-          {edu.achievements.map((a, i) => (
-            <li
-              key={i}
-              className="flex items-center gap-2 text-sm text-[var(--muted)]"
-            >
-              <FiAward className="shrink-0 text-[var(--amber)]" size={13} />
-              {a}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  </motion.div>
-);
+        {/* full degree + institution */}
+        <p className="mt-2 text-[var(--fg)]">{edu.degree}</p>
+        <p className="text-[var(--blue)]">{edu.institution}</p>
+        {edu.details && (
+          <p className="mt-1 text-[var(--muted)]">
+            <span className="text-[var(--faint)]">→ </span>
+            {edu.details}
+          </p>
+        )}
+
+        {/* achievements */}
+        {edu.achievements?.length > 0 && (
+          <div className="mt-3 space-y-1">
+            {edu.achievements.map((a, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 text-[var(--muted)]"
+              >
+                <FiAward size={12} className="shrink-0 text-[var(--amber)]" />
+                {a}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
 
 const Education = () => {
   const [items, setItems] = useState(fallbackEducation);
@@ -116,22 +154,59 @@ const Education = () => {
   return (
     <section id="educations" className="relative overflow-hidden py-24">
       <GridBg glow={false} />
-      <div className="relative z-10 mx-auto max-w-4xl px-5">
+      <div className="relative z-10 mx-auto max-w-6xl px-5">
         <SectionLabel
-          name="cat education.log"
+          name="./pipeline run education.yml"
           title="Education"
-          description="Academic background in Computer Science & Engineering."
+          description="My academic journey — each milestone, a stage that passed."
         />
 
-        <div className="space-y-6">
-          {items.map((edu, i) => (
-            <EduEntry
-              key={edu._id || i}
-              edu={edu}
-              index={i}
-              isLast={i === items.length - 1}
-            />
-          ))}
+        <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl">
+          {/* window bar */}
+          <div className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5">
+            <span className="term-dot bg-[#ff5f56]" />
+            <span className="term-dot bg-[#ffbd2e]" />
+            <span className="term-dot bg-[#27c93f]" />
+            <span className="ml-3 font-mono text-xs text-[var(--muted)]">
+              zsh — academic.pipeline
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6">
+            {/* command + summary */}
+            <div className="mb-6 font-mono text-sm">
+              <div className="flex gap-2">
+                <span className="text-[var(--accent)]">$</span>
+                <span className="text-[var(--fg)]">
+                  ./pipeline run education.yml
+                </span>
+              </div>
+              <div className="mt-2 text-[var(--muted)]">
+                <span className="text-[var(--accent)]">▶</span> education.target
+                <span className="text-[var(--faint)]">
+                  {" "}
+                  · {items.length} stages · CGPA 3.82/4.00
+                </span>
+              </div>
+            </div>
+
+            <div>
+              {items.map((edu, i) => (
+                <Stage
+                  key={edu._id || i}
+                  edu={edu}
+                  index={i}
+                  isLast={i === items.length - 1}
+                />
+              ))}
+            </div>
+
+            {/* footer */}
+            <div className="mt-2 flex items-center gap-2 font-mono text-sm text-[var(--accent)]">
+              <FiCheck size={14} strokeWidth={3} />
+              pipeline finished · academic excellence maintained
+            </div>
+          </div>
         </div>
       </div>
     </section>
