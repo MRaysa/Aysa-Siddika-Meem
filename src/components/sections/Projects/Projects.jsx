@@ -36,6 +36,39 @@ const LANG_COLORS = {
 const langColor = (p) =>
   LANG_COLORS[(p.techIcons || [])[0]] || "var(--accent)";
 
+const hostname = (url) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "localhost:3000";
+  }
+};
+
+// Browser mockup that shows a full-page screenshot; on hover the image
+// slowly scrolls from top to bottom so nothing is permanently cropped.
+const BrowserPreview = ({ src, url }) => (
+  <div className="mb-6 overflow-hidden rounded-lg border border-[var(--border)] shadow-lg">
+    <div className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-3 py-2">
+      <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+      <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+      <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+      <div className="ml-2 flex-1 truncate rounded bg-[var(--bg)] px-2.5 py-1 font-mono text-[10px] text-[var(--faint)]">
+        {url ? hostname(url) : "preview"}
+      </div>
+    </div>
+    <div className="group relative h-60 overflow-hidden bg-[var(--surface-2)]">
+      <img
+        src={src}
+        alt="preview"
+        className="absolute inset-x-0 top-0 w-full transition-transform duration-[3500ms] ease-linear group-hover:[transform:translateY(calc(-100%+15rem))]"
+      />
+      <span className="pointer-events-none absolute bottom-2 right-2 rounded bg-black/60 px-2 py-0.5 font-mono text-[10px] text-white/80 opacity-0 transition-opacity group-hover:opacity-100">
+        hover to scroll ↓
+      </span>
+    </div>
+  </div>
+);
+
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -182,13 +215,7 @@ const Projects = () => {
                       className="flex-1 overflow-y-auto p-6 lg:max-h-[520px]"
                     >
                       {active.image && (
-                        <div className="mb-5 overflow-hidden rounded-lg border border-[var(--border)]">
-                          <img
-                            src={active.image}
-                            alt={active.title}
-                            className="max-h-56 w-full object-cover"
-                          />
-                        </div>
+                        <BrowserPreview src={active.image} url={active.live} />
                       )}
 
                       <h3 className="flex items-center gap-2 font-mono text-2xl font-bold text-[var(--fg-strong)]">
