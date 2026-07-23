@@ -1,5 +1,29 @@
 [
   {
+    "id": 1,
+    "title": "AI Translator",
+    "description": "A full AI language studio running on the edge — 240+ languages, tone modes, 12 AI tools, chat and text-to-speech, all in a single Cloudflare Worker.",
+    "tags": ["Cloudflare Workers", "Hono", "OpenAI", "Zod", "PWA", "Edge"],
+    "category": "Full Stack",
+    "image": "/AI-Translator.png",
+    "github": "https://github.com/MRaysa/AI-Translator",
+    "live": "https://translator-app.aysasiddikameem3141.workers.dev",
+    "techIcons": ["SiCloudflare", "SiOpenai", "SiJavascript"],
+    "accentColor": "bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500",
+    "details": {
+      "features": [
+        "240+ languages with auto-detect, searchable pickers & country flags",
+        "6 tone modes + 7 domain contexts (Business, Legal, Medical…)",
+        "12 one-click AI tools — Improve, Summarize, Email/Social, Simplify, Fix Grammar, Reverse-check with similarity %",
+        "AI chat about any translation + a floating 'Lingo' assistant",
+        "Text-to-speech, history & drafts, PWA install, light/dark themes",
+        "Edge-native: one Worker serves the UI + versioned /api/v1, key kept fully server-side"
+      ],
+      "challenges": "Serving a static UI and a JSON API from a single Cloudflare Worker while keeping the OpenAI key fully server-side and secure.",
+      "solutions": "Edge-native architecture with Hono + Zod validation, a bundler-free build assembling HTML/CSS partials, security headers (CSP/HSTS), rate limiting, and CI with lint + 23 Vitest tests."
+    }
+  },
+  {
     "id": 3,
     "title": "Gardening Tips Application",
     "description": "Full-stack web application for managing public and private gardening tips",
