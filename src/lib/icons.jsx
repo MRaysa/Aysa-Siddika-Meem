@@ -51,6 +51,7 @@ import {
   SiOpenai,
   SiAxios,
   SiCloudflare,
+  SiVuedotjs,
 } from "react-icons/si";
 import { TbBrandNextjs, TbBrandReact, TbDatabase } from "react-icons/tb";
 import { GiDiploma, GiBrain } from "react-icons/gi";
@@ -105,6 +106,7 @@ const ICONS = {
   SiOpenai,
   SiAxios,
   SiCloudflare,
+  SiVuedotjs,
   // Tb
   TbBrandNextjs,
   TbBrandReact,
