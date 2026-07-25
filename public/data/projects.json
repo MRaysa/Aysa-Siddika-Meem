@@ -1,5 +1,80 @@
 [
   {
+    "id": 0,
+    "title": "Aynova Stream",
+    "description": "A full-stack, production-grade live sports streaming platform — football, cricket, UFC, F1 and more in HD — with a real-time match feed, a DRM-capable video player, an installable PWA, and a complete admin dashboard.",
+    "tags": ["Vue 3", "Vite", "Pinia", "Node.js", "Express", "MongoDB", "PWA", "Shaka Player"],
+    "category": "Full Stack",
+    "image": "/aynova-streem.png",
+    "github": "https://github.com/MRaysa/AYNOVA-STREAM",
+    "live": "https://aynovastream.vercel.app/",
+    "techIcons": ["SiVuedotjs", "SiNodedotjs", "SiMongodb"],
+    "accentColor": "bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600",
+    "details": {
+      "features": [
+        "Live & upcoming match dashboard — auto-categorized Live / Upcoming / Ended with live countdowns",
+        "Multi-sport: football, cricket, basketball, tennis, F1, UFC/MMA + a FIFA World Cup spotlight",
+        "Resilient video player (Shaka Player + hls.js) — HLS, DASH & DRM streams, multi-server/quality switching",
+        "Branded Live TV channel grid with dedicated watch pages",
+        "Installable PWA — home-screen install, full-screen launch, Android-TV / D-pad remote support",
+        "Full admin dashboard — pin/hide/banner/override matches, channels, ads, API config & cron scheduler",
+        "JWT-authenticated admin with protected routes"
+      ],
+      "challenges": "Building a resilient site on top of an unreliable third-party sports feed — a provider timeout used to blank out all matches and their streams.",
+      "solutions": "A two-cache design keeps the raw provider payload and the normalized matches separate, preserving the last-good set; admin overrides (pin/hide/banner/custom links) are merged onto the live feed at request time; and the Express app is serverless-aware (pooled Mongo connection, cron guarded behind VERCEL)."
+    }
+  },
+  {
+    "id": 1,
+    "title": "AI Translator",
+    "description": "A full AI language studio running on the edge — 240+ languages, tone modes, 12 AI tools, chat and text-to-speech, all in a single Cloudflare Worker.",
+    "tags": ["Cloudflare Workers", "Hono", "OpenAI", "Zod", "PWA", "Edge"],
+    "category": "Full Stack",
+    "image": "/AI-Translator.png",
+    "github": "https://github.com/MRaysa/AI-Translator",
+    "live": "",
+    "techIcons": ["SiCloudflare", "SiOpenai", "SiJavascript"],
+    "accentColor": "bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500",
+    "details": {
+      "features": [
+        "240+ languages with auto-detect, searchable pickers & country flags",
+        "6 tone modes + 7 domain contexts (Business, Legal, Medical…)",
+        "12 one-click AI tools — Improve, Summarize, Email/Social, Simplify, Fix Grammar, Reverse-check with similarity %",
+        "AI chat about any translation + a floating 'Lingo' assistant",
+        "Text-to-speech, history & drafts, PWA install, light/dark themes",
+        "Edge-native: one Worker serves the UI + versioned /api/v1, key kept fully server-side"
+      ],
+      "challenges": "Serving a static UI and a JSON API from a single Cloudflare Worker while keeping the OpenAI key fully server-side and secure.",
+      "solutions": "Edge-native architecture with Hono + Zod validation, a bundler-free build assembling HTML/CSS partials, security headers (CSP/HSTS), rate limiting, and CI with lint + 23 Vitest tests."
+    }
+  },
+  {
+    "id": 2,
+    "title": "AstroVision",
+    "description": "A full-stack astronomy research tool to view and analyze astronomical FITS images — interactive viewer, statistics, histograms, image processing, and edge & star detection powered by Astropy & Photutils.",
+    "tags": ["Next.js", "TypeScript", "FastAPI", "Astropy", "Photutils", "OpenCV"],
+    "category": "Full Stack",
+    "image": "/AstroVision.png",
+    "github": "https://github.com/MRaysa/AstroVision",
+    "live": "",
+    "techIcons": ["SiNextdotjs", "SiTypescript", "SiPython"],
+    "accentColor": "bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600",
+    "details": {
+      "features": [
+        "Interactive FITS viewer — zoom, pan, fullscreen, live pixel coordinate & intensity readout",
+        "Statistics & interactive zoomable histogram (mean, median, std-dev, dynamic range)",
+        "Searchable full FITS header / metadata panel (telescope, instrument, exposure, filter)",
+        "Image processing — brightness, contrast, gamma, normalize, invert, blur, sharpen",
+        "Edge detection (Sobel, Laplacian, Canny) & star detection via Photutils DAOFIND",
+        "Side-by-side comparison view with a draggable divider",
+        "Export PNG/JPEG renders, statistics & histogram CSV, metadata JSON",
+        "One-click bundled sample datasets (nebula, galaxies, lunar terrain, star fields)"
+      ],
+      "challenges": "Handling large scientific FITS images efficiently while keeping the browser fast and rendering them the way professional astronomy software does.",
+      "solutions": "Two-tier architecture — a Python FastAPI backend (Astropy, NumPy, SciPy, OpenCV, Photutils) parses FITS and returns display-ready PNGs over a typed JSON API, using a ZScale interval + asinh stretch for realistic rendering, while the Next.js / TypeScript frontend stays lightweight."
+    }
+  },
+  {
     "id": 3,
     "title": "Gardening Tips Application",
     "description": "Full-stack web application for managing public and private gardening tips",

@@ -1,346 +1,220 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
-import { FiMail, FiMapPin, FiPhone, FiSend, FiCheck } from "react-icons/fi";
-import { FaTelegramPlane, FaWhatsapp } from "react-icons/fa";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FiGithub,
+  FiLinkedin,
+  FiArrowRight,
+  FiCheckCircle,
+} from "react-icons/fi";
+import { FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
+import { SectionLabel, GridBg } from "../../ui/term";
+
+const CONFIG = [
+  ["EMAIL", "aysasiddikameem3141@gmail.com", "mailto:aysasiddikameem3141@gmail.com"],
+  ["PHONE", "+880 1647760804", "tel:+8801647760804"],
+  ["LOCATION", "Dhaka, Bangladesh", null],
+  ["TIMEZONE", "GMT+6", null],
+  ["STATUS", "open to work", null],
+];
+
+const SOCIALS = [
+  { icon: <FiGithub />, url: "https://github.com/MRaysa", label: "github" },
+  { icon: <FiLinkedin />, url: "https://www.linkedin.com/in/mst-aysa-siddika-meem/", label: "linkedin" },
+  { icon: <FaWhatsapp />, url: "https://wa.me/8801647760804", label: "whatsapp" },
+  { icon: <FaTelegramPlane />, url: "https://t.me/aysasiddikameem", label: "telegram" },
+];
+
+const field =
+  "w-full rounded-md border border-[var(--border)] bg-[var(--bg-alt)] px-3 py-2 font-mono text-sm text-[var(--fg)] outline-none transition-colors placeholder:text-[var(--faint)] focus:border-[var(--accent)]";
 
 const Contact = () => {
-  const controls = useAnimation();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle"); // idle | sending | sent
 
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [isInView, controls]);
+  const change = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  return (
-    <div
-      id="contact"
-      ref={ref}
-      className="relative min-h-screen overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800 snap-start"
-    >
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full opacity-10"
-            style={{
-              width: Math.random() * 300 + 100,
-              height: Math.random() * 300 + 100,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: `radial-gradient(circle, #3b82f6, transparent 70%)`,
-            }}
-            animate={{
-              x: [0, Math.random() * 200 - 100],
-              y: [0, Math.random() * 200 - 100],
-              rotate: [0, Math.random() * 360],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="container mx-auto px-6 py-32 relative z-10">
-        <motion.div
-          initial="hidden"
-          animate={controls}
-          variants={containerVariants}
-          className="flex flex-col lg:flex-row items-center justify-between gap-12 min-h-[70vh]"
-        >
-          {/* Contact Info */}
-          <motion.div variants={itemVariants} className="lg:w-1/2 space-y-8">
-            <motion.h2
-              variants={itemVariants}
-              className="text-4xl md:text-5xl font-bold"
-            >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-                Let's Connect
-              </span>
-            </motion.h2>
-
-            <motion.p
-              variants={itemVariants}
-              className="text-xl text-gray-600 dark:text-gray-300"
-            >
-              Have a project in mind or want to discuss opportunities? Feel free
-              to reach out!
-            </motion.p>
-
-            <motion.div variants={itemVariants} className="space-y-6">
-              <ContactInfoItem
-                icon={<FiMail className="text-blue-500" size={24} />}
-                title="Email"
-                value="aysasiddikameem3141@gmail.com"
-                link="mailto:aysasiddikameem3141@gmail.com"
-              />
-              <ContactInfoItem
-                icon={<FiPhone className="text-green-500" size={24} />}
-                title="Phone"
-                value="+880 1617272980"
-                link="tel:+8801617272980"
-              />
-              <ContactInfoItem
-                icon={<FiMapPin className="text-purple-500" size={24} />}
-                title="Location"
-                value="Dhaka, Bangladesh"
-              />
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="flex gap-4 pt-4">
-              <motion.a
-                href="https://wa.me/8801617272980"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 bg-green-500 text-white rounded-full shadow-lg"
-              >
-                <FaWhatsapp size={24} />
-              </motion.a>
-              <motion.a
-                href="https://t.me/aysasiddikameem"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 bg-blue-400 text-white rounded-full shadow-lg"
-              >
-                <FaTelegramPlane size={24} />
-              </motion.a>
-            </motion.div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div variants={itemVariants} className="w-full lg:w-1/2">
-            <ContactForm />
-          </motion.div>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const ContactInfoItem = ({ icon, title, value, link }) => {
-  return (
-    <motion.div
-      whileHover={{ x: 5 }}
-      className="flex items-start gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
-    >
-      <div className="p-2 bg-blue-50 dark:bg-gray-700 rounded-lg">{icon}</div>
-      <div>
-        <h3 className="text-gray-500 dark:text-gray-400 text-sm">{title}</h3>
-        {link ? (
-          <a
-            href={link}
-            className="text-lg font-medium text-gray-800 dark:text-gray-200 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
-          >
-            {value}
-          </a>
-        ) : (
-          <p className="text-lg font-medium text-gray-800 dark:text-gray-200">
-            {value}
-          </p>
-        )}
-      </div>
-    </motion.div>
-  );
-};
-
-const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
+    setStatus("sending");
+    // NOTE: currently simulated. Wire to EmailJS/API to actually deliver.
     setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
-
-      // Reset success message after 3 seconds
-      setTimeout(() => setIsSuccess(false), 3000);
-    }, 1500);
+      setStatus("sent");
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    }, 1200);
   };
 
   return (
-    <motion.div whileHover={{ y: -5 }} className="relative">
-      {/* Form background layers */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-3xl shadow-lg transform rotate-2"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl shadow-lg transform -rotate-2"></div>
-      </div>
+    <section id="contact" className="relative overflow-hidden py-24">
+      <GridBg />
+      <div className="relative z-10 mx-auto max-w-6xl px-5">
+        <SectionLabel
+          name="./contact --send"
+          title="Get In Touch"
+          description="Open to software engineering & research roles — let's build something."
+        />
 
-      {/* Glow effect */}
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="absolute -inset-4 bg-blue-500/10 dark:bg-blue-600/10 rounded-3xl blur-md"
-      />
-
-      {/* Main form */}
-      <div className="relative p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-lg border-2 border-white/20">
-        <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-          Send me a message
-        </h3>
-
-        {isSuccess ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-lg flex items-center gap-3 mb-6"
-          >
-            <FiCheck className="text-green-500" size={20} />
-            <span>Your message has been sent successfully!</span>
-          </motion.div>
-        ) : null}
-
-        <form onSubmit={handleSubmit}>
-          <div className="space-y-5">
-            <motion.div whileFocus={{ scale: 1.02 }} className="relative">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-              >
-                Your Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              />
-            </motion.div>
-
-            <motion.div whileFocus={{ scale: 1.02 }} className="relative">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              />
-            </motion.div>
-
-            <motion.div whileFocus={{ scale: 1.02 }} className="relative">
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
-              >
-                Your Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows="4"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              ></textarea>
-            </motion.div>
-
-            <motion.button
-              type="submit"
-              disabled={isSubmitting}
-              whileHover={!isSubmitting ? { y: -3, scale: 1.02 } : {}}
-              whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-              className={`w-full px-6 py-3 rounded-lg font-medium flex items-center justify-center gap-2 ${
-                isSubmitting
-                  ? "bg-gray-300 dark:bg-gray-600 cursor-not-allowed"
-                  : "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
-              }`}
-            >
-              {isSubmitting ? (
-                <>
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <FiSend size={18} />
-                  Send Message
-                </>
-              )}
-            </motion.button>
+        <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] shadow-2xl">
+          {/* window bar */}
+          <div className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5">
+            <span className="term-dot bg-[#ff5f56]" />
+            <span className="term-dot bg-[#ffbd2e]" />
+            <span className="term-dot bg-[#27c93f]" />
+            <span className="ml-3 font-mono text-xs text-[var(--muted)]">
+              zsh — contact
+            </span>
           </div>
-        </form>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            {/* Left: config */}
+            <div className="border-b border-[var(--border)] p-6 font-mono text-sm lg:border-b-0 lg:border-r">
+              <div className="flex gap-2">
+                <span className="text-[var(--accent)]">$</span>
+                <span className="text-[var(--fg)]">cat contact.config</span>
+              </div>
+
+              <div className="mt-3 space-y-1">
+                {CONFIG.map(([k, v, link]) => (
+                  <div key={k} className="flex flex-wrap gap-x-2">
+                    <span className="w-24 shrink-0 text-[var(--blue)]">{k}</span>
+                    <span className="text-[var(--faint)]">=</span>
+                    {link ? (
+                      <a
+                        href={link}
+                        className="text-[var(--cyan)] transition-colors hover:text-[var(--accent)]"
+                      >
+                        "{v}"
+                      </a>
+                    ) : (
+                      <span className="text-[var(--cyan)]">"{v}"</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 flex gap-2">
+                <span className="text-[var(--accent)]">$</span>
+                <span className="text-[var(--fg)]">ls ./social</span>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {SOCIALS.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-2)] px-3 py-1.5 text-xs text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  >
+                    {s.icon}
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: send-message */}
+            <div className="p-6 font-mono text-sm">
+              <div className="flex gap-2">
+                <span className="text-[var(--accent)]">$</span>
+                <span className="text-[var(--fg)]">./send-message</span>
+              </div>
+
+              <AnimatePresence mode="wait">
+                {status === "sent" ? (
+                  <motion.div
+                    key="response"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="mt-4 space-y-1.5"
+                  >
+                    <p className="text-[var(--muted)]">
+                      <span className="text-[var(--faint)]">&gt; </span>POST
+                      /api/contact
+                    </p>
+                    <p className="text-[var(--muted)]">
+                      <span className="text-[var(--faint)]">&gt; </span>
+                      <span className="text-[var(--accent)]">200 OK</span> ·
+                      message queued
+                    </p>
+                    <p className="mt-3 flex items-center gap-2 text-[var(--accent)]">
+                      <FiCheckCircle /> Thanks! I'll get back to you soon.
+                    </p>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onSubmit={submit}
+                    className="mt-4 space-y-3"
+                  >
+                    <div>
+                      <label className="mb-1 block text-[var(--faint)]">
+                        --name
+                      </label>
+                      <input
+                        name="name"
+                        value={form.name}
+                        onChange={change}
+                        required
+                        placeholder="Jane Doe"
+                        className={field}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-[var(--faint)]">
+                        --email
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={change}
+                        required
+                        placeholder="jane@company.com"
+                        className={field}
+                      />
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-[var(--faint)]">
+                        --message
+                      </label>
+                      <textarea
+                        name="message"
+                        value={form.message}
+                        onChange={change}
+                        required
+                        rows={4}
+                        placeholder="Tell me about the role or project..."
+                        className={`${field} resize-none`}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={status === "sending"}
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-4 py-2.5 font-mono text-sm font-medium text-[var(--accent-fg)] transition-opacity hover:opacity-90 disabled:opacity-60"
+                    >
+                      {status === "sending" ? (
+                        <>
+                          <span className="inline-block h-3.5 w-3.5 rounded-full border-2 border-[var(--accent-fg)] border-t-transparent animate-spin" />
+                          sending...
+                        </>
+                      ) : (
+                        <>
+                          run send <FiArrowRight />
+                        </>
+                      )}
+                    </button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 };
 

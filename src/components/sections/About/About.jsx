@@ -1,497 +1,152 @@
-import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FiGithub, FiLinkedin, FiTwitter, FiFacebook } from "react-icons/fi";
+import { FiClock, FiBriefcase, FiPackage, FiAward } from "react-icons/fi";
+import { SectionLabel, GridBg } from "../../ui/term";
 
-// Animated Number with flip effect
-const FlipNumber = ({ value, isInfinity }) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef(null);
-  const hasAnimated = useRef(false);
+const STATS = [
+  { key: "uptime", value: "2+", label: "years shipping production", icon: <FiClock /> },
+  { key: "clients", value: "3", label: "companies · US & AU", icon: <FiBriefcase /> },
+  { key: "shipped", value: "10+", label: "projects delivered", icon: <FiPackage /> },
+  { key: "gpa", value: "3.82", label: "CGPA / 4.00", icon: <FiAward /> },
+];
 
-  useEffect(() => {
-    if (isInfinity || hasAnimated.current) return;
-    const target = parseInt(value) || 0;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          let current = 0;
-          const increment = target / 40;
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-              setDisplayValue(target);
-              clearInterval(timer);
-            } else {
-              setDisplayValue(Math.floor(current));
-            }
-          }, 50);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [value, isInfinity]);
-
-  if (isInfinity) {
-    return (
-      <motion.span
-        className="text-6xl font-black"
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        ∞
-      </motion.span>
-    );
-  }
-
-  return <span ref={ref}>{displayValue}+</span>;
-};
+// A syntax-highlighted key/value line for the profile object.
+const Field = ({ k, v, accent = "var(--cyan)" }) => (
+  <div className="flex flex-wrap gap-x-2 pl-4">
+    <span className="text-[var(--purple)]">{k}</span>
+    <span className="text-[var(--faint)]">:</span>
+    <span style={{ color: accent }}>{typeof v === "string" ? `"${v}"` : v}</span>
+    <span className="text-[var(--faint)]">,</span>
+  </div>
+);
 
 const About = () => {
-  const [hovered, setHovered] = useState(false);
-  const constraintsRef = useRef(null);
-
-  const achievements = [
-    { number: "3+", text: "Years of Code, Creativity & Curiosity", icon: "🚀" },
-    {
-      number: "50+",
-      text: "Projects from fun side hacks to full-scale web systems",
-      icon: "💻",
-    },
-    {
-      number: "∞",
-      text: "Cups of Tea/Coffee fueling my late-night coding sessions",
-      icon: "☕",
-    },
-  ];
-
-  // const skillCategories = [
-  //   {
-  //     title: "Frontend",
-  //     skills: [
-  //       "React.js",
-  //       "Next.js",
-  //       "TypeScript",
-  //       "Tailwind CSS",
-  //       "JavaScript",
-  //     ],
-  //     icon: "💻",
-  //   },
-  //   {
-  //     title: "Backend",
-  //     skills: [
-  //       "Node.js",
-  //       "Express.js",
-  //       "Django",
-  //       "Python",
-  //       "MongoDB",
-  //       "PostgreSQL",
-  //     ],
-  //     icon: "⚙️",
-  //   },
-  //   {
-  //     title: "Dev Tools",
-  //     skills: ["Git & GitHub", "Vercel", "Netlify", "REST APIs", "Firebase"],
-  //     icon: "🛠️",
-  //   },
-  //   {
-  //     title: "UI/UX",
-  //     skills: ["Figma", "Responsive Design", "Accessibility Standards"],
-  //     icon: "🎨",
-  //   },
-  // ];
-
   return (
-    <section
-      id="about"
-      className="relative py-24 overflow-hidden bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-gray-900 dark:to-gray-800"
-      ref={constraintsRef}
-    >
-      {/* Floating Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            drag
-            dragConstraints={constraintsRef}
-            className="absolute rounded-full opacity-10"
-            style={{
-              width: Math.random() * 300 + 100,
-              height: Math.random() * 300 + 100,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: `radial-gradient(circle, #3b82f6, transparent 70%)`,
-            }}
-            animate={{
-              x: [0, Math.random() * 200 - 100],
-              y: [0, Math.random() * 200 - 100],
-              rotate: [0, Math.random() * 360],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
+    <section id="about" className="relative overflow-hidden py-24">
+      <GridBg glow={false} />
 
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Animated Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-              About Me
-            </span>
-          </h2>
+      <div className="relative z-10 mx-auto max-w-6xl px-5">
+        <SectionLabel
+          name="whoami"
+          title="About"
+          description="Computer Science graduate turned full-stack engineer, focused on building data-driven products that scale."
+        />
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
+          {/* Profile image card */}
           <motion.div
-            className="w-32 h-1 mx-auto bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-          />
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Profile Image Section - Adjusted height and positioning */}
-          <div
-            className="h-[450px] relative rounded-3xl overflow-hidden border-2 border-white/20 shadow-2xl"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+            className="lg:col-span-2"
           >
-            <motion.div
-              className="h-full w-full relative"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <img
-                src="/profile.jpg"
-                alt="Aysa Siddika Meem"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent" />
-              <div className="absolute inset-0 flex items-end p-8">
-                <div>
-                  <motion.h3
-                    className="text-3xl md:text-4xl font-bold text-white mb-2"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    Aysa Siddika Meem
-                  </motion.h3>
-                  <motion.p
-                    className="text-lg md:text-xl text-blue-200"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    Software Engineer 
-                  </motion.p>
-                </div>
+            <div className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]">
+              <div className="flex items-center gap-2 border-b border-[var(--border)] bg-[var(--surface-2)] px-4 py-2.5">
+                <span className="term-dot bg-[#ff5f56]" />
+                <span className="term-dot bg-[#ffbd2e]" />
+                <span className="term-dot bg-[#27c93f]" />
+                <span className="ml-3 font-mono text-xs text-[var(--muted)]">
+                  aysa-siddika-meem.jpeg
+                </span>
               </div>
-            </motion.div>
-
-            {hovered && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="absolute bottom-6 left-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg"
-              >
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                 Full Stack Web Developer • MERN Stack Developer • Problem Solver
-                </p>
-              </motion.div>
-            )}
-          </div>
-
-          {/* Content Section - Adjusted spacing */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6"
-          >
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">
-              I Build <span className="text-blue-500">Digital Experiences</span>{" "}
-              That Inspire
-            </h3>
-
-            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              I'm a Full Stack Developer with a passion for building fast,
-              responsive, and user-centric web applications. My expertise spans
-              frontend artistry (React, Next.js, animations) and backend
-              precision (Node.js, Django, databases), allowing me to craft
-              seamless, end-to-end solutions. I obsess over clean code,
-              intuitive UX, and performance optimization—because great software
-              shouldn't just work; it should delight.
-            </p>
-
-            {/* Personal Mission - Adjusted padding */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-              className="p-5 bg-blue-50/50 dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-gray-700"
-            >
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">💬</span>
-                <div>
-                  <h4 className="font-bold text-blue-600 dark:text-blue-400 mb-2">
-                    Personal Mission:
-                  </h4>
-                  <p className="text-gray-700 dark:text-gray-300 italic">
-                    "I believe the best software doesn't just function — it
-                    tells a story, solves a need, and connects people in
-                    meaningful ways."
+              <div className="relative aspect-[4/5] w-full">
+                <img
+                  src="/aysa.jpeg"
+                  alt="Aysa Siddika Meem"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <p className="font-mono text-sm font-semibold text-white">
+                    Aysa Siddika Meem
+                  </p>
+                  <p className="font-mono text-xs text-white/70">
+                    Full-Stack Software Engineer
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* Formatted Skill Categories - Adjusted spacing */}
-            {/* <div className="space-y-5">
-              {skillCategories.map((category, index) => (
-                <motion.div
-                  key={category.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  viewport={{ once: true }}
-                  className="space-y-2"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">{category.icon}</span>
-                    <h4 className="font-bold text-gray-800 dark:text-gray-200">
-                      {category.title}
-                    </h4>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill, i) => (
-                      <motion.div
-                        key={skill}
-                        whileHover={{
-                          y: -3,
-                          scale: 1.03,
-                          backgroundColor: "#3b82f6",
-                          color: "white",
-                        }}
-                        className="px-3 py-1.5 bg-white dark:bg-gray-800 rounded-full shadow-sm border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-sm cursor-default"
-                      >
-                        {skill}
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div> */}
+          {/* Bio + profile object */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="lg:col-span-3"
+          >
+            <p className="leading-relaxed text-[var(--fg)]">
+              I'm a full-stack software engineer with{" "}
+              <span className="text-[var(--accent)]">2+ years</span> of
+              professional experience building scalable applications for
+              companies across the{" "}
+              <span className="text-[var(--fg-strong)]">US and Australia</span> —
+              multi-tenant SaaS platforms, Stripe billing, AI integrations
+              (OpenAI, Gemini, Claude), and custom CRM systems.
+            </p>
+            <p className="mt-4 leading-relaxed text-[var(--muted)]">
+              I care deeply about clean architecture, type safety, and
+              performance — writing code that's maintainable as much as it works.
+              Alongside engineering, I'm an undergraduate researcher at CCDS,
+              working on geospatial analysis and remote sensing.
+            </p>
 
-            {/* Animated Achievement Cards - Adjusted grid */}
-            {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {achievements.map((item, i) => (
-                <motion.div
-                  key={item.text}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{
-                    y: -5,
-                    boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)",
-                  }}
-                  className="bg-white dark:bg-gray-800 p-3 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 text-center relative overflow-hidden"
-                >
-                  <div className="text-3xl mb-2">{item.icon}</div>
-                  <div className="text-xl font-bold text-blue-500">
-                    {item.number}
-                  </div>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    {item.text}
-                  </div>
-                </motion.div>
-              ))}
-            </div> */}
-
-            {/* Social Links - Adjusted padding */}
-            {/* <div className="flex gap-3 pt-6">
-              {[
-                {
-                  icon: <FiGithub size={20} />,
-                  color: "from-gray-800 to-gray-600",
-                  text: "GitHub",
-                  url: "https://github.com/MRaysa",
-                },
-                {
-                  icon: <FiLinkedin size={20} />,
-                  color: "from-blue-600 to-blue-800",
-                  text: "LinkedIn",
-                  url: "https://www.linkedin.com/in/mst-aysa-siddika-meem/",
-                },
-                {
-                  icon: <FiTwitter size={20} />,
-                  color: "from-sky-400 to-sky-600",
-                  text: "Twitter",
-                  url: "#",
-                },
-                {
-                  icon: <FiFacebook size={20} />,
-                  color: "from-blue-500 to-blue-700",
-                  text: "Facebook",
-                  url: "https://www.facebook.com/muniaislam.meem",
-                },
-              ].map((social, i) => (
-                <motion.a
-                  key={social.text}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + i * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{
-                    y: -5,
-                    scale: 1.1,
-                  }}
-                  className={`bg-gradient-to-r ${social.color} text-white p-3 rounded-full w-12 h-12 flex items-center justify-center relative overflow-hidden shadow-lg`}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {social.icon}
-                </motion.a>
-              ))}
-            </div> */}
+            {/* profile object literal */}
+            <div className="mt-6 overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 font-mono text-sm leading-relaxed">
+              <div>
+                <span className="text-[var(--red)]">const</span>{" "}
+                <span className="text-[var(--blue)]">profile</span>{" "}
+                <span className="text-[var(--faint)]">= {"{"}</span>
+              </div>
+              <Field k="role" v="Full-Stack Software Engineer" />
+              <Field k="location" v="Dhaka, Bangladesh" />
+              <Field k="currentlyAt" v="NAFCORP Technologies (Remote · Australia)" />
+              <Field k="focus" v="SaaS · AI · Scalable APIs" />
+              <Field k="education" v="B.Sc CSE — IUB" />
+              <div className="flex flex-wrap gap-x-2 pl-4">
+                <span className="text-[var(--purple)]">openToWork</span>
+                <span className="text-[var(--faint)]">:</span>
+                <span className="text-[var(--amber)]">true</span>
+                <span className="text-[var(--faint)]">,</span>
+              </div>
+              <div className="text-[var(--faint)]">{"}"}</div>
+            </div>
           </motion.div>
         </div>
-      </div>
-      {/* Achievement Cards - Glassmorphism Style */}
-      <div className="mt-20 px-4 md:px-16 lg:px-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {achievements.map((item, i) => (
+
+        {/* Stats */}
+        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {STATS.map((s, i) => (
             <motion.div
-              key={item.text}
-              initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
-              whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ duration: 0.7, delay: i * 0.2, type: "spring" }}
+              key={s.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05, rotateY: 5 }}
-              className="group perspective-1000"
+              whileHover={{ y: -4 }}
+              className="group relative overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 transition-colors hover:border-[var(--accent)]"
             >
-              <div className="relative p-8 rounded-3xl backdrop-blur-xl bg-white/70 dark:bg-gray-900/50 border border-white/20 dark:border-gray-700/30 shadow-[0_8px_32px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] overflow-hidden">
-                {/* Animated gradient background */}
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(147,51,234,0.1) 50%, rgba(236,72,153,0.1) 100%)",
-                  }}
-                />
-
-                {/* Floating icon */}
-                <motion.div
-                  className="relative z-10 mb-6"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 dark:from-blue-500/30 dark:to-purple-500/30 flex items-center justify-center shadow-lg">
-                    <span className="text-5xl">{item.icon}</span>
-                  </div>
-                </motion.div>
-
-                {/* Number with glow */}
-                <div className="relative z-10 text-center mb-4">
-                  <span className="text-6xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent drop-shadow-sm">
-                    <FlipNumber value={item.number} isInfinity={item.number === "∞"} />
-                  </span>
-                </div>
-
-                {/* Description */}
-                <p className="relative z-10 text-center text-gray-600 dark:text-gray-300 text-sm leading-relaxed font-medium">
-                  {item.text}
-                </p>
-
-                {/* Bottom glow line */}
-                <motion.div
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full group-hover:w-3/4 transition-all duration-500"
-                />
-
-                {/* Corner accents */}
-                <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-blue-400/30 rounded-tr-xl" />
-                <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-purple-400/30 rounded-bl-xl" />
+              {/* faint metric key + icon */}
+              <div className="mb-3 flex items-center justify-between">
+                <span className="font-mono text-xs text-[var(--faint)]">
+                  {s.key}
+                </span>
+                <span className="text-[var(--muted)] transition-colors group-hover:text-[var(--accent)]">
+                  {s.icon}
+                </span>
               </div>
+
+              <div className="font-mono text-4xl font-bold tracking-tight text-[var(--accent)]">
+                {s.value}
+              </div>
+              <div className="mt-1 text-sm text-[var(--muted)]">{s.label}</div>
+
+              {/* hover accent bar */}
+              <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
             </motion.div>
           ))}
         </div>
       </div>
-
-      {/* Social Links Section */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="mt-12 flex justify-center"
-      >
-        <div className="flex gap-4">
-          {[
-            {
-              icon: <FiGithub size={20} />,
-              color: "from-gray-800 to-gray-600",
-              text: "GitHub",
-              url: "https://github.com/MRaysa",
-            },
-            {
-              icon: <FiLinkedin size={20} />,
-              color: "from-blue-600 to-blue-800",
-              text: "LinkedIn",
-              url: "https://www.linkedin.com/in/mst-aysa-siddika-meem/",
-            },
-            {
-              icon: <FiTwitter size={20} />,
-              color: "from-sky-400 to-sky-600",
-              text: "Twitter",
-              url: "#",
-            },
-            {
-              icon: <FiFacebook size={20} />,
-              color: "from-blue-500 to-blue-700",
-              text: "Facebook",
-              url: "https://www.facebook.com/muniaislam.meem",
-            },
-          ].map((social, i) => (
-            <motion.a
-              key={social.text}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + i * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{
-                y: -5,
-                scale: 1.1,
-              }}
-              className={`bg-gradient-to-r ${social.color} text-white p-3 rounded-full w-12 h-12 flex items-center justify-center relative overflow-hidden shadow-lg`}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {social.icon}
-            </motion.a>
-          ))}
-        </div>
-      </motion.div>
     </section>
   );
 };

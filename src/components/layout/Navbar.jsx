@@ -1,214 +1,156 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-scroll";
 import { FiMenu, FiX, FiDownload } from "react-icons/fi";
-import Button from "../ui/Button";
 import ThemeToggle from "./ThemeToggle";
+
+const navLinks = [
+  { name: "about", to: "about" },
+  { name: "experience", to: "experience" },
+  { name: "work", to: "projects" },
+  { name: "skills", to: "skills" },
+  { name: "education", to: "educations" },
+  { name: "contact", to: "contact" },
+];
+
+const RESUME = "/Mst_Aysa_Siddika_Meem_Resume.pdf";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("home");
-
-  const navLinks = [
-    { name: "Home", to: "home" },
-    { name: "About", to: "about" },
-    { name: "Experience", to: "experience" },
-    { name: "Projects", to: "projects" },
-    { name: "Skills", to: "skills" },
-    { name: "Educations", to: "educations" },
-    { name: "Contact", to: "contact" },
-  ];
+  const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-
-      // Update active link based on scroll position
-      const sections = document.querySelectorAll("section");
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        if (window.scrollY >= sectionTop - 100) {
-          setActiveLink(section.id);
-        }
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      const sections = document.querySelectorAll("section[id], div[id]");
+      sections.forEach((s) => {
+        if (window.scrollY >= s.offsetTop - 120) setActive(s.id);
       });
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <motion.header
-      initial={{ y: -100 }}
+      initial={{ y: -80 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed w-full z-50 transition-all duration-300 ${
+      transition={{ duration: 0.4 }}
+      className={`fixed top-0 z-50 w-full border-b transition-colors duration-300 ${
         scrolled
-          ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+          ? "border-[var(--border)] bg-[var(--bg)]/85 backdrop-blur-md"
+          : "border-transparent bg-transparent"
       }`}
     >
-      <div
-        className={`container mx-auto px-6 flex justify-between items-center ${
-          scrolled ? "py-2" : "py-4"
-        }`}
-      >
-        {/* Logo */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5">
+        {/* Brand */}
         <Link
           to="home"
-          smooth={true}
-          className="flex items-center gap-2 cursor-pointer group"
-          onClick={() => setActiveLink("home")}
+          smooth
+          duration={500}
+          className="cursor-pointer font-mono text-sm font-semibold tracking-tight"
+          onClick={() => setActive("home")}
         >
-          <motion.div
-            whileHover={{ rotate: 15 }}
-            className="flex items-center justify-center"
-          >
-            <img
-              src="/logo.png"
-              alt="Aysa Siddika Meem"
-              className={`w-auto object-contain transition-all duration-300 ${
-                scrolled ? "h-16" : "h-20"
-              }`}
-            />
-          </motion.div>
-          {/* <span className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 hidden md:block transition-opacity group-hover:opacity-80">
-            Meem
-          </span> */}
+          <span className="text-[var(--accent)]">~/</span>
+          <span className="text-[var(--fg-strong)]">aysa</span>
+          <span className="text-[var(--muted)]">-siddika-meem</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 relative">
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
-            <div
+            <Link
               key={link.to}
-              className="relative"
-              onMouseEnter={() => setActiveLink(link.to)}
-              onMouseLeave={() =>
-                setActiveLink(window.location.hash.slice(1) || "home")
-              }
+              to={link.to}
+              smooth
+              duration={500}
+              offset={-72}
+              spy
+              onSetActive={() => setActive(link.to)}
+              onClick={() => setActive(link.to)}
+              className={`cursor-pointer rounded-md px-3 py-1.5 font-mono text-sm transition-colors ${
+                active === link.to
+                  ? "text-[var(--accent)]"
+                  : "text-[var(--muted)] hover:text-[var(--fg)]"
+              }`}
             >
-              <Link
-                to={link.to}
-                smooth={true}
-                offset={-80}
-                className={`px-2 py-1 transition-colors cursor-pointer font-medium relative z-10 ${
-                  activeLink === link.to
-                    ? "text-indigo-600 dark:text-indigo-400"
-                    : "text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400"
-                }`}
-                onClick={() => setActiveLink(link.to)}
-              >
-                {link.name}
-              </Link>
-              {activeLink === link.to && (
-                <motion.div
-                  layoutId="navIndicator"
-                  className="absolute bottom-0 left-0 w-full h-1 bg-indigo-500 dark:bg-indigo-400 rounded-full"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
-                />
-              )}
-            </div>
+              <span className="text-[var(--faint)]">/</span>
+              {link.name}
+            </Link>
           ))}
         </nav>
 
-        {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-4">
-          <Button
-            variant="primary"
-            onClick={() => window.open("/resume.pdf")}
-            className="group"
-            icon={
-              <FiDownload className="transition-transform group-hover:translate-y-0.5" />
-            }
+        {/* Actions */}
+        <div className="hidden items-center gap-2.5 md:flex">
+          <ThemeToggle />
+          <a
+            href={RESUME}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-md bg-[var(--accent)] px-3.5 py-1.5 font-mono text-xs font-medium text-[var(--accent-fg)] transition-opacity hover:opacity-90"
           >
-            Resume
-          </Button>
-          {/* <ThemeToggle /> */}
+            <FiDownload size={14} />
+            resume.pdf
+          </a>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 relative z-50"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <motion.div
-            animate={mobileOpen ? "open" : "closed"}
-            variants={{
-              open: { rotate: 45, y: 5 },
-              closed: { rotate: 0, y: 0 },
-            }}
-            className="w-6 h-0.5 bg-current"
-          />
-          <motion.div
-            animate={mobileOpen ? "open" : "closed"}
-            variants={{
-              open: { opacity: 0 },
-              closed: { opacity: 1 },
-            }}
-            className="w-6 h-0.5 bg-current my-1.5"
-          />
-          <motion.div
-            animate={mobileOpen ? "open" : "closed"}
-            variants={{
-              open: { rotate: -45, y: -5 },
-              closed: { rotate: 0, y: 0 },
-            }}
-            className="w-6 h-0.5 bg-current"
-          />
-        </button>
+        {/* Mobile toggle */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label="Toggle menu"
+            className="rounded-md border border-[var(--border)] p-2 text-[var(--fg)]"
+          >
+            {mobileOpen ? <FiX size={18} /> : <FiMenu size={18} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden absolute top-full right-0 w-64 bg-white dark:bg-gray-800 shadow-xl rounded-lg mx-4"
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border-t border-[var(--border)] bg-[var(--bg)] md:hidden"
           >
-            <div className="flex flex-col gap-1 p-2">
+            <div className="flex flex-col p-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  smooth={true}
-                  offset={-80}
-                  className={`px-4 py-3 rounded-md transition-colors ${
-                    activeLink === link.to
-                      ? "bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-300"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  }`}
+                  smooth
+                  duration={500}
+                  offset={-72}
                   onClick={() => {
                     setMobileOpen(false);
-                    setActiveLink(link.to);
+                    setActive(link.to);
                   }}
+                  className={`cursor-pointer rounded-md px-3 py-2.5 font-mono text-sm ${
+                    active === link.to
+                      ? "bg-[var(--surface-2)] text-[var(--accent)]"
+                      : "text-[var(--muted)]"
+                  }`}
                 >
+                  <span className="text-[var(--faint)]">/</span>
                   {link.name}
                 </Link>
               ))}
-              <div className="flex items-center gap-2 p-4 border-t border-gray-200 dark:border-gray-700 mt-2">
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    window.open("/resume.pdf");
-                    setMobileOpen(false);
-                  }}
-                  className="flex-1"
-                  icon={<FiDownload />}
-                >
-                  Resume
-                </Button>
-                {/* <ThemeToggle className="p-3" /> */}
-              </div>
+              <a
+                href={RESUME}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-md bg-[var(--accent)] px-3.5 py-2.5 font-mono text-sm font-medium text-[var(--accent-fg)]"
+              >
+                <FiDownload size={14} />
+                resume.pdf
+              </a>
             </div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </motion.header>

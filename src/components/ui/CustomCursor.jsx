@@ -216,7 +216,7 @@ const CustomCursor = () => {
           width: sizes.ring + 30,
           height: sizes.ring + 30,
           background:
-            "radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%)",
+            "radial-gradient(circle, rgba(63, 185, 80, 0.18), transparent 70%)",
           filter: "blur(10px)",
         }}
         animate={{
